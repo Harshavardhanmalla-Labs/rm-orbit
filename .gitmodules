@@ -1,0 +1,54 @@
+[submodule "Mail"]
+	path = Mail
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Mail.git
+[submodule "Atlas"]
+	path = Atlas
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Atlas.git
+[submodule "Secure"]
+	path = Secure
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Secure.git
+[submodule "Meet"]
+	path = Meet
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Meet.git
+[submodule "Gate"]
+	path = Gate
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Gate.git
+[submodule "Calendar"]
+	path = Calendar
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Calendar.git
+[submodule "Control Center"]
+	path = Control Center
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Control-Center.git
+[submodule "FitterMe"]
+	path = FitterMe
+	url = https://github.com/Harshavardhanmalla-Labs/RM-FitterMe.git
+[submodule "Connect"]
+	path = Connect
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Connect.git
+[submodule "Planet"]
+	path = Planet
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Planet.git
+[submodule "LegalOS"]
+	path = LegalOS
+	url = https://github.com/Harshavardhanmalla-Labs/RM-LegalOS.git
+[submodule "TurboTick"]
+	path = TurboTick
+	url = https://github.com/Harshavardhanmalla-Labs/RM-TurboTick.git
+[submodule "Portfolio"]
+	path = Portfolio
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Book.git
+[submodule "Card"]
+	path = Card
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Card.git
+[submodule "Learn"]
+	path = Learn
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Learn.git
+[submodule "Capital Hub"]
+	path = Capital Hub
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Capital-Hub.git
+[submodule "Snitch"]
+	path = Snitch
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Snitch.git
+[submodule "Fonts"]
+	path = Fonts
+	url = https://github.com/Harshavardhanmalla-Labs/RM-Fonts.git
