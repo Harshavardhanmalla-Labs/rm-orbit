@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Wallet - Vault Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex min-h-screen">
+<!-- Side Navigation -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col sticky top-0 h-screen">
+<div class="p-6">
+<div class="flex items-center gap-2 mb-1">
+<div class="bg-primary rounded-lg p-1 text-white">
+<span class="material-symbols-outlined block">account_balance_wallet</span>
+</div>
+<h1 class="text-xl font-bold tracking-tight text-slate-900 dark:text-white">RM Wallet</h1>
+</div>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400 uppercase tracking-widest">Enterprise Vault</p>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">shield</span>
+<span class="text-sm font-semibold">Vaults</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-semibold">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-semibold">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+</nav>
+<div class="p-4 mt-auto">
+<div class="bg-primary/5 dark:bg-primary/10 rounded-xl p-4 border border-primary/20">
+<p class="text-xs font-bold text-primary uppercase mb-1">Pro Plan</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mb-3">Unlock advanced security features and team roles.</p>
+<button class="w-full bg-primary text-white text-xs font-bold py-2 px-4 rounded-lg hover:bg-primary/90 transition-all">
+                        Upgrade Plan
+                    </button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex items-center gap-4">
+<h2 class="text-lg font-bold text-slate-800 dark:text-slate-200">Vault Management</h2>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-8 w-8 rounded-full bg-primary/20 flex items-center justify-center text-primary font-bold text-xs border border-primary/30">
+                        JD
+                    </div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="p-8 max-w-7xl mx-auto w-full">
+<!-- Title & Actions -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h1 class="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight mb-2">Secure Vaults</h1>
+<p class="text-slate-500 dark:text-slate-400 max-w-md">Manage, monitor, and organize your organization's sensitive infrastructure secrets and access credentials.</p>
+</div>
+<div class="flex items-center gap-3">
+<button class="flex items-center gap-2 px-4 py-2 border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-sm font-bold rounded-lg transition-all">
+<span class="material-symbols-outlined text-lg">file_upload</span>
+                            Import Secrets
+                        </button>
+<button class="flex items-center gap-2 px-5 py-2 bg-primary hover:bg-primary/90 text-white text-sm font-bold rounded-lg shadow-lg shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-lg">add_circle</span>
+                            New Vault
+                        </button>
+</div>
+</div>
+<!-- Stats Summary (Optional Add-on for Modern Look) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Total Vaults</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">12</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Active Secrets</p>
+<p class="text-2xl font-bold text-slate-900 dark:text-white">422</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Access Requests</p>
+<p class="text-2xl font-bold text-primary">3 Pending</p>
+</div>
+</div>
+<!-- Table Container -->
+<div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Vault Name</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Owner Team</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Secrets Count</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Last Access</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Access Level</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 p-2 rounded-lg">
+<span class="material-symbols-outlined block text-xl">account_tree</span>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Infrastructure Vault</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                            Platform Eng
+                                        </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-slate-600 dark:text-slate-400">124</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600 dark:text-slate-400">2 mins ago</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-primary/10 text-primary border border-primary/20">
+                                            Admin
+                                        </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 p-2 rounded-lg">
+<span class="material-symbols-outlined block text-xl">developer_mode_tv</span>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">DevOps Vault</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                            SRE Team
+                                        </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-slate-600 dark:text-slate-400">86</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600 dark:text-slate-400">1 hour ago</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-emerald-100 dark:bg-emerald-900/20 text-emerald-600 border border-emerald-200 dark:border-emerald-800">
+                                            Editor
+                                        </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 p-2 rounded-lg">
+<span class="material-symbols-outlined block text-xl">rocket_launch</span>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Production Vault</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                            Cloud Ops
+                                        </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-slate-600 dark:text-slate-400">212</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600 dark:text-slate-400">15 mins ago</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                            Viewer
+                                        </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 p-2 rounded-lg">
+<span class="material-symbols-outlined block text-xl">security</span>
+</div>
+<span class="font-bold text-slate-900 dark:text-slate-100">Compliance Vault</span>
+</div>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                                            Audit Team
+                                        </span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-slate-600 dark:text-slate-400">45</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm text-slate-600 dark:text-slate-400">3 hours ago</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-slate-700">
+                                            Viewer
+                                        </span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-slate-50/50 dark:bg-slate-800/30 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<span class="text-sm text-slate-500 dark:text-slate-400 font-medium">Showing 1 to 4 of 12 results</span>
+<div class="flex items-center gap-2">
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 disabled:opacity-50 transition-all">
+<span class="material-symbols-outlined block">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg bg-primary text-white text-sm font-bold shadow-sm">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-800 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white dark:hover:bg-slate-800 text-sm font-medium text-slate-600 dark:text-slate-400 transition-all">3</button>
+<button class="p-2 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-white dark:hover:bg-slate-800 transition-all">
+<span class="material-symbols-outlined block">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

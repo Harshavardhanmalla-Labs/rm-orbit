@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Structured Data View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#0f49bd",
+            "background-light": "#f6f6f8",
+            "background-dark": "#101622",
+            "surface-dark": "#1c2333",
+            "surface-darker": "#111827",
+            "border-dark": "#2d3748",
+          },
+          fontFamily: {
+            "display": ["Inter", "sans-serif"]
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-hidden">
+<div class="flex h-screen w-full bg-background-light dark:bg-background-dark overflow-hidden">
+<!-- Side Navigation -->
+<aside class="flex w-64 flex-col border-r border-slate-200 dark:border-border-dark bg-white dark:bg-surface-darker transition-all">
+<div class="flex h-full flex-col justify-between p-4">
+<div class="flex flex-col gap-4">
+<div class="flex items-center gap-3 px-2 py-3">
+<div class="h-10 w-10 overflow-hidden rounded-full bg-slate-200 dark:bg-slate-700 bg-center bg-cover" data-alt="User profile avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCXcZWpTvFkQLAzk3hLnKEU2XGfV0HLETXvIn8ahki9VKhnlIytkpOXcG9GmMQ6F1BA4evkaYLoXAyqNHDhX9ZXCpH5Wv-31tpI6rh1EDri8qpWFjkLMNzRIabnxw_6NxmqlUg4xvbIax45T67HSDikQ8DsIqhBr1E6JTHBpTDjFxhVifgUe6jRcf_kZF9qCPVoEM5JUQVQ_BirXJj1MJuWy1w-icMTWsCngJIimVQTf16Xo91nUhCcdHR4ppzsxCEIOWzEaX1V3K4");'></div>
+<div class="flex flex-col">
+<h1 class="text-sm font-semibold leading-tight text-slate-900 dark:text-white">RM Writer</h1>
+<p class="text-xs font-normal text-slate-500 dark:text-slate-400">Pro Workspace</p>
+</div>
+</div>
+<nav class="flex flex-col gap-2">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">home</span>
+<span class="text-sm font-medium">Home</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">folder</span>
+<span class="text-sm font-medium">Projects</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary dark:bg-primary/20 dark:text-blue-400 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl fill-1">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">database</span>
+<span class="text-sm font-medium">Data Sources</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 hover:bg-slate-100 dark:text-slate-300 dark:hover:bg-surface-dark transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+</div>
+<div class="rounded-xl bg-slate-100 p-4 dark:bg-surface-dark mt-auto">
+<div class="flex items-start gap-3">
+<span class="material-symbols-outlined text-primary dark:text-blue-400">auto_awesome</span>
+<div>
+<p class="text-sm font-medium text-slate-900 dark:text-white">AI Credits</p>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-1">1,200 / 2,000 used</p>
+<div class="mt-2 h-1.5 w-full rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-[60%] rounded-full bg-primary dark:bg-blue-500"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex flex-1 flex-col overflow-hidden bg-background-light dark:bg-background-dark">
+<!-- Header -->
+<header class="flex h-16 shrink-0 items-center justify-between border-b border-slate-200 bg-white px-6 dark:border-border-dark dark:bg-surface-darker">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="flex items-center justify-center rounded bg-primary/10 p-1.5 dark:bg-primary/20">
+<span class="material-symbols-outlined text-primary dark:text-blue-400">table_chart</span>
+</div>
+<h2 class="text-lg font-bold leading-tight">Q3 Roadmap.csv</h2>
+<span class="rounded bg-slate-200 px-2 py-0.5 text-xs font-medium text-slate-600 dark:bg-slate-700 dark:text-slate-300">v2.4</span>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-border-dark"></div>
+<div class="relative flex w-64 items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400 dark:text-slate-500">search</span>
+<input class="w-full rounded-lg border-0 bg-slate-100 py-2 pl-10 pr-4 text-sm text-slate-900 focus:ring-2 focus:ring-primary dark:bg-surface-dark dark:text-white dark:placeholder-slate-500" placeholder="Search rows..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<!-- View Switcher -->
+<div class="flex rounded-lg bg-slate-100 p-1 dark:bg-surface-dark">
+<button class="rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm dark:text-slate-400 dark:hover:bg-surface-darker dark:hover:text-white transition-all">Text</button>
+<button class="rounded-md bg-white px-3 py-1.5 text-sm font-medium text-primary shadow-sm dark:bg-surface-darker dark:text-blue-400">Data</button>
+<button class="rounded-md px-3 py-1.5 text-sm font-medium text-slate-600 hover:bg-white hover:shadow-sm dark:text-slate-400 dark:hover:bg-surface-darker dark:hover:text-white transition-all">Graph</button>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-border-dark"></div>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 transition-colors">
+              Share
+            </button>
+<button class="flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-600 hover:bg-slate-50 dark:border-border-dark dark:bg-surface-dark dark:text-slate-300 dark:hover:bg-surface-darker transition-colors">
+<span class="material-symbols-outlined">download</span>
+</button>
+<button class="flex items-center justify-center rounded-lg border border-slate-200 bg-white px-3 py-2 text-slate-600 hover:bg-slate-50 dark:border-border-dark dark:bg-surface-dark dark:text-slate-300 dark:hover:bg-surface-darker transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="h-10 w-10 overflow-hidden rounded-full border border-slate-200 dark:border-border-dark">
+<div class="h-full w-full bg-cover bg-center" data-alt="Small user avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCKwZ_5HQ32NasaTk2jXeAX50CyziGAb-YXb8Z-Bj3ghWNbVwL0rdWQ1BUnMZWUSdGiYCpdVTxTYY2WeDcf6Pl7D9EPzvi3UtMq4InNZbsANG2pZRS4roPe9f8U0pIQxIOk6pDq_S4RV2VdV06G_c0bTjSlM2GxYKwKbmz8Z0nPAlFvj4Yyksy4CguzRV2pu24Y7s6ailThQPm18nGO2ahkx2m9IVjfnETBHorXTPi_pl3G9OGSxRRfMkIzulS-slS51OMyK0rpmNY");'></div>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex flex-1 flex-col overflow-hidden p-6">
+<!-- Filters Bar -->
+<div class="mb-4 flex flex-wrap items-center gap-3">
+<button class="flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 hover:bg-slate-50 dark:border-border-dark dark:bg-surface-dark dark:text-slate-300 dark:hover:bg-surface-darker transition-colors">
+<span>Filter</span>
+<span class="material-symbols-outlined text-lg">filter_list</span>
+</button>
+<div class="h-4 w-px bg-slate-300 dark:bg-border-dark"></div>
+<button class="flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-200 dark:bg-surface-dark dark:text-slate-300 dark:hover:bg-surface-darker transition-colors">
+<span>Status: Active</span>
+<span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-200 dark:bg-surface-dark dark:text-slate-300 dark:hover:bg-surface-darker transition-colors">
+<span>Priority: All</span>
+<span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+</button>
+<button class="flex items-center gap-2 rounded-lg bg-slate-100 px-3 py-1.5 text-sm text-slate-600 hover:bg-slate-200 dark:bg-surface-dark dark:text-slate-300 dark:hover:bg-surface-darker transition-colors">
+<span>Assigned: Me</span>
+<span class="material-symbols-outlined text-lg">keyboard_arrow_down</span>
+</button>
+<div class="ml-auto flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+<span>Showing 8 of 24 rows</span>
+<button class="rounded p-1 hover:bg-slate-100 dark:hover:bg-surface-dark">
+<span class="material-symbols-outlined text-lg">refresh</span>
+</button>
+</div>
+</div>
+<!-- Data Table Container -->
+<div class="flex-1 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm dark:border-border-dark dark:bg-surface-darker flex flex-col">
+<div class="flex-1 overflow-auto">
+<table class="w-full min-w-[1000px] table-auto text-left text-sm">
+<thead class="bg-slate-50 text-slate-500 dark:bg-surface-dark dark:text-slate-400 sticky top-0 z-10">
+<tr>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark w-32">Task ID</th>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark">Feature Name</th>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark w-40">Status</th>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark w-32">Priority</th>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark w-24">Owner</th>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark w-32">Due Date</th>
+<th class="border-b border-slate-200 px-4 py-3 font-medium dark:border-border-dark w-48 text-right">Progress</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-200 dark:divide-border-dark">
+<tr class="group hover:bg-slate-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">TASK-101</td>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">User Authentication</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                      Done
+                    </span>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-red-500">priority_high</span>
+<span class="text-slate-700 dark:text-slate-300">High</span>
+</div>
+</td>
+<td class="px-4 py-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAy8s8xGNEIwEma--m4LfHUc0Lv-YhNMklni0O2nuPqTgVJu7dY02Lm71AVLXB8EPaU92ejfvEe22xIC3PdlsJuSWHMIKkg0rXC4K2m7d7jgpgrqzsU5hs1kVFbGuQZKnpNZUuZav8_eMe9DIeza5viHKDuElXY7EMuOKdU9e9w-n9YLwJwSODhj1G0fiBbavGzO4rU4xiIzxjmzI_dZE5Tr5PAcKUk1C1sY5vWRtjdceBRPETa4GVe26ntBi92WV3Gek1ZDuIR_bc");'></div>
+</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400">Oct 12</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">100%</span>
+<div class="h-1.5 w-24 rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-full rounded-full bg-emerald-500"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">TASK-102</td>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Dashboard UI</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                      In Progress
+                    </span>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-amber-500">remove</span>
+<span class="text-slate-700 dark:text-slate-300">Medium</span>
+</div>
+</td>
+<td class="px-4 py-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC1wHY9zNtfWELm1aLMPvJsu-5p-nu_drUv_3vXU52QhCobSd1uos0NutCObnf70SuKDwrIyR6NwvqdZcim71NPgFDiQFCgVPOH8BTZP6uXdFjTmixUKxifWjpXfHp877_ILqgUI0hGrWOgbVgWLL2nOg6SVQFX6IVOgwAhmY7sTlQRX52PQ-rOeUB4Vbo08HXJNPkf7mjCfYL94RatGvvstBFAzduQGEXBrsysbtl1LTcic4Sm9GpcK7tLkr_y6F2WThGIbt5j6I4");'></div>
+</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400">Oct 15</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">60%</span>
+<div class="h-1.5 w-24 rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-[60%] rounded-full bg-primary dark:bg-blue-500"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">TASK-103</td>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">API Integration</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-0.5 text-xs font-medium text-blue-800 dark:bg-blue-900/30 dark:text-blue-400">
+                      In Progress
+                    </span>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-red-500">priority_high</span>
+<span class="text-slate-700 dark:text-slate-300">High</span>
+</div>
+</td>
+<td class="px-4 py-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCT2UXpq1Efon9d9iSu6Dq-9fdC-u8dHm8ocQnDwws-B7pjONMWX8y6lFwNkZI16iPwM3ryhHdps2hr9TLV9rcHnD4-6_KwsWu4UTh6VVzDLTrOtQDBQh7HtDK2Jmr81Ef39lYNZUwdR9pYUSzKIgfxwMlnYKyPTPgvt0MorDNcqdDGtff-fEwkpLIPAI-WyLkBggnubTO09EKnyuWEaI3X_XdQSFPILgyGEvgZy4muafWhLD2_WMIlO_Mq15HK54k9AakzgWL8zQQ");'></div>
+</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400">Oct 20</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">45%</span>
+<div class="h-1.5 w-24 rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-[45%] rounded-full bg-primary dark:bg-blue-500"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">TASK-105</td>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Mobile Responsiveness</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/30 dark:text-red-400">
+                        Blocked
+                      </span>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-red-500">priority_high</span>
+<span class="text-slate-700 dark:text-slate-300">High</span>
+</div>
+</td>
+<td class="px-4 py-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCktVujqTSFqq0KdexalzgXCZ4E1R26ylgmVcnuSxronYbJRXQFs55FSeGntuqZEk6lqq7BXqBYwMeR_1NDOF4qOFUY5OD8mREluNrXlERBoiyR8xebKqwyxOFOyOGeK1fRvQSXIzdDsQCT8njRo-r0tvc2nVV1W7Qw287WjcP6tIqss9jBHEIvkbSeeiSmfbonh1f_o6PebC45TmH0bNMClrbl2vkWu6Sov6oSOu6B4tLn_4JYDiS3ni6GMZ5BPz1-zvJRyzyl290");'></div>
+</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400">Oct 18</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">20%</span>
+<div class="h-1.5 w-24 rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-[20%] rounded-full bg-amber-500"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">TASK-107</td>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Payment Gateway</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center rounded-full bg-emerald-100 px-2.5 py-0.5 text-xs font-medium text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400">
+                        Done
+                      </span>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-purple-500">flag</span>
+<span class="text-slate-700 dark:text-slate-300">Critical</span>
+</div>
+</td>
+<td class="px-4 py-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBVGRdBuBmNddsNlusfT04VB92r17EPsE8lU49tA-47FvEJvRZwqkiDwB4spA4f8iyW68hjHPvNGxNaHGVSvd4ZZaA7hjLBUjtXXWvtgl-e_clVSCfcfU0ByqGNC5eBwBY_7SG-16xovAyq366fngCCxE10sBHqcwgmqfOAz9aaoqgowCZCNoIOdrWjHb-RxJ3xE0KPkLI5n2lQGV5f6sI_4Ba119yEqHlH8NRhLD_DHDyZl9EKDyOrAE-cvkWQDXsB3rpGIZY3U0o");'></div>
+</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400">Oct 05</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">100%</span>
+<div class="h-1.5 w-24 rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-full rounded-full bg-emerald-500"></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 dark:hover:bg-surface-dark transition-colors">
+<td class="px-4 py-3 font-mono text-slate-500 dark:text-slate-400">TASK-108</td>
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Notification System</td>
+<td class="px-4 py-3">
+<span class="inline-flex items-center rounded-full bg-purple-100 px-2.5 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900/30 dark:text-purple-400">
+                        Review
+                      </span>
+</td>
+<td class="px-4 py-3">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-sm text-amber-500">remove</span>
+<span class="text-slate-700 dark:text-slate-300">Medium</span>
+</div>
+</td>
+<td class="px-4 py-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCh5LV8XhRSKibmM0mExTB7IibTQXihXGx6Dz6wGIXJtEgFwGpP1qLy3CgFFO2zII26p5y-Bmo_Ku3Y5Ay654QbxSHC5dkTgWNosbLm31dtVc1awgKw4R6W78oYMYeM3vBkb5pWEq2BZ55QHgQ6VbF92qj-AB_DX3a7AmMoizC4aLf6ufcWwY6-btVq9utRnZS9DdgxNJBr9cnmj5g0qhE69-Wl_xupgpLjIR3efTyNoSVaeqsJUVgDb8QrTnmz9ZlBMBPNl3t5yoo");'></div>
+</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-400">Oct 25</td>
+<td class="px-4 py-3 text-right">
+<div class="flex items-center justify-end gap-3">
+<span class="text-xs font-medium text-slate-700 dark:text-slate-300">80%</span>
+<div class="h-1.5 w-24 rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="h-1.5 w-[80%] rounded-full bg-purple-500"></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- AI Insights Block -->
+<div class="mt-6 flex shrink-0 items-start gap-4 rounded-xl border border-primary/20 bg-gradient-to-r from-primary/10 to-transparent p-5 dark:border-primary/30 dark:from-primary/20">
+<div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-lg shadow-primary/30">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<div class="flex-1">
+<div class="flex items-center justify-between">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white">AI Insights</h3>
+<span class="text-xs font-medium uppercase tracking-wider text-primary dark:text-blue-400">Real-time Analysis</span>
+</div>
+<p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+              Based on the current table data, here is a summary of the project status:
+            </p>
+<ul class="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2 lg:grid-cols-3">
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined mt-0.5 text-sm text-red-500">warning</span>
+<span class="text-sm text-slate-700 dark:text-slate-200">
+<strong class="font-medium">Blockers Detected:</strong> 40% of high-priority tasks are currently blocked or at risk.
+                    </span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined mt-0.5 text-sm text-amber-500">schedule</span>
+<span class="text-sm text-slate-700 dark:text-slate-200">
+<strong class="font-medium">Schedule Slip:</strong> 'Dashboard UI' feature is lagging behind by 2 days.
+                    </span>
+</li>
+<li class="flex items-start gap-2">
+<span class="material-symbols-outlined mt-0.5 text-sm text-emerald-500">tips_and_updates</span>
+<span class="text-sm text-slate-700 dark:text-slate-200">
+<strong class="font-medium">Suggestion:</strong> Reallocate resources from 'Dark Mode' (Low Priority) to 'Dashboard UI'.
+                    </span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

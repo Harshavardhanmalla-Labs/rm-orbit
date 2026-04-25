@@ -1,0 +1,276 @@
+/*
+ * Orbit Design Tokens — CSS Custom Properties
+ * Auto-synced from /orbit-ui/tokens/*.json
+ * Include this file in every app's index.css via:
+ *   @import "/orbit-ui/orbit-tokens.css";
+ *
+ * Light mode is the default (:root).
+ * Dark mode activates on <html class="dark">.
+ */
+
+/* ─── Font Faces ────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "RM Forma";
+  src: url("/fonts/RMForma-Regular.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RM Forma";
+  src: url("/fonts/RMForma-SemiBold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RM Forma";
+  src: url("/fonts/RMForma-Bold.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RM Forma";
+  src: url("/fonts/RMForma-Variable.woff2") format("woff2");
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: "RM Samplet";
+  src: url("/fonts/RM-Samplet-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* ─── Static Palette Tokens ────────────────────────────────────────────── */
+:root {
+  /* Primary */
+  --orbit-primary-50:  #eef4ff;
+  --orbit-primary-100: #dce8ff;
+  --orbit-primary-200: #b9d1ff;
+  --orbit-primary-300: #8bb4ff;
+  --orbit-primary-400: #548fff;
+  --orbit-primary-500: #2b7cee;
+  --orbit-primary-600: #1a62d4;
+  --orbit-primary-700: #0f49bd;
+  --orbit-primary-800: #0a3690;
+  --orbit-primary-900: #0a1f5c;
+  --orbit-primary-950: #060f36;
+
+  /* Neutral */
+  --orbit-neutral-50:  #f8fafc;
+  --orbit-neutral-100: #f1f5f9;
+  --orbit-neutral-200: #e2e8f0;
+  --orbit-neutral-300: #cbd5e1;
+  --orbit-neutral-400: #94a3b8;
+  --orbit-neutral-500: #64748b;
+  --orbit-neutral-600: #475569;
+  --orbit-neutral-700: #334155;
+  --orbit-neutral-800: #1e293b;
+  --orbit-neutral-900: #0f172a;
+  --orbit-neutral-950: #020617;
+
+  /* Success */
+  --orbit-success-500: #22c55e;
+  --orbit-success-600: #16a34a;
+  --orbit-success-100: #dcfce7;
+  --orbit-success-700: #15803d;
+
+  /* Warning */
+  --orbit-warning-500: #f59e0b;
+  --orbit-warning-600: #d97706;
+  --orbit-warning-100: #fef3c7;
+
+  /* Danger */
+  --orbit-danger-500:  #f43f5e;
+  --orbit-danger-600:  #e11d48;
+  --orbit-danger-100:  #ffe4e6;
+
+  /* Info */
+  --orbit-info-500:    #0ea5e9;
+  --orbit-info-600:    #0284c7;
+  --orbit-info-100:    #e0f2fe;
+
+  /* Typography */
+  --orbit-font-sans:    "RM Forma", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --orbit-font-display: "RM Samplet", "RM Forma", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --orbit-font-mono:    "JetBrains Mono", "Fira Code", Consolas, monospace;
+
+  /* Radius */
+  --orbit-radius-xs:     4px;
+  --orbit-radius-sm:     6px;
+  --orbit-radius-md:     8px;
+  --orbit-radius-lg:     12px;
+  --orbit-radius-xl:     16px;
+  --orbit-radius-2xl:    20px;
+  --orbit-radius-full:   9999px;
+  --orbit-radius-button: 8px;
+  --orbit-radius-input:  8px;
+  --orbit-radius-card:   12px;
+  --orbit-radius-modal:  16px;
+  --orbit-radius-panel:  14px;
+  --orbit-radius-badge:  9999px;
+  --orbit-radius-chip:   9999px;
+
+  /* Shadows */
+  --orbit-shadow-sm:      0 1px 2px 0 rgba(0,0,0,0.06), 0 1px 3px 0 rgba(0,0,0,0.04);
+  --orbit-shadow-md:      0 1px 3px 0 rgba(0,0,0,0.08), 0 1px 2px -1px rgba(0,0,0,0.08);
+  --orbit-shadow-lg:      0 4px 12px -2px rgba(0,0,0,0.12), 0 2px 6px -2px rgba(0,0,0,0.08);
+  --orbit-shadow-xl:      0 8px 24px -4px rgba(0,0,0,0.16), 0 4px 10px -4px rgba(0,0,0,0.10);
+  --orbit-shadow-2xl:     0 16px 40px -8px rgba(0,0,0,0.2), 0 8px 16px -8px rgba(0,0,0,0.12);
+  --orbit-shadow-glass:   0 14px 34px rgba(2,6,23,0.36);
+  --orbit-shadow-modal:   0 20px 60px -15px rgba(0,0,0,0.30);
+  --orbit-shadow-dropdown:0 4px 16px -2px rgba(0,0,0,0.14), 0 2px 6px -2px rgba(0,0,0,0.08);
+  --orbit-shadow-focus:   0 0 0 3px rgba(43,124,238,0.25);
+
+  /* Z-index */
+  --orbit-z-dropdown:       1000;
+  --orbit-z-sticky:         1100;
+  --orbit-z-modal-backdrop: 1200;
+  --orbit-z-modal:          1300;
+  --orbit-z-popover:        1400;
+  --orbit-z-tooltip:        1500;
+  --orbit-z-orbit-bar:      1600;
+  --orbit-z-toast:          1700;
+}
+
+/* ─── Light Mode Semantic Tokens (default) ─────────────────────────────── */
+:root {
+  --orbit-surface-base:     #ffffff;
+  --orbit-surface-subtle:   #f8fafc;
+  --orbit-surface-muted:    #f1f5f9;
+  --orbit-surface-elevated: #ffffff;
+  --orbit-surface-overlay:  rgba(0, 0, 0, 0.40);
+
+  --orbit-text-primary:   #0f172a;
+  --orbit-text-secondary: #334155;
+  --orbit-text-muted:     #64748b;
+  --orbit-text-disabled:  #94a3b8;
+  --orbit-text-inverse:   #ffffff;
+  --orbit-text-link:      #2b7cee;
+  --orbit-text-link-hover:#0f49bd;
+
+  --orbit-border-default: #e2e8f0;
+  --orbit-border-subtle:  #f1f5f9;
+  --orbit-border-strong:  #cbd5e1;
+  --orbit-border-focus:   #2b7cee;
+
+  --orbit-glass-bg:     rgba(255, 255, 255, 0.75);
+  --orbit-glass-border: rgba(255, 255, 255, 0.60);
+
+  /* Shell-specific (Orbit Bar) */
+  --orbit-shell-bg:           rgba(15, 23, 42, 0.88);
+  --orbit-shell-panel:        rgba(22, 33, 52, 0.95);
+  --orbit-shell-border:       rgba(148, 163, 184, 0.30);
+  --orbit-shell-text:         #e2e8f0;
+  --orbit-shell-text-muted:   #94a3b8;
+  --orbit-shell-highlight:    #2b7cee;
+  --orbit-shell-highlight-hover: #1a62d4;
+}
+
+/* ─── Dark Mode Semantic Tokens ────────────────────────────────────────── */
+.dark {
+  --orbit-surface-base:     #0f172a;
+  --orbit-surface-subtle:   #1e293b;
+  --orbit-surface-muted:    #334155;
+  --orbit-surface-elevated: #1e293b;
+  --orbit-surface-overlay:  rgba(0, 0, 0, 0.60);
+
+  --orbit-text-primary:   #f1f5f9;
+  --orbit-text-secondary: #cbd5e1;
+  --orbit-text-muted:     #64748b;
+  --orbit-text-disabled:  #475569;
+  --orbit-text-inverse:   #0f172a;
+  --orbit-text-link:      #548fff;
+  --orbit-text-link-hover:#8bb4ff;
+
+  --orbit-border-default: rgba(148, 163, 184, 0.20);
+  --orbit-border-subtle:  rgba(148, 163, 184, 0.10);
+  --orbit-border-strong:  rgba(148, 163, 184, 0.35);
+  --orbit-border-focus:   #548fff;
+
+  --orbit-glass-bg:     rgba(15, 23, 42, 0.85);
+  --orbit-glass-border: rgba(148, 163, 184, 0.15);
+}
+
+/* ─── Base Reset & Defaults ─────────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  font-family: var(--orbit-font-sans);
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--orbit-text-primary);
+  background-color: var(--orbit-surface-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Theme Transition ──────────────────────────────────────────────────── */
+/* Smooth color transitions when switching dark/light mode */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 150ms;
+  transition-timing-function: ease;
+}
+
+/* But NOT on elements that have their own transitions (avoids double-transitions) */
+*[class*="animate-"],
+*[class*="transition-"] {
+  transition-property: revert;
+}
+
+/* ─── Focus Visible (global default) ───────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--orbit-border-focus);
+  outline-offset: 2px;
+}
+
+/* ─── Skip Link ─────────────────────────────────────────────────────────── */
+.orbit-skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 16px;
+  z-index: var(--orbit-z-toast);
+  padding: 8px 16px;
+  background: var(--orbit-primary-600);
+  color: #ffffff;
+  border-radius: var(--orbit-radius-md);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+}
+.orbit-skip-link:focus {
+  top: 16px;
+}
+
+/* ─── Scrollbar (global thin style) ────────────────────────────────────── */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--orbit-border-strong) transparent;
+}
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--orbit-border-strong);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--orbit-text-muted);
+}

@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Wallet - Secret Details</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="flex h-screen flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-10">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined">database</span>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold tracking-tight">RM Wallet</h2>
+</div>
+<div class="relative flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-slate-400">search</span>
+<input class="w-64 bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/50" placeholder="Search secrets..." type="text"/>
+</div>
+</div>
+<nav class="flex items-center gap-6">
+<a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary" href="#">Vaults</a>
+<a class="text-sm font-semibold text-primary" href="#">Secrets</a>
+<a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary" href="#">Activity</a>
+<a class="text-sm font-semibold text-slate-600 dark:text-slate-400 hover:text-primary" href="#">Settings</a>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700"></div>
+<button class="text-slate-500 hover:text-primary flex items-center justify-center p-2 rounded-lg bg-slate-100 dark:bg-slate-800">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="size-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-primary font-bold text-xs" data-alt="User avatar placeholder with initials">
+                    JD
+                </div>
+</nav>
+</header>
+<!-- Main Layout Container -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Panel: Metadata -->
+<aside class="w-80 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col overflow-y-auto">
+<div class="p-6">
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-slate-400 text-sm">folder</span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-400">Production Vault</span>
+</div>
+<h1 class="text-2xl font-extrabold text-slate-900 dark:text-white mb-2">db-prod-01</h1>
+<p class="text-sm text-slate-500 mb-6">Database Password</p>
+<div class="space-y-6">
+<div>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Ownership</h4>
+<div class="flex items-center gap-3">
+<div class="size-6 rounded-full bg-slate-200 flex items-center justify-center overflow-hidden">
+<span class="material-symbols-outlined text-xs">person</span>
+</div>
+<span class="text-sm font-medium">SRE Team Alpha</span>
+</div>
+</div>
+<div>
+<h4 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-3">Tags</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 rounded text-[10px] font-bold uppercase tracking-wide">Critical</span>
+<span class="px-2 py-1 bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 rounded text-[10px] font-bold uppercase tracking-wide">Production</span>
+<span class="px-2 py-1 bg-primary/10 text-primary rounded text-[10px] font-bold uppercase tracking-wide">Database</span>
+</div>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<span class="text-sm text-slate-500">Created</span>
+<span class="text-sm font-medium">2 months ago</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-slate-500">Expires</span>
+<span class="text-sm font-medium text-orange-600">In 14 days</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-sm text-slate-500">Version</span>
+<span class="text-sm font-medium">v12</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Center Panel: Secret Content -->
+<section class="flex-1 bg-background-light dark:bg-background-dark p-8 overflow-y-auto">
+<div class="max-w-3xl mx-auto">
+<!-- Security Warning Card -->
+<div class="mb-8 p-4 bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl flex items-start gap-4">
+<span class="material-symbols-outlined text-orange-600 mt-0.5">warning</span>
+<div>
+<p class="text-sm font-bold text-orange-900 dark:text-orange-200">Credential Rotation Recommended</p>
+<p class="text-sm text-orange-700 dark:text-orange-300">This secret has not been rotated in 90 days. We recommend updating the credentials for security compliance.</p>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-8 border-b border-slate-100 dark:border-slate-800">
+<div class="flex items-center justify-between mb-8">
+<h3 class="text-lg font-bold">Credential Details</h3>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-blue-700 flex items-center gap-2">
+<span class="material-symbols-outlined text-base">sync</span>
+                                    Rotate Credential
+                                </button>
+</div>
+<div class="grid grid-cols-1 gap-6">
+<!-- Field: Host -->
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Endpoint Host</label>
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-slate-50 dark:bg-slate-800 px-4 py-3 rounded-lg border border-slate-100 dark:border-slate-700 font-mono text-sm text-slate-700 dark:text-slate-300">
+                                            db-prod-01.internal.rm-wallet.io
+                                        </div>
+<button class="p-3 text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined text-base">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Field: Username -->
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Username</label>
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-slate-50 dark:bg-slate-800 px-4 py-3 rounded-lg border border-slate-100 dark:border-slate-700 font-mono text-sm text-slate-700 dark:text-slate-300">
+                                            admin_root_svc
+                                        </div>
+<button class="p-3 text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined text-base">content_copy</span>
+</button>
+</div>
+</div>
+<!-- Field: Password -->
+<div>
+<label class="block text-xs font-bold text-slate-400 uppercase tracking-widest mb-2">Password</label>
+<div class="flex items-center gap-2">
+<div class="flex-1 bg-slate-50 dark:bg-slate-800 px-4 py-3 rounded-lg border border-slate-100 dark:border-slate-700 font-mono text-sm flex items-center justify-between">
+<span class="text-slate-400 tracking-widest">••••••••••••••••••••</span>
+<button class="text-primary text-xs font-bold hover:underline">REVEAL</button>
+</div>
+<button class="p-3 text-slate-400 hover:text-primary hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">
+<span class="material-symbols-outlined text-base">content_copy</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="px-8 py-4 bg-slate-50 dark:bg-slate-800/50 flex items-center justify-between">
+<span class="text-xs text-slate-500">Accessing this secret will be logged in the audit trail.</span>
+<button class="text-xs font-bold text-slate-600 dark:text-slate-400 hover:text-primary">Edit Configuration</button>
+</div>
+</div>
+<div class="mt-12 grid grid-cols-2 gap-8">
+<div>
+<h4 class="text-sm font-bold mb-4">Related Services</h4>
+<div class="space-y-3">
+<div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center gap-3">
+<div class="size-8 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">bolt</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">RM TurboTick</p>
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-tight">Injection Active</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+<div class="p-3 bg-white dark:bg-slate-900 rounded-lg border border-slate-200 dark:border-slate-800 flex items-center gap-3">
+<div class="size-8 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-sm">monitoring</span>
+</div>
+<div class="flex-1">
+<p class="text-sm font-bold">Cloud Observability</p>
+<p class="text-[10px] text-slate-500 uppercase font-bold tracking-tight">Connected</p>
+</div>
+<span class="material-symbols-outlined text-slate-400">chevron_right</span>
+</div>
+</div>
+</div>
+<div class="relative overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 h-40 flex items-center justify-center text-slate-400 font-medium text-sm text-center p-6 bg-white dark:bg-slate-900" data-alt="Abstract grid pattern matching the design theme" style="background-image: radial-gradient(#cbd5e1 1px, transparent 1px); background-size: 20px 20px;">
+                            Access Policy Visualization <br/> Coming Soon
+                        </div>
+</div>
+</div>
+</section>
+<!-- Right Panel: Audit/History Feed -->
+<aside class="w-80 border-l border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col overflow-y-auto">
+<div class="p-6">
+<h3 class="text-sm font-bold mb-6 flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">history</span>
+                        Audit Activity
+                    </h3>
+<div class="space-y-6 relative before:absolute before:left-3 before:top-2 before:bottom-2 before:w-px before:bg-slate-200 dark:before:bg-slate-800">
+<!-- Audit Item -->
+<div class="relative pl-8">
+<div class="absolute left-1 top-1 size-4 rounded-full bg-slate-200 dark:bg-slate-700 ring-4 ring-white dark:ring-slate-900 z-10 flex items-center justify-center">
+<span class="size-1.5 rounded-full bg-slate-500"></span>
+</div>
+<p class="text-sm font-bold mb-0.5">Secret Revealed</p>
+<p class="text-xs text-slate-500">by <span class="font-medium text-slate-900 dark:text-slate-200">Sarah Jenkins</span></p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase font-bold">Today, 10:45 AM</p>
+</div>
+<!-- Audit Item -->
+<div class="relative pl-8">
+<div class="absolute left-1 top-1 size-4 rounded-full bg-primary ring-4 ring-white dark:ring-slate-900 z-10 flex items-center justify-center">
+<span class="size-1.5 rounded-full bg-white"></span>
+</div>
+<p class="text-sm font-bold mb-0.5">Policy Updated</p>
+<p class="text-xs text-slate-500">by <span class="font-medium text-slate-900 dark:text-slate-200">System Admin</span></p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase font-bold">Yesterday, 4:12 PM</p>
+</div>
+<!-- Audit Item -->
+<div class="relative pl-8">
+<div class="absolute left-1 top-1 size-4 rounded-full bg-slate-200 dark:bg-slate-700 ring-4 ring-white dark:ring-slate-900 z-10 flex items-center justify-center">
+<span class="size-1.5 rounded-full bg-slate-500"></span>
+</div>
+<p class="text-sm font-bold mb-0.5">Secret Created</p>
+<p class="text-xs text-slate-500">by <span class="font-medium text-slate-900 dark:text-slate-200">Deployment Bot</span></p>
+<p class="text-[10px] text-slate-400 mt-1 uppercase font-bold">Jan 12, 2024</p>
+</div>
+</div>
+<div class="mt-8">
+<button class="w-full py-2.5 text-xs font-bold text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg border border-slate-200 dark:border-slate-800">
+                            View Full Audit Log
+                        </button>
+</div>
+<div class="mt-12 p-4 bg-primary/5 rounded-xl border border-primary/10">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-primary text-base">shield</span>
+<span class="text-xs font-bold text-primary uppercase">Security Score</span>
+</div>
+<div class="flex items-end gap-2 mb-3">
+<span class="text-3xl font-black text-slate-900 dark:text-white leading-none">84</span>
+<span class="text-slate-500 text-sm font-medium mb-1">/ 100</span>
+</div>
+<div class="w-full bg-slate-200 dark:bg-slate-700 h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[84%]"></div>
+</div>
+</div>
+</div>
+</aside>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,95 @@
+{
+  "items": [
+    {
+      "id": "rwsi-domain-001",
+      "org_id": "*",
+      "category": "domain",
+      "title": "Primary Root Domain",
+      "value": "freedomlabs.in",
+      "environment": "production",
+      "owner_team": "platform",
+      "notes": "Root domain used for RM Orbit production routing.",
+      "tags": ["dns", "root", "production"],
+      "source": "cloudflare",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "id": "rwsi-domain-002",
+      "org_id": "*",
+      "category": "domain",
+      "title": "Wallet App Domain",
+      "value": "wallet.freedomlabs.in -> port 45019",
+      "environment": "production",
+      "owner_team": "platform",
+      "notes": "Frontend endpoint for RM Wallet users.",
+      "tags": ["wallet", "routing"],
+      "source": "cloudflare",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "id": "rwsi-domain-003",
+      "org_id": "*",
+      "category": "domain",
+      "title": "Wallet API Internal Port",
+      "value": "localhost:6110",
+      "environment": "local",
+      "owner_team": "platform",
+      "notes": "Wallet backend API service port for local and internal service calls.",
+      "tags": ["wallet", "api", "port"],
+      "source": "runtime",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "id": "rwsi-cf-001",
+      "org_id": "*",
+      "category": "cloudflare",
+      "title": "Cloudflare Zone",
+      "value": "freedomlabs.in",
+      "environment": "production",
+      "owner_team": "platform",
+      "notes": "Primary DNS zone used by RM Orbit.",
+      "tags": ["cloudflare", "zone"],
+      "source": "cloudflare",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "id": "rwsi-cf-002",
+      "org_id": "*",
+      "category": "cloudflare",
+      "title": "WAF Profile",
+      "value": "RM Orbit Standard WAF Policy",
+      "environment": "production",
+      "owner_team": "security",
+      "notes": "Baseline WAF profile for public app subdomains.",
+      "tags": ["cloudflare", "waf", "security"],
+      "source": "cloudflare",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "id": "rwsi-misc-001",
+      "org_id": "*",
+      "category": "misc",
+      "title": "Status Dashboard",
+      "value": "status.freedomlabs.in",
+      "environment": "production",
+      "owner_team": "sre",
+      "notes": "External status page for customer-facing uptime communication.",
+      "tags": ["status", "sre"],
+      "source": "ops",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    },
+    {
+      "id": "rwsi-misc-002",
+      "org_id": "*",
+      "category": "misc",
+      "title": "Incident Escalation Contact",
+      "value": "oncall@freedomlabs.in",
+      "environment": "production",
+      "owner_team": "sre",
+      "notes": "Primary escalation mailbox for critical incidents.",
+      "tags": ["incident", "oncall", "contact"],
+      "source": "ops",
+      "updated_at": "2026-03-10T00:00:00+00:00"
+    }
+  ]
+}

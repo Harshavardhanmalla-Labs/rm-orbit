@@ -1,0 +1,195 @@
+name: Tenant Context Contract
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  atlas:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Atlas/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tenant-context + event contract tests
+        run: python -m unittest discover -s tests -p "test_*.py"
+
+  control-center:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "Control Center/server"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: "Control Center/server/package-lock.json"
+      - name: Install dependencies
+        run: npm install
+      - name: Run tenant-context tests
+        run: npm run test:tenant
+
+  calendar:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Calendar/server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Calendar/server/package-lock.json
+      - name: Install dependencies
+        run: npm install
+      - name: Run tenant-context + event contract tests
+        run: npm run test:tenant
+
+  planet:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Planet/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tenant-context + event contract tests
+        run: python -m unittest discover -s tests -p "test_*.py"
+
+  mail:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Mail/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Run tenant-context + event contract tests
+        run: |
+          PYTHONPATH=. pytest -q \
+            tests/test_eventbus_contract.py \
+            tests/test_deps_auth_context.py \
+            tests/test_admin_service.py
+
+  connect:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Connect/server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Connect/server/package-lock.json
+      - name: Install dependencies
+        run: npm install
+      - name: Run tenant-context + event contract tests
+        run: npm run test:tenant
+
+  meet:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Meet/server
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Meet/server/package-lock.json
+      - name: Install dependencies
+        run: npm install
+      - name: Run tenant-context + event contract tests
+        run: npm run test:tenant
+
+  snitch:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: Snitch/backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Snitch/backend/package-lock.json
+      - name: Install dependencies
+        run: npm install
+      - name: Run tenant-context + envelope + Capital Hub tests
+        run: npm test
+
+  contract-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Install Python dependencies for contract checks
+        run: |
+          pip install -r Atlas/backend/requirements.txt
+          pip install -r Planet/backend/requirements.txt
+          pip install -r Mail/backend/requirements.txt
+      - name: Run unified envelope contract gate
+        run: ./contract-gate.sh
+
+  runtime-matrix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate runtime matrix consistency
+        run: ./runtime-matrix-gate.sh
+
+  integration-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: Meet/server/package-lock.json
+      - name: Install smoke dependencies
+        run: |
+          pip install -r Writer/backend/requirements.txt
+          pip install -r Search/backend/requirements.txt
+          npm --prefix Meet/server install
+      - name: Run integration smoke gate
+        run: ./smoke-gate.sh

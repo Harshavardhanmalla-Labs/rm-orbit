@@ -1,0 +1,128 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-body: #0a0a0a;
+  --bg-surface: #161616;
+  --bg-toolbar: #1e1e1e;
+  --bg-tile: #1a1a1a;
+  --accent: #6366f1;
+  --accent-hover: #4f46e5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-body);
+  color: #f4f4f5;
+  font-family:
+    'Inter',
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Video tile — hide browser default controls */
+video {
+  display: block;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #3f3f46;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Focus ring */
+*:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Smooth transitions */
+button {
+  transition: background-color 0.15s ease, opacity 0.15s ease, transform 0.1s ease;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* Video grid layout */
+.video-grid {
+  display: grid;
+  gap: 8px;
+  width: 100%;
+  height: 100%;
+}
+
+.video-grid[data-count='1'] {
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.video-grid[data-count='2'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+}
+
+.video-grid[data-count='3'],
+.video-grid[data-count='4'] {
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+}
+
+.video-grid[data-count='5'],
+.video-grid[data-count='6'] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+.video-grid[data-count='7'],
+.video-grid[data-count='8'],
+.video-grid[data-count='9'] {
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}
+
+@media (max-width: 640px) {
+  .video-grid[data-count='2'],
+  .video-grid[data-count='3'],
+  .video-grid[data-count='4'] {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .video-grid[data-count='5'],
+  .video-grid[data-count='6'],
+  .video-grid[data-count='7'],
+  .video-grid[data-count='8'],
+  .video-grid[data-count='9'] {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(auto-fill, minmax(160px, 1fr));
+  }
+}

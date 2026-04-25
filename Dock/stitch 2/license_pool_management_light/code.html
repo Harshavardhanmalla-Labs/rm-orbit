@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1349ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101522",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<title>RM Dock - License Pool Management</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100">
+<div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark px-6 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-8 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl">token</span>
+</div>
+<h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">RM Dock</h2>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<label class="flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="text-slate-500 flex bg-slate-50 dark:bg-slate-800 items-center justify-center pl-3">
+<span class="material-symbols-outlined text-xl">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-50 dark:bg-slate-800 focus:outline-0 focus:ring-0 text-slate-900 dark:text-slate-100 h-full placeholder:text-slate-500 text-sm font-normal" placeholder="Quick Search..." value=""/>
+</div>
+</label>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+<div class="bg-primary/20 rounded-full size-10 flex items-center justify-center overflow-hidden border border-primary/30">
+<img alt="User Avatar" class="size-full object-cover" data-alt="User profile avatar placeholder" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3YXMFha5mBq_osXwUkzPOpao8PuhAq4LNQQTrRyO5zkcAlkijpIDZXJ-NdFeeSGvFtpgHy4uMMCD6uxw0tSkBbDVoRge6YU2p9cJEvpT85XVAIjO2oh0AQnMxvLCn2H1og3unCUPfJMp9z4TFMQErQK_kA6Xpiw9y7tN6pQgW2aUzTuDjUux93niBVTqv2FfwigMCUj-td95J-GrQQQ-GsiLgH6H6eTw5rHbFcUPFFphVABpcQVCvCKK-GqW8ZE8KpeCbLpzVVUWw"/>
+</div>
+</div>
+</header>
+<div class="flex grow">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark flex flex-col p-4 gap-6 sticky top-16 h-[calc(100vh-64px)] overflow-y-auto">
+<div class="flex flex-col">
+<p class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-4 px-3">Main Menu</p>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">inventory_2</span>
+<span class="text-sm font-medium">Assets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary border-r-4 border-primary" href="#">
+<span class="material-symbols-outlined text-xl">vpn_key</span>
+<span class="text-sm font-semibold">License Pool</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">desktop_windows</span>
+<span class="text-sm font-medium">Software</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-xl">store</span>
+<span class="text-sm font-medium">Vendors</span>
+</a>
+</nav>
+</div>
+<div class="mt-auto">
+<div class="p-4 bg-primary/5 rounded-xl border border-primary/20">
+<p class="text-primary text-xs font-bold mb-1">System Status</p>
+<p class="text-slate-600 dark:text-slate-400 text-[11px] mb-3">Organization-wide license health is optimal.</p>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[85%]"></div>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 p-8 bg-background-light dark:bg-background-dark max-w-7xl mx-auto w-full">
+<div class="flex flex-col gap-8">
+<!-- Page Header -->
+<div class="flex flex-wrap justify-between items-end gap-4">
+<div class="flex flex-col gap-1">
+<h1 class="text-slate-900 dark:text-slate-100 text-3xl font-black tracking-tight">License Pool</h1>
+<p class="text-slate-500 dark:text-slate-400 text-base">Manage and allocate software licenses across your organization.</p>
+</div>
+<div class="flex gap-3">
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-sm font-bold hover:bg-slate-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg">upload</span>
+                            Import
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-300 text-sm font-bold hover:bg-slate-50 transition-colors shadow-sm">
+<span class="material-symbols-outlined text-lg">sync_alt</span>
+                            Allocate
+                        </button>
+<button class="flex items-center gap-2 px-4 py-2 bg-primary text-white rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+<span class="material-symbols-outlined text-lg">history</span>
+                            Track Renewals
+                        </button>
+</div>
+</div>
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-blue-50 dark:bg-blue-900/20 text-blue-600 rounded-lg">
+<span class="material-symbols-outlined">apps</span>
+</div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Software</span>
+</div>
+<p class="text-2xl font-bold text-slate-900 dark:text-slate-100">42 Products</p>
+<p class="text-sm text-slate-500 mt-1">Across 12 vendors</p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-green-50 dark:bg-green-900/20 text-green-600 rounded-lg">
+<span class="material-symbols-outlined">assignment_turned_in</span>
+</div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Usage</span>
+</div>
+<p class="text-2xl font-bold text-slate-900 dark:text-slate-100">1,284 Licenses</p>
+<p class="text-sm text-green-600 mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">trending_up</span> 
+                            82% Allocation Rate
+                        </p>
+</div>
+<div class="bg-white dark:bg-slate-800 p-6 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex justify-between items-start mb-4">
+<div class="p-2 bg-amber-50 dark:bg-amber-900/20 text-amber-600 rounded-lg">
+<span class="material-symbols-outlined">warning</span>
+</div>
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Expiring Soon</span>
+</div>
+<p class="text-2xl font-bold text-slate-900 dark:text-slate-100">8 Renewals</p>
+<p class="text-sm text-amber-600 mt-1">Within next 30 days</p>
+</div>
+</div>
+<!-- Search & Filters -->
+<div class="flex flex-col md:flex-row gap-4 bg-white dark:bg-slate-800 p-4 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+<div class="flex-1 relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary/20 focus:border-primary text-sm outline-none transition-all" placeholder="Filter by software, category or ID..." type="text"/>
+</div>
+<div class="flex gap-3">
+<select class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-primary/20">
+<option>All Vendors</option>
+<option>Adobe</option>
+<option>Microsoft</option>
+<option>Atlassian</option>
+</select>
+<select class="bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-lg px-4 py-2 text-sm text-slate-700 dark:text-slate-300 outline-none focus:ring-2 focus:ring-primary/20">
+<option>All Categories</option>
+<option>Creative</option>
+<option>Productivity</option>
+<option>Infrastructure</option>
+</select>
+<button class="p-2 text-slate-500 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">filter_list</span>
+</button>
+</div>
+</div>
+<!-- Table View -->
+<div class="bg-white dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="border-b border-slate-200 dark:border-slate-700 bg-slate-50/50 dark:bg-slate-900/50">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Software</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Total</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Assigned</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-center">Available</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Vendor</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Expiration Date</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">Actions</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-700">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-slate-100 dark:bg-slate-700 rounded text-primary">
+<span class="material-symbols-outlined">palette</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Adobe Creative Cloud</p>
+<p class="text-[11px] text-slate-500">Design Suite v2024</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-sm font-medium">500</td>
+<td class="px-6 py-4 text-center text-sm font-medium">492</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 text-[11px] font-bold border border-red-100 dark:border-red-900/30">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                            8 (Low Stock)
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-slate-600 dark:text-slate-400">Adobe Inc.</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                        Dec 12, 2024
+                                    </td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-slate-100 dark:bg-slate-700 rounded text-blue-500">
+<span class="material-symbols-outlined">cloud</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Microsoft 365 Enterprise</p>
+<p class="text-[11px] text-slate-500">E5 License Plan</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-sm font-medium">1,200</td>
+<td class="px-6 py-4 text-center text-sm font-medium">1,050</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-50 dark:bg-green-900/20 text-green-600 text-[11px] font-bold border border-green-100 dark:border-green-900/30">
+<span class="size-1.5 rounded-full bg-green-600"></span>
+                                            150
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-slate-600 dark:text-slate-400">Microsoft Corp</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                        Aug 24, 2025
+                                    </td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-slate-100 dark:bg-slate-700 rounded text-slate-800 dark:text-slate-100">
+<span class="material-symbols-outlined">terminal</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">Jira Software</p>
+<p class="text-[11px] text-slate-500">Premium Subscription</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-sm font-medium">250</td>
+<td class="px-6 py-4 text-center text-sm font-medium">210</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-50 dark:bg-amber-900/20 text-amber-600 text-[11px] font-bold border border-amber-100 dark:border-amber-900/30">
+<span class="size-1.5 rounded-full bg-amber-600"></span>
+                                            40
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-slate-600 dark:text-slate-400">Atlassian</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                        Oct 15, 2024
+                                    </td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="p-2 bg-slate-100 dark:bg-slate-700 rounded text-cyan-600">
+<span class="material-symbols-outlined">shield</span>
+</div>
+<div>
+<p class="text-sm font-semibold text-slate-900 dark:text-slate-100">CrowdStrike Falcon</p>
+<p class="text-[11px] text-slate-500">Endpoint Protection</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-center text-sm font-medium">2,500</td>
+<td class="px-6 py-4 text-center text-sm font-medium">2,488</td>
+<td class="px-6 py-4 text-center">
+<div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-red-50 dark:bg-red-900/20 text-red-600 text-[11px] font-bold border border-red-100 dark:border-red-900/30">
+<span class="size-1.5 rounded-full bg-red-600"></span>
+                                            12 (Low Stock)
+                                        </div>
+</td>
+<td class="px-6 py-4">
+<span class="text-sm text-slate-600 dark:text-slate-400">CrowdStrike</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">
+                                        Jan 30, 2025
+                                    </td>
+<td class="px-6 py-4 text-right">
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 border-t border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 flex justify-between items-center">
+<p class="text-sm text-slate-500">Showing 4 of 42 licenses</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs font-semibold hover:bg-white dark:hover:bg-slate-800 transition-colors">Previous</button>
+<button class="px-3 py-1 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded text-xs font-semibold shadow-sm">1</button>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs font-semibold hover:bg-white dark:hover:bg-slate-800 transition-colors">2</button>
+<button class="px-3 py-1 border border-slate-200 dark:border-slate-700 rounded text-xs font-semibold hover:bg-white dark:hover:bg-slate-800 transition-colors">Next</button>
+</div>
+</div>
+</div>
+<!-- Footer Summary -->
+<div class="flex flex-col md:flex-row gap-6">
+<div class="flex-1 bg-slate-900 text-white p-6 rounded-xl relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-lg font-bold mb-2">Need more seats?</h3>
+<p class="text-slate-300 text-sm mb-4 max-w-md">Your allocation for Adobe and CrowdStrike is near capacity. Consider upgrading your pool to prevent service interruption for new hires.</p>
+<button class="px-4 py-2 bg-primary text-white text-sm font-bold rounded-lg hover:bg-primary/90 transition-all">Request Expansion</button>
+</div>
+<span class="material-symbols-outlined absolute -right-4 -bottom-4 text-9xl text-white/5 pointer-events-none">auto_awesome</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

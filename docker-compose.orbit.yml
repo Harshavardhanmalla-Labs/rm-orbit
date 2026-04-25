@@ -1,0 +1,449 @@
+version: '3.8'
+
+services:
+  # ========================================
+  # CORE INFRASTRUCTURE
+  # ========================================
+  
+  orbit-postgres:
+    image: postgres:16
+    container_name: orbit-postgres
+    restart: always
+    environment:
+      POSTGRES_DB: orbit_master
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres_secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - orbit_pg_data:/var/lib/postgresql/data
+      - ./init-db.sh:/docker-entrypoint-initdb.d/init-db.sh:ro
+    networks:
+      - orbit_network
+
+  orbit-redis:
+    image: redis:7-alpine
+    container_name: orbit-redis
+    restart: always
+    command: redis-server --save 60 1 --loglevel warning
+    ports:
+      - "6379:6379"
+    volumes:
+      - orbit_redis_data:/data
+    networks:
+      - orbit_network
+
+  orbit-minio:
+    image: minio/minio:latest
+    container_name: orbit-minio
+    restart: always
+    environment:
+      MINIO_ROOT_USER: orbit_admin
+      MINIO_ROOT_PASSWORD: orbit_storage_secret
+    command: server /data --console-address ":9001"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - orbit_minio_data:/data
+    networks:
+      - orbit_network
+
+  # ========================================
+  # GATEWAY (Traefik)
+  # ========================================
+  
+  orbit-gateway:
+    image: traefik:v3.1
+    container_name: orbit-gateway
+    restart: always
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080" # Traefik dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - orbit_network
+
+  # ========================================
+  # APPLICATION BACKENDS
+  # ========================================
+
+  gate-backend:
+    build: ./Gate/authx
+    container_name: gate-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres_secret@orbit-postgres:5432/orbit_gate
+      REDIS_URL: redis://orbit-redis:6379/0
+      JWT_SECRET_KEY: rm_orbit_master_security_key_2024
+    ports:
+      - "45001:8000"
+    networks:
+      - orbit_network
+    depends_on:
+      - orbit-postgres
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.gate.rule=Host(`auth.freedomlabs.in`)"
+      - "traefik.http.services.gate.loadbalancer.server.port=8000"
+
+  wallet-backend:
+    build:
+      context: ./Wallet
+      dockerfile: Dockerfile
+    container_name: wallet-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres_secret@orbit-postgres:5432/orbit_wallet
+      REDIS_URL: redis://orbit-redis:6379/0
+      WALLET_MASTER_KEY: orbit_wallet_encryption_secret_v1
+      WALLET_AUTH_MODE: gate
+      WALLET_GATE_JWKS_URL: http://gate-backend:8000/api/v1/oidc/jwks
+    ports:
+      - "45019:6110"
+    networks:
+      - orbit_network
+    depends_on:
+      - orbit-postgres
+      - gate-backend
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request,sys;sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:6110/health', timeout=3).getcode()==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.wallet.rule=Host(`wallet.freedomlabs.in`)"
+      - "traefik.http.services.wallet.loadbalancer.server.port=6110"
+
+  writer-backend:
+    build:
+      context: ./Writer
+      dockerfile: Dockerfile
+    container_name: writer-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_writer
+    ports:
+      - "45010:6011"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.writer.rule=Host(`writer.freedomlabs.in`)"
+      - "traefik.http.services.writer.loadbalancer.server.port=6011"
+
+  turbotick-backend:
+    build:
+      context: ./TurboTick
+      dockerfile: Dockerfile
+    container_name: turbotick-backend
+    restart: always
+      - "traefik.http.services.turbotick.loadbalancer.server.port=6100"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_turbotick
+      TURBOTICK_EVENT_SINK_URL: http://snitch-eventbus:6005/sink
+      TURBOTICK_EVENT_SINK_TOKEN: snitch-internal-secret
+      TURBOTICK_GATE_USERINFO_URL: http://gate-backend:8000/api/v1/auth/userinfo
+
+  secure-backend:
+    build:
+      context: ./Secure
+      dockerfile: Dockerfile
+    container_name: secure-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+asyncpg://postgres:postgres_secret@orbit-postgres:5432/orbit_secure
+      SNITCH_EVENT_SINK_URL: http://snitch-eventbus:6005/sink
+      SNITCH_INTERNAL_TOKEN: snitch-internal-secret
+      ATLAS_API_BASE_URL: http://atlas-backend:8000
+      ATLAS_INTERNAL_TOKEN: atlas-internal-secret
+      CAPITALHUB_API_BASE_URL: http://capitalhub-backend:6130
+      CAPITALHUB_INTERNAL_TOKEN: capitalhub-internal-secret
+    ports:
+      - "45012:6004"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.secure.rule=Host(`secure.freedomlabs.in`)"
+      - "traefik.http.services.secure.loadbalancer.server.port=6004"
+
+  dock-backend:
+    build:
+      context: ./Dock
+      dockerfile: Dockerfile
+    container_name: dock-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_dock
+    ports:
+      - "45020:6120"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.dock.rule=Host(`dock.freedomlabs.in`)"
+      - "traefik.http.services.dock.loadbalancer.server.port=6120"
+
+  mail-backend:
+    build:
+      context: ./Mail
+      dockerfile: backend/Dockerfile
+    container_name: mail-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_mail
+      REDIS_URL: redis://orbit-redis:6379/1
+    ports:
+      - "45004:8000"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mail.rule=Host(`mail.freedomlabs.in`)"
+      - "traefik.http.services.mail.loadbalancer.server.port=8000"
+
+  meet-backend:
+    build:
+      context: ./Meet
+      dockerfile: Dockerfile
+    container_name: meet-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_meet
+      REDIS_URL: redis://orbit-redis:6379/2
+    ports:
+      - "45003:6001"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.meet.rule=Host(`meet.freedomlabs.in`)"
+      - "traefik.http.services.meet.loadbalancer.server.port=6001"
+
+  planet-backend:
+    build:
+      context: ./Planet
+      dockerfile: Dockerfile
+    container_name: planet-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_planet
+    ports:
+      - "45006:46000"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.planet.rule=Host(`planet.freedomlabs.in`)"
+      - "traefik.http.services.planet.loadbalancer.server.port=46000"
+
+  fitterme-backend:
+    build:
+      context: ./FitterMe
+      dockerfile: Dockerfile
+    container_name: fitterme-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_fitterme
+    ports:
+      - "45016:6002"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fitterme.rule=Host(`fitter.freedomlabs.in`)"
+      - "traefik.http.services.fitterme.loadbalancer.server.port=6002"
+
+  controlcenter-backend:
+    build:
+      context: ./Control Center
+      dockerfile: Dockerfile
+    container_name: controlcenter-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_controlcenter
+    ports:
+      - "45011:8077"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.controlcenter.rule=Host(`admin.freedomlabs.in`)"
+      - "traefik.http.services.controlcenter.loadbalancer.server.port=8077"
+
+  connect-backend:
+    build:
+      context: ./Connect
+      dockerfile: Dockerfile
+    container_name: connect-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_connect
+      REDIS_URL: redis://orbit-redis:6379/3
+    ports:
+      - "45008:5000"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.connect.rule=Host(`connect.freedomlabs.in`)"
+      - "traefik.http.services.connect.loadbalancer.server.port=5000"
+
+  capitalhub-backend:
+    build:
+      context: ./Capital Hub
+      dockerfile: Dockerfile
+    container_name: capitalhub-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql+psycopg://postgres:postgres_secret@orbit-postgres:5432/orbit_capitalhub
+      CAPITALHUB_AUTH_MODE: gate
+      CAPITALHUB_GATE_JWKS_URL: http://gate-backend:8000/api/v1/oidc/jwks
+      CAPITALHUB_ENFORCE_FINANCE_ROLES: "true"
+      CAPITALHUB_EVENT_SINK_URL: http://snitch-eventbus:6005/sink
+      CAPITALHUB_EVENT_SINK_TOKEN: snitch-internal-secret
+      CAPITALHUB_INTERNAL_TOKEN: capitalhub-internal-secret
+    ports:
+      - "45013:6130"
+    networks:
+      - orbit_network
+    depends_on:
+      - orbit-postgres
+      - gate-backend
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request,sys;sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:6130/health', timeout=3).getcode()==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.capitalhub.rule=Host(`capital.freedomlabs.in`)"
+      - "traefik.http.services.capitalhub.loadbalancer.server.port=6130"
+
+  calendar-backend:
+    build:
+      context: ./Calendar
+      dockerfile: Dockerfile
+    container_name: calendar-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_calendar
+    ports:
+      - "45005:5001"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.calendar.rule=Host(`calendar.freedomlabs.in`)"
+      - "traefik.http.services.calendar.loadbalancer.server.port=5001"
+
+  atlas-backend:
+    build:
+      context: ./Atlas
+      dockerfile: Dockerfile
+    container_name: atlas-backend
+    restart: always
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres_secret@orbit-postgres:5432/orbit_atlas
+      AWS_ACCESS_KEY_ID: orbit_admin
+      AWS_SECRET_ACCESS_KEY: orbit_storage_secret
+      S3_ENDPOINT: http://orbit-minio:9000
+      S3_BUCKET: atlas-documents
+      ATLAS_INTERNAL_TOKEN: atlas-internal-secret
+      CAPITALHUB_API_BASE_URL: http://capitalhub-backend:6130
+      CAPITALHUB_INTERNAL_TOKEN: capitalhub-internal-secret
+    ports:
+      - "5173:8000"
+    networks:
+      - orbit_network
+    depends_on:
+      - orbit-minio
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.atlas.rule=Host(`atlas.freedomlabs.in`)"
+      - "traefik.http.services.atlas.loadbalancer.server.port=8000"
+
+  orbit-search:
+    build:
+      context: .
+      dockerfile: Search/Dockerfile
+    container_name: orbit-search
+    restart: always
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.search.rule=Host(`search.freedomlabs.in`)"
+      - "traefik.http.services.search.loadbalancer.server.port=6200"
+
+  orbit-learn:
+    build:
+      context: ./Learn
+      dockerfile: Dockerfile
+    container_name: orbit-learn
+    restart: always
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.learn.rule=Host(`learn.freedomlabs.in`)"
+      - "traefik.http.services.learn.loadbalancer.server.port=80"
+
+  orbit-fonts:
+    image: nginx:alpine
+    container_name: orbit-fonts
+    restart: always
+    volumes:
+      - "./Fonts/RM Fonts:/usr/share/nginx/html:ro"
+    networks:
+      - orbit_network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.fonts.rule=Host(`fonts.freedomlabs.in`)"
+      - "traefik.http.services.fonts.loadbalancer.server.port=80"
+
+  snitch-eventbus:
+    build:
+      context: ./Snitch
+      dockerfile: backend/Dockerfile
+    container_name: snitch-eventbus
+    restart: always
+    command: npm run eventbus
+    environment:
+      REDIS_URL: redis://orbit-redis:6379/7
+      SNITCH_INTERNAL_TOKEN: snitch-internal-secret
+      ATLAS_INTERNAL_TOKEN: atlas-internal-secret
+      ATLAS_API_BASE_URL: http://atlas-backend:8000
+      SNITCH_RELAY_CONNECT_URL: http://connect-backend:5000/internal/notifications
+      SNITCH_RELAY_MAIL_URL: http://mail-backend:8000/internal/relay
+      SNITCH_RELAY_INTERNAL_TOKEN: snitch-internal-secret
+    ports:
+      - "6005:6005"
+    networks:
+      - orbit_network
+    depends_on:
+      - orbit-redis
+      - atlas-backend
+      - connect-backend
+
+networks:
+  orbit_network:
+    name: orbit_network
+    driver: bridge
+
+volumes:
+  orbit_pg_data:
+  orbit_redis_data:
+  orbit_minio_data:

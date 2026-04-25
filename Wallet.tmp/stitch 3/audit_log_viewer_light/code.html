@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Audit Logs - RM Wallet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-background-dark shrink-0">
+<div class="p-6 flex items-center gap-3">
+<div class="size-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-sm font-bold leading-tight">RM Wallet</h1>
+<p class="text-xs text-slate-500 font-medium">RM Orbit Enterprise</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">lock</span>
+<span class="text-sm font-medium">Vaults</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">key</span>
+<span class="text-sm font-medium">Secrets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span class="text-sm font-medium">Shared Secrets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">verified_user</span>
+<span class="text-sm font-medium">Access Policies</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary/10 text-primary rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">history</span>
+<span class="text-sm font-bold">Audit Logs</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">token</span>
+<span class="text-sm font-medium">Automation Tokens</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">extension</span>
+<span class="text-sm font-medium">Integrations</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors group" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer">
+<img alt="Admin Avatar" class="size-8 rounded-full bg-slate-200" data-alt="User avatar for Felix" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCL2sfhdlvO1HDUPcm4nmW9Ld8mXvXUdAFYP_fZsVEtE9q6lG08A1SBK-NhED8o9ubMCnmRhprj07X6wWKJ5uiD9XBD5uhm8mNlP_Vi98VMe4zcrPWIRhAe5vYm-Q1khgsIWn1F7B7vi6WS5kLn9gX8FW-jdnAhnpXQjOhA6Nx7--KFh-O9X5BK3dv0Qg4o8HZO3Htk0-8A_6TWmaG6UxGL0n3aRxFg1CAFcKGjxshzQ0zaiztWChxI3oRaACLllqCT8y1XPupb3C6p"/>
+<div class="flex-1 min-w-0">
+<p class="text-xs font-bold truncate">Felix Admin</p>
+<p class="text-[10px] text-slate-500 truncate">felix@rm-orbit.com</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-8 bg-white dark:bg-background-dark border-b border-slate-200 dark:border-slate-800 shrink-0">
+<div class="flex items-center gap-2 text-sm">
+<span class="text-slate-500">RM Wallet</span>
+<span class="material-symbols-outlined text-slate-400 text-sm">chevron_right</span>
+<span class="font-bold">Audit Logs</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg">notifications</button>
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg text-sm font-bold shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+<span class="material-symbols-outlined text-[18px]">download</span>
+                        Export Logs
+                    </button>
+</div>
+</header>
+<div class="flex-1 overflow-y-auto p-8 bg-slate-50 dark:bg-background-dark/50">
+<div class="max-w-7xl mx-auto space-y-6">
+<div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white">Audit Logs</h2>
+<p class="text-slate-500 text-sm">Monitor all access and activity across your enterprise vault environment.</p>
+</div>
+<!-- Filters Card -->
+<div class="bg-white dark:bg-background-dark p-6 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+<div class="col-span-1 md:col-span-1">
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Search</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm" placeholder="User, secret or IP..." type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Action Type</label>
+<select class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+<option>All Actions</option>
+<option>Secret Revealed</option>
+<option>Password Rotated</option>
+<option>Policy Created</option>
+<option>Login Successful</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Vault</label>
+<select class="w-full px-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm">
+<option>All Vaults</option>
+<option>Infrastructure-PROD</option>
+<option>Marketing-Assets</option>
+<option>Engineering-Alpha</option>
+</select>
+</div>
+<div>
+<label class="block text-xs font-bold text-slate-500 uppercase mb-2">Date Range</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">calendar_today</span>
+<input class="w-full pl-10 pr-4 py-2 bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent text-sm" type="text" value="Oct 24 - Oct 31, 2023"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Table Card -->
+<div class="bg-white dark:bg-background-dark rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-slate-50 dark:bg-slate-900/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">User</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Action</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Secret / Resource</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Vault</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Timestamp</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">IP Address</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="size-8 rounded-full" data-alt="User avatar for Alex" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDNBaUg9Cmkv1lovq7ACraBhZTwYwVd3bsTFhF8I7MYM8HGxHj4_N9ya9zBqB6DGdJMC-Z7rq0bD4_BDlMIKP4Sv8wNUre2zu8mLzGEpqqeNZkZoKE4jvAp6ZxhaSXDY3HiZonnBbH0fanrJN0WB6pRoa7yZlDbTIAxCRgvZGRJnj58tCe0PdIcPZHNVW_4aK8hrUf4digLU46oIp_o1iMb-3uuTTZw6_WZTbiP63FEbW6HupmOfzz8xJsFXYxc-_giujnGF16MHquR"/>
+<span class="text-sm font-semibold">Alex Rivera</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-amber-50 text-amber-700 border border-amber-200">
+<span class="size-1.5 rounded-full bg-amber-600"></span>
+                                                Secret Revealed
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium">aws-prod-iam-key</span>
+<span class="text-[10px] text-slate-400 font-mono">ID: sec_8921vbn</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Infrastructure-PROD</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Oct 31, 2023 14:22:05</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-500">192.168.1.12</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="size-8 rounded-full" data-alt="User avatar for Sarah" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCBwRmtfEtNswVvdbVzwCa5fXRcKuJDJy_E-5jSunhF_k-4q4L5XwekelVTzx06WBoeuQN9-7tDM41trzUD_90DlrcQ6j7h7MBNX1dQsxt0fZ3Hc3ShPGi46fq_BwQ9wOEFTVxxUQVltzsDIb8mJenBzRY6V2NitlNkBCVWMPZEv7yvOiBgxlXn0PpY0pi87jnPMKZKatizj-GsjpZ24GXjy1rMGRI1lniCffr5GfjdyfEwfQnYMEl_CdPzzuC0_mygHYuSZZ9tYU8C"/>
+<span class="text-sm font-semibold">Sarah Connor</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="size-1.5 rounded-full bg-emerald-600"></span>
+                                                Password Rotated
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium">db-admin-password</span>
+<span class="text-[10px] text-slate-400 font-mono">ID: sec_1120pqr</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Engineering-Alpha</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Oct 31, 2023 12:45:11</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-500">45.23.112.90</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="size-8 rounded-full" data-alt="User avatar for Marcus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDDPc1zSpB0bZkCsGxEIb0chg5erxgUPaS7QxRsXAWyGBisaqzI-IxxTUg_zS2vKCpekbnkV1Frw8aG_mMsJ1SC7SR-sgDk7s6P5h4TDQJk5_pdSF2gCLNNarTl6bablMOigYwmlTRprYrLutmmztkslZV9Qcx-Bj1JIK-6tRnR-yJf5omaBQPTfivNlG7O2seJoC93A-b0J_D4q3ZtLoU5YQpiVaAM_8dfeXam8ASdl-21iQs9f_Bw2R_kGhUOPO63VOW7l-zyOHUV"/>
+<span class="text-sm font-semibold">Marcus Wright</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-blue-50 text-blue-700 border border-blue-200">
+<span class="size-1.5 rounded-full bg-blue-600"></span>
+                                                Policy Created
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium">read-only-marketing</span>
+<span class="text-[10px] text-slate-400 font-mono">ID: pol_9918aaa</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Marketing-Assets</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Oct 31, 2023 09:15:44</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-500">10.0.4.55</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-full bg-slate-200 flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-500 text-sm">robot_2</span>
+</div>
+<span class="text-sm font-semibold">CI-CD Pipeline #4</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700 border border-slate-200">
+<span class="size-1.5 rounded-full bg-slate-500"></span>
+                                                Token Authenticated
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium">deploy-token-v2</span>
+<span class="text-[10px] text-slate-400 font-mono">ID: tok_0012xyz</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">System</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Oct 31, 2023 08:30:00</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-500">127.0.0.1</td>
+</tr>
+<tr class="hover:bg-slate-50 dark:hover:bg-slate-900/30 transition-colors">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Avatar" class="size-8 rounded-full" data-alt="User avatar for Kyle" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAcFtI-LeokHd9N9XKxV4l9C4Km_A7P_WQcD-kL-ytQfu_cu9Rmf5GT9ELYIRLWvQRM2qUauqkvU8jrtbApjZ7lP9Y7MTIsXN9fd1m38C906fECOjUVwJxz1dlWosAtJ3MndcExU-1Oc9j5HaChNrwhELzobXrQrlpomv5Yvj1tlFIrj-GSxaXJgzm6vcQ1VyX7I_8mlgQNiPpYNl0VFJKtmsk_JniOVdYNjnhrqZwvjey4jdG1UzYL7QCRoG7LgneMHVFMrcO_I6Q2"/>
+<span class="text-sm font-semibold">Kyle Reese</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center gap-1.5 py-1 px-2.5 rounded-full text-xs font-bold bg-rose-50 text-rose-700 border border-rose-200">
+<span class="size-1.5 rounded-full bg-rose-600"></span>
+                                                Vault Deleted
+                                            </span>
+</td>
+<td class="px-6 py-4">
+<div class="flex flex-col">
+<span class="text-sm font-medium">temp-staging-vault</span>
+<span class="text-[10px] text-slate-400 font-mono">ID: vlt_5544err</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Staging</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Oct 30, 2023 23:59:12</td>
+<td class="px-6 py-4 text-sm font-mono text-slate-500">88.122.9.4</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-slate-50 dark:bg-slate-900/50 border-t border-slate-200 dark:border-slate-800 flex items-center justify-between">
+<span class="text-xs font-medium text-slate-500">Showing 1 to 10 of 2,451 results</span>
+<div class="flex items-center gap-2">
+<button class="p-1 hover:bg-slate-200 dark:hover:bg-slate-800 rounded">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<div class="flex items-center gap-1">
+<button class="size-8 rounded bg-primary text-white text-xs font-bold">1</button>
+<button class="size-8 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-xs font-bold">2</button>
+<button class="size-8 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-xs font-bold">3</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="size-8 rounded hover:bg-slate-200 dark:hover:bg-slate-800 text-xs font-bold">245</button>
+</div>
+<button class="p-1 hover:bg-slate-200 dark:hover:bg-slate-800 rounded">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orbit Search</title>
+    <script>
+      try {
+        const t = localStorage.getItem('orbit-theme');
+        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches))
+          document.documentElement.classList.add('dark');
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/orbit-ui/orbit-tokens.css" />
+    <link rel="stylesheet" href="/orbit-ui/orbit-ui.css" />
+    <script type="module" src="/orbit-ui/orbit-bar.js"></script>
+    <script type="module" src="/orbit-ui/orbit-theme-init.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

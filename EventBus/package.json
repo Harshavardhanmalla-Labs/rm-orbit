@@ -1,0 +1,38 @@
+{
+  "name": "snitch-backend",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test tenant-context.test.js event-envelope.test.js capitalhub-service.test.js secure-service.test.js",
+    "test:tenant": "node --test tenant-context.test.js",
+    "test:contract": "node --test event-envelope.test.js",
+    "test:capitalhub": "node --test capitalhub-service.test.js",
+    "test:secure": "node --test secure-service.test.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "learn": "nodemon learn-service.js",
+    "capitalhub": "nodemon capitalhub-service.js",
+    "secure": "nodemon secure-service.js",
+    "eventbus": "nodemon eventbus.js",
+    "turn": "node turn-server.js",
+    "media": "nodemon media-service.js"
+  },
+  "dependencies": {
+    "ajv": "^8.18.0",
+    "ajv-formats": "^3.0.1",
+    "axios": "^1.13.6",
+    "cross-env": "^10.1.0",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^9.0.0",
+    "luxon": "^3.7.2",
+    "node-turn": "^0.0.6",
+    "pg": "^8.20.0",
+    "pg-pool": "^3.13.0",
+    "redis": "^4.6.7",
+    "socket.io": "^4.8.0",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

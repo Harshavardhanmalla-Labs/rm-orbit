@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Quick Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#135bec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#1a212e",
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        "display": ["Work Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation Bar -->
+<header class="flex shrink-0 items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-background-dark px-6 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-[24px]">dataset</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">RM Writer</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-surface-dark border border-transparent focus-within:border-primary/50 transition-colors">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden bg-transparent text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-3 text-sm font-normal leading-normal" placeholder="Search" value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Documents</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Sheets</a>
+<a class="text-primary text-sm font-medium leading-normal" href="#">Notes</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Tasks</a>
+</nav>
+<button class="hidden sm:flex min-w-[84px] cursor-pointer items-center justify-center gap-2 overflow-hidden rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold leading-normal">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span class="truncate">New Note</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 ring-2 ring-slate-200 dark:ring-slate-700" data-alt="User profile picture placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDT5tprCs7crl_5_-hAQCuiaD1junw0sd6HR7Y73BbzY7pyaNGZg1OT-yFKfjhs1I_DwXiD-_zqOIAqk2ixSz_njTN8sWtTdH-ilzYe04tlUjXiv37OYB1sEpABgyFmsMJ95K87hkEEZQC-hueb0IaPLwqsx1dJzdELEJ_1jT7-cwtypWA4zPSEWgTsDeYa1kKwIqhm8iD83dUo-WsmA3iwzzB0AXT2B-pICe7MAmmMhdBwpSxum9GgFpv9IUi24O4QL-8Ko_abzlE");'></div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex flex-1 overflow-hidden">
+<!-- Left Sidebar: Notes List -->
+<aside class="w-full md:w-[380px] flex flex-col border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-background-dark/50">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<h1 class="text-2xl font-bold tracking-tight mb-4 text-slate-900 dark:text-white">Quick Notes</h1>
+<div class="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+<button class="flex h-8 shrink-0 items-center justify-center rounded-lg bg-primary text-white px-3 text-sm font-medium transition-colors">
+                        All Notes
+                    </button>
+<button class="flex h-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-3 text-sm font-medium transition-colors">
+                        Drafts
+                    </button>
+<button class="flex h-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-3 text-sm font-medium transition-colors">
+                        Ideas
+                    </button>
+<button class="flex h-8 shrink-0 items-center justify-center rounded-lg bg-slate-100 dark:bg-surface-dark hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 px-3 text-sm font-medium transition-colors">
+                        Pinned
+                    </button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-2">
+<!-- Note Item: Active -->
+<div class="group flex flex-col gap-1 p-3 rounded-xl bg-slate-100 dark:bg-surface-dark border border-primary/50 cursor-pointer relative transition-all hover:shadow-md">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-semibold text-primary uppercase tracking-wider">Product</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">10m ago</span>
+</div>
+<h3 class="font-semibold text-slate-900 dark:text-white leading-tight">Product Launch Checklist</h3>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2">Review the final Q3 marketing assets. Ensure legal has signed off on the new terms of service updates.</p>
+<div class="flex items-center gap-2 mt-2">
+<div class="flex -space-x-2">
+<div class="size-6 rounded-full border-2 border-slate-100 dark:border-surface-dark bg-slate-300" data-alt="Collaborator avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCr7btLL-T9OhayBNfPD7ysqpDAnY-ZGbAiu8amtTf8rSrGvyvtYEGyGjyw1OG_SPvGHl6x4OXu8vE8JpV-NOEfV4Pt51mSYVL7lpAZavK0m2pyphf1KB1Cmnu2N_NE8wp9zbUiEAvDKiADmWC6l6hxvsmgvH_t_MwJIbls7ekqbXO3oLPIu9BCIjNe0GK7rhIgXP4wBOKeNUOwe6IIDS2fKTpL1jrP5xHUn7KQa89Wg2SESrkAGFDuXuKAKjuiJhy86kdq9gALb40"); background-size: cover;'></div>
+<div class="size-6 rounded-full border-2 border-slate-100 dark:border-surface-dark bg-slate-300" data-alt="Collaborator avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIns6iq3w263-rw1cDyBfMgy0Q-g70t6AZrWOEXVmDcgfRckCN0w3vrDMmg6j94jSWS4ZFI4VQvo72dbl2i5Nn1GzVJABwFxJO8_i7_Nb8-DKjgwsVmwMSEnYN6NI8AqdDiMWX4LyyqkednXOrn5GvyenSAe2DVUu-3qu0STN13MPhYrWfnvfJ5PBFgJX-1HmfIb5zRlGa1rpGBq1t9Lqe5_mC13WomWGGFH9HJkHTuzClMWFPvMu4FQko2KFbVYwMVHYdey8hamo"); background-size: cover;'></div>
+</div>
+</div>
+</div>
+<!-- Note Item -->
+<div class="group flex flex-col gap-1 p-3 rounded-xl bg-white dark:bg-transparent border border-transparent hover:bg-slate-50 dark:hover:bg-surface-dark/50 hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Meeting</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">2h ago</span>
+</div>
+<h3 class="font-medium text-slate-900 dark:text-slate-200 leading-tight">Engineering Sync: API Refactor</h3>
+<p class="text-sm text-slate-500 dark:text-slate-500 line-clamp-2">Discussion points: GraphQL migration timeline, breaking changes for mobile clients, deprecation strategy.</p>
+</div>
+<!-- Note Item -->
+<div class="group flex flex-col gap-1 p-3 rounded-xl bg-white dark:bg-transparent border border-transparent hover:bg-slate-50 dark:hover:bg-surface-dark/50 hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Idea</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Yesterday</span>
+</div>
+<h3 class="font-medium text-slate-900 dark:text-slate-200 leading-tight">Q4 Feature: AI Summary</h3>
+<p class="text-sm text-slate-500 dark:text-slate-500 line-clamp-2">Use LLMs to summarize long threads in the inbox. Needs to be privacy-first. Check open source models.</p>
+</div>
+<!-- Note Item -->
+<div class="group flex flex-col gap-1 p-3 rounded-xl bg-white dark:bg-transparent border border-transparent hover:bg-slate-50 dark:hover:bg-surface-dark/50 hover:border-slate-200 dark:hover:border-slate-700 cursor-pointer transition-all">
+<div class="flex justify-between items-start mb-1">
+<span class="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider">Personal</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">2d ago</span>
+</div>
+<h3 class="font-medium text-slate-900 dark:text-slate-200 leading-tight">Grocery List</h3>
+<p class="text-sm text-slate-500 dark:text-slate-500 line-clamp-2">Milk, Coffee beans (medium roast), Avocados, Sourdough bread.</p>
+</div>
+</div>
+</aside>
+<!-- Right Content: Active Note -->
+<section class="hidden md:flex flex-col flex-1 bg-background-light dark:bg-background-dark relative">
+<!-- Note Toolbar -->
+<div class="flex items-center justify-between px-8 py-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="flex items-center gap-1 hover:text-primary cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">folder_open</span>
+                        Product
+                    </span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Product Launch Checklist</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="text-xs text-slate-400 dark:text-slate-500 mr-2">Last edited just now</span>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-slate-200 dark:border-slate-700 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-300 text-sm font-medium transition-colors">
+<span class="material-symbols-outlined text-[18px]">share</span>
+                         Share
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-primary hover:bg-primary/90 text-white text-sm font-medium transition-colors shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-[18px]">description</span>
+                         Promote to Doc
+                    </button>
+<button class="p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Note Editor Area -->
+<div class="flex-1 overflow-y-auto px-8 py-6">
+<div class="max-w-3xl mx-auto">
+<input class="w-full bg-transparent text-4xl font-bold text-slate-900 dark:text-white border-none focus:ring-0 px-0 mb-4 placeholder:text-slate-300 dark:placeholder:text-slate-700" placeholder="Untitled Note" type="text" value="Product Launch Checklist"/>
+<div class="prose dark:prose-invert max-w-none">
+<div class="flex items-center gap-3 text-slate-500 dark:text-slate-400 mb-6">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800/50 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">calendar_today</span>
+                                Due Oct 15
+                            </div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded bg-slate-100 dark:bg-slate-800/50 text-xs font-medium">
+<span class="material-symbols-outlined text-[14px]">sell</span>
+                                Q3 Launch
+                            </div>
+</div>
+<p class="text-lg text-slate-700 dark:text-slate-300 mb-6">
+                            Key items remaining for the Q3 release. We need to ensure all stakeholders are aligned before the go-no-go meeting on Friday.
+                        </p>
+<!-- Interactive Checklist Item -->
+<div class="flex items-start gap-3 mb-3 group/item">
+<button class="mt-0.5 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">check_box_outline_blank</span>
+</button>
+<div class="flex-1 border-b border-transparent group-focus-within/item:border-slate-200 dark:group-focus-within/item:border-slate-800 pb-1">
+<span class="text-slate-800 dark:text-slate-200">Finalize marketing copy for landing page</span>
+</div>
+</div>
+<div class="flex items-start gap-3 mb-3 group/item">
+<button class="mt-0.5 text-primary">
+<span class="material-symbols-outlined">check_box</span>
+</button>
+<div class="flex-1 border-b border-transparent pb-1">
+<span class="text-slate-400 dark:text-slate-500 line-through">Review legal terms with counsel</span>
+</div>
+</div>
+<div class="flex items-start gap-3 mb-3 group/item">
+<button class="mt-0.5 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">check_box_outline_blank</span>
+</button>
+<div class="flex-1 border-b border-transparent group-focus-within/item:border-slate-200 dark:group-focus-within/item:border-slate-800 pb-1">
+<span class="text-slate-800 dark:text-slate-200">Prepare release notes for App Store</span>
+</div>
+</div>
+<div class="flex items-start gap-3 mb-3 group/item">
+<button class="mt-0.5 text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined">check_box_outline_blank</span>
+</button>
+<div class="flex-1 border-b border-transparent group-focus-within/item:border-slate-200 dark:group-focus-within/item:border-slate-800 pb-1">
+<span class="text-slate-800 dark:text-slate-200">Coordinate with support team on FAQs</span>
+</div>
+</div>
+<!-- Embedded Image Block -->
+<div class="my-6 relative group rounded-xl overflow-hidden border border-slate-200 dark:border-slate-700">
+<img alt="Team meeting whiteboard sketching session" class="w-full h-auto object-cover max-h-[300px]" data-alt="Team brainstorming whiteboard session" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF7LIhOhHituzgg9SNp8s3407HEXwMYcAHWEWrGgLi2D1hZW580IWHW_J3p3uPVVXvEIkDlbpTz9Qk6PZtntZ1FIyANhqF0PQdoqcXa6Pm1bY_QTpuikyitAhOk3jFq6RaDDv-77OW9meTJ92b8SgQh9TNzdaXOPyBzQ7ovfjX7nUL-725yZsUMLWT-CrL-EV1vgHvy08WA4qWSacMTHpxIDmcbyEpEg8UtjCpFtgjTwpGmvkFdM0rja__Y-7yfqLZnyCxni2cjZQ"/>
+<div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="bg-black/50 hover:bg-black/70 text-white p-1.5 rounded-lg backdrop-blur-sm">
+<span class="material-symbols-outlined text-[18px]">more_horiz</span>
+</button>
+</div>
+</div>
+<h3 class="text-xl font-bold text-slate-900 dark:text-white mt-8 mb-4">Notes from Sync</h3>
+<p class="text-slate-700 dark:text-slate-300 mb-2">
+                            Design team mentioned that the dark mode assets for the new onboarding flow are ready. <span class="text-primary bg-primary/10 px-1 rounded cursor-pointer hover:underline">@Sarah</span> to upload them to Figma.
+                        </p>
+<p class="text-slate-700 dark:text-slate-300">
+                            Engineering needs 2 more days for the backend migration.
+                        </p>
+</div>
+</div>
+</div>
+<!-- AI Floating Action Button (Optional Context) -->
+<div class="absolute bottom-8 right-8">
+<button class="group flex items-center justify-center size-14 rounded-full bg-primary hover:bg-primary/90 text-white shadow-lg shadow-primary/30 transition-all hover:scale-105 active:scale-95">
+<span class="material-symbols-outlined text-[28px] group-hover:animate-pulse">auto_awesome</span>
+</button>
+</div>
+</section>
+</main>
+</body></html>

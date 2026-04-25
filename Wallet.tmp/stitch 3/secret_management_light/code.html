@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Wallet - Secret Management</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .active-nav {
+            background-color: rgba(19, 73, 236, 0.1);
+            color: #1349ec;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined">orbit</span>
+</div>
+<div>
+<h1 class="font-bold text-lg leading-none">RM Wallet</h1>
+<p class="text-xs text-slate-500 font-medium">RM Orbit Suite</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg active-nav transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">key</span>
+<span class="text-sm font-semibold">Secrets</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">shield</span>
+<span class="text-sm font-semibold">Vaults</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span class="text-sm font-semibold">Users</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">history</span>
+<span class="text-sm font-semibold">Audit Logs</span>
+</a>
+</nav>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-[22px]">settings</span>
+<span class="text-sm font-semibold">Settings</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex items-center justify-between px-8 shrink-0">
+<div class="flex items-center flex-1 max-w-md">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="w-full bg-slate-100 dark:bg-slate-800 border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary/20 placeholder:text-slate-500" placeholder="Search secrets, tags, or vaults..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:bg-slate-800"></div>
+<div class="flex items-center gap-3 pl-2">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold leading-none">Alex Rivera</p>
+<p class="text-[11px] text-slate-500 font-medium">Administrator</p>
+</div>
+<img alt="Profile" class="w-9 h-9 rounded-full border border-slate-200 dark:border-slate-700" data-alt="User profile avatar showing Alex Rivera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDFeAEVHPANbcwzSmspAdnoDjHHi204oxpmFYXD-CNj_rdmbsKSHlD8hevT_A-A2gh9uTdl6NUrygqKDepPWSdnME0xSf4PjfUMTN718_oL6Xv4yGJZ3MRGxk04gFy1MkPstYIydvkFV8ZFrUqfYysRg8-Nam7mUPIpYTZn6WplGFLSCqMRnHwyGg8sWHI6zaxaXOGV8MYVDYcT_JdQhhdLlF5ZoHDJhmMjVOt2xPMPH4UP7Dpsj-8iRLSCB9o9YU2iQ_yKGZEbWUwV"/>
+</div>
+</div>
+</header>
+<!-- Workspace -->
+<div class="flex-1 overflow-y-auto p-8 space-y-6">
+<!-- Page Title & Primary Actions -->
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<div>
+<h2 class="text-2xl font-bold tracking-tight">Secrets</h2>
+<p class="text-sm text-slate-500 mt-1">Manage and rotate your sensitive credentials securely.</p>
+</div>
+<button class="bg-primary hover:bg-primary/90 text-white px-5 py-2.5 rounded-lg font-bold text-sm inline-flex items-center gap-2 shadow-sm transition-all active:scale-95">
+<span class="material-symbols-outlined text-[20px]">add</span>
+                        New Secret
+                    </button>
+</div>
+<!-- Filters -->
+<div class="flex flex-wrap items-center gap-3">
+<div class="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 cursor-pointer hover:border-slate-300 transition-colors">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Type:</span>
+<span class="text-sm font-semibold">All Types</span>
+<span class="material-symbols-outlined text-slate-400 text-[18px]">expand_more</span>
+</div>
+<div class="flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-lg px-3 py-1.5 cursor-pointer hover:border-slate-300 transition-colors">
+<span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Vault:</span>
+<span class="text-sm font-semibold">All Vaults</span>
+<span class="material-symbols-outlined text-slate-400 text-[18px]">expand_more</span>
+</div>
+<div class="h-6 w-[1px] bg-slate-200 dark:bg-slate-800 mx-1"></div>
+<button class="text-sm font-semibold text-primary hover:underline">Clear all filters</button>
+</div>
+<!-- Table Container -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden shadow-sm">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-slate-50/50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Secret Name</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Type</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Vault</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Owner</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Last Updated</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider">Permissions</th>
+<th class="px-6 py-4 text-xs font-bold text-slate-500 uppercase tracking-wider w-10"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-slate-800">
+<!-- Row 1 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined text-[18px]">password</span>
+</div>
+<span class="font-semibold text-sm">db-production-pass</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Password</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Infrastructure</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full" data-alt="Avatar of Alex Rivera" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiYpPn3wNzVf0FImWSZwI00HEDMY1un9Hnz_7CV4L-AsTnoX53sQ6eTyQIXF92wf6wgJ1mNyKAIxClPSlMBDK7KbB0-9xyzzTNrBaG-8ewfP8Zhop-xTFw6LIDCjbwtimf68h3nIkXRZGUZTzukxGO4aOaqQpuA3T_rv2DIu0eTT8ohwasdsyX6FLomms4s3ANmGB8eM2g5iw1IEhc1wov9egWr2T33mvnlcOnPDHghvdYwW2JR7BRGo-J1jsfuhNzo066zeB-JHhL"/>
+<span class="text-sm font-medium">Alex Rivera</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">2 mins ago</td>
+<td class="px-6 py-4">
+<div class="flex gap-1">
+<span class="w-6 h-6 flex items-center justify-center rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold">R</span>
+<span class="w-6 h-6 flex items-center justify-center rounded bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold">W</span>
+<span class="w-6 h-6 flex items-center justify-center rounded bg-rose-50 dark:bg-rose-900/30 text-rose-700 dark:text-rose-400 text-[10px] font-bold">D</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-indigo-50 dark:bg-indigo-900/30 flex items-center justify-center text-indigo-600 dark:text-indigo-400">
+<span class="material-symbols-outlined text-[18px]">api</span>
+</div>
+<span class="font-semibold text-sm">stripe-api-live</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">API Key</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">DevOps</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full" data-alt="Avatar of Sarah Chen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBAaUb7D7fWnBpNM5fkXYh7wEHb6D3h1356hfAVlSa8tz11qQ11Arg8zQcN1ZLvlGijU6wfnTaIFxD7ViHctMJN00i_JWc4jNV0UnlAwTtjiZvxJWwMISV735OXwb7uMsy8s52N7g-ut_a3DmZn-Mx9xhFhe1LY_JUazvQg1apjko56eCtbNun4fTKBPFg91pNbModPf8GZsnbK_TR3WW3sVgcg19N5nLyrDMpJP6inbd-E7DsY3W6MKv75uHe4t95HproxPCAD469G"/>
+<span class="text-sm font-medium">Sarah Chen</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">1 hour ago</td>
+<td class="px-6 py-4">
+<div class="flex gap-1">
+<span class="w-6 h-6 flex items-center justify-center rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold">R</span>
+<span class="w-6 h-6 flex items-center justify-center rounded bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold">W</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-violet-50 dark:bg-violet-900/30 flex items-center justify-center text-violet-600 dark:text-violet-400">
+<span class="material-symbols-outlined text-[18px]">terminal</span>
+</div>
+<span class="font-semibold text-sm">aws-root-ssh</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">SSH Key</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Infrastructure</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full" data-alt="Avatar of Michael Todd" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCQR0mYuTv5Inh8cp5fK2WOHTiif-pH_qhaqUocAlWplgyps2nqdr9M2yw2BQAnRUUkWPmZ3NpzziFD_8q3Pto0dXPTjD2bOA8Z-bZbBhNunJZYcBAqw0IPYzHr8ZI7HCwiGQx2J1MhU3ae3lbCE8qngKjxjmLr2rF_IsIWBUit5HFXyVJ2NV-TawUBFeYAYC3HGUWIybpregAoxnK2rUaoQE6WhU7uO1WdYPTRaBLwPpmSIRR-HGgKDpl6dRLVDTISwxMkFg-xDNDj"/>
+<span class="text-sm font-medium">Michael Todd</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">Yesterday</td>
+<td class="px-6 py-4">
+<div class="flex gap-1">
+<span class="w-6 h-6 flex items-center justify-center rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold">R</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-orange-50 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400">
+<span class="material-symbols-outlined text-[18px]">token</span>
+</div>
+<span class="font-semibold text-sm">github-oauth-token</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">Token</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">DevOps</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full" data-alt="Avatar of Elena Gruff" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBNSpGOgOepxlEooHOgUi_ah7MM45UVILY9cJ-5_jju9tBKiQio5BfQYg7eYTjpNyCRieVpl-p7qG3-ZgT5zVzhCwDhjKhWQ1wdOKMmoSleItj6DjPgYgomYO2brOBK08AFZAnwdiSbbxRgANnU0hTua5c054nlhw5-dNqO62anN17IkPbxONjm_iBPwIKk-_gf5r72acU0lpxj41qxE6nC23M2X1eikvp45SKd2u83PifISMiB6k0zLKvtv7CFDS2zgtQ9OZaVGY53"/>
+<span class="text-sm font-medium">Elena Gruff</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">3 days ago</td>
+<td class="px-6 py-4">
+<div class="flex gap-1">
+<span class="w-6 h-6 flex items-center justify-center rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold">R</span>
+<span class="w-6 h-6 flex items-center justify-center rounded bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 text-[10px] font-bold">W</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+<!-- Row 5 -->
+<tr class="hover:bg-slate-50/80 dark:hover:bg-slate-800/30 transition-colors group border-transparent">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded bg-sky-50 dark:bg-sky-900/30 flex items-center justify-center text-sky-600 dark:text-sky-400">
+<span class="material-symbols-outlined text-[18px]">key</span>
+</div>
+<span class="font-semibold text-sm">sendgrid-key</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">API Key</span>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600 dark:text-slate-400">Marketing</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2">
+<img class="w-6 h-6 rounded-full" data-alt="Avatar of Michael Todd" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCcY_wmCaCFVf3SjM7yLxaG13BTGwMcNxdZGoZCAN9SPTd4qNsbB-lc6LnChe923VYf__qwzTFU8XTN3E6UNhZEvEs_KiZrOvbzD3zkDy_UsHqtpLOH4mL2s2IZ_j3p35YZF08PxzUuVS3KJCpmwTBhUo-JVx4xkhHxzhvSzuBMMIOfdW65ycV_OOenrw-UWolQZQW5x0f-8k2z8_LjgdQ3Q6EXk50P7GEQlqE2lUoQno4JzI6ApOSpQHLc_5xvCqDM1bG8_3uV_0uy"/>
+<span class="text-sm font-medium">Michael Todd</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-500">Oct 12, 2023</td>
+<td class="px-6 py-4">
+<div class="flex gap-1">
+<span class="w-6 h-6 flex items-center justify-center rounded bg-emerald-50 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-400 text-[10px] font-bold">R</span>
+</div>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-1.5 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 group-hover:opacity-100 transition-opacity">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 flex items-center justify-between border-t border-slate-200 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-800/20">
+<div class="text-sm text-slate-500 font-medium">
+                            Showing <span class="text-slate-900 dark:text-slate-100 font-bold">1-5</span> of <span class="text-slate-900 dark:text-slate-100 font-bold">48</span> secrets
+                        </div>
+<div class="flex items-center gap-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors" disabled="">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg bg-primary text-white font-bold text-sm shadow-sm">1</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-700 text-sm font-semibold transition-colors">2</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-700 text-sm font-semibold transition-colors">3</button>
+<span class="px-2 text-slate-400">...</span>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-700 text-sm font-semibold transition-colors">10</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg border border-slate-200 dark:border-slate-800 hover:bg-white dark:hover:bg-slate-700 transition-colors">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Footer Stats (Optional Clean Detail) -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+<div class="bg-blue-50/50 dark:bg-blue-900/10 border border-blue-100 dark:border-blue-900/30 rounded-xl p-4 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-blue-100 dark:bg-blue-900/40 flex items-center justify-center text-blue-600 dark:text-blue-400">
+<span class="material-symbols-outlined">vpn_key</span>
+</div>
+<div>
+<p class="text-xs text-blue-600 dark:text-blue-400 font-bold uppercase tracking-wider">Active Secrets</p>
+<p class="text-xl font-bold">48</p>
+</div>
+</div>
+<div class="bg-amber-50/50 dark:bg-amber-900/10 border border-amber-100 dark:border-amber-900/30 rounded-xl p-4 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center text-amber-600 dark:text-amber-400">
+<span class="material-symbols-outlined">sync_problem</span>
+</div>
+<div>
+<p class="text-xs text-amber-600 dark:text-amber-400 font-bold uppercase tracking-wider">Expiring Soon</p>
+<p class="text-xl font-bold">12</p>
+</div>
+</div>
+<div class="bg-emerald-50/50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-900/30 rounded-xl p-4 flex items-center gap-4">
+<div class="w-10 h-10 rounded-full bg-emerald-100 dark:bg-emerald-900/40 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
+<span class="material-symbols-outlined">verified_user</span>
+</div>
+<div>
+<p class="text-xs text-emerald-600 dark:text-emerald-400 font-bold uppercase tracking-wider">Compliant</p>
+<p class="text-xl font-bold">100%</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

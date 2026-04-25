@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Wallet - Enterprise SaaS Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .sidebar-item-active {
+            background-color: rgba(19, 73, 236, 0.1);
+            color: #1349ec;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light text-slate-900 font-display">
+<div class="flex min-h-screen">
+<!-- Sidebar -->
+<aside class="w-64 border-r border-slate-200 bg-white flex flex-col sticky top-0 h-screen">
+<div class="p-6 flex items-center gap-3">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-xl">shield_lock</span>
+</div>
+<span class="text-xl font-bold tracking-tight">RM Wallet</span>
+</div>
+<nav class="flex-1 px-4 py-2 space-y-1 overflow-y-auto">
+<p class="px-3 py-2 text-xs font-semibold text-slate-400 uppercase tracking-wider">Main</p>
+<a class="sidebar-item-active flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+                    Dashboard
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">lock_open</span>
+                    Vaults
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">key</span>
+                    Secrets
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+                    Shared Secrets
+                </a>
+<p class="px-3 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">Security</p>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">policy</span>
+                    Access Policies
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+                    Audit Logs
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">token</span>
+                    Automation Tokens
+                </a>
+<p class="px-3 py-4 text-xs font-semibold text-slate-400 uppercase tracking-wider">System</p>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">extension</span>
+                    Integrations
+                </a>
+<a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-50 rounded-lg text-sm font-medium transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+                    Settings
+                </a>
+</nav>
+<div class="p-4 border-t border-slate-100">
+<div class="flex items-center gap-3 p-2 bg-slate-50 rounded-xl">
+<div class="w-10 h-10 rounded-full bg-slate-200 overflow-hidden">
+<img alt="User avatar" data-alt="Portrait of a male professional user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZ4oSCSTq0zzY--iGEu8aI4oBS74sv6YoO-pXxQMAtd_inFzuAZeN2T3Dy3aQ7_gQPOQSyPe9k54-Ylp_H77Rjf_wVVPkihiepcOF7RY-tK-WmtALV2DhRTPZLXlYGGddM3EskMKYUMCeynKnRBrryvBUvOx5HyqgU7iYywLUgRPO0bAOXI_pmyTuusQR6uVwZ9IuWP9MskDIGqH6MVz8Vgervi_OIxrjTLjoIarsAQ-BpYi1OzOk8zYfbfcUYEKMYyLBpFMkfgyut"/>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-semibold truncate">Ryan Miller</p>
+<p class="text-xs text-slate-500 truncate">Admin Account</p>
+</div>
+<span class="material-symbols-outlined text-slate-400 text-sm cursor-pointer hover:text-slate-600">unfold_more</span>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0">
+<!-- Header -->
+<header class="h-16 border-b border-slate-200 bg-white flex items-center justify-between px-8 sticky top-0 z-10">
+<div class="flex items-center flex-1 max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+<input class="w-full bg-slate-50 border-none rounded-lg pl-10 text-sm focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search secrets, logs, or vaults (Cmd + K)" type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-9 h-9 rounded-full hover:bg-slate-100 flex items-center justify-center relative transition-colors">
+<span class="material-symbols-outlined text-slate-600">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
+</button>
+<button class="bg-primary text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-primary/90 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span>
+                        New Secret
+                    </button>
+</div>
+</header>
+<div class="p-8 overflow-y-auto">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-slate-900">System Overview</h1>
+<p class="text-slate-500">Real-time status of your enterprise credential environment.</p>
+</div>
+<!-- Widgets Stats -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+<div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-sm transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined">inventory_2</span>
+</span>
+<span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">+5.2%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Total Secrets Stored</p>
+<h3 class="text-2xl font-bold mt-1">1,248</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-sm transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-blue-100 rounded-lg text-blue-600">
+<span class="material-symbols-outlined">passkey</span>
+</span>
+<span class="text-xs font-semibold text-green-600 bg-green-50 px-2 py-1 rounded-full">+2.1%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Active Access Tokens</p>
+<h3 class="text-2xl font-bold mt-1">42</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-sm transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-purple-100 rounded-lg text-purple-600">
+<span class="material-symbols-outlined">share</span>
+</span>
+<span class="text-xs font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full">-1.5%</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Recently Shared</p>
+<h3 class="text-2xl font-bold mt-1">12</h3>
+</div>
+<div class="bg-white p-6 rounded-xl border border-slate-200 hover:shadow-sm transition-shadow border-l-4 border-l-red-500">
+<div class="flex justify-between items-start mb-4">
+<span class="p-2 bg-red-100 rounded-lg text-red-600">
+<span class="material-symbols-outlined">gpp_maybe</span>
+</span>
+<span class="text-xs font-semibold text-slate-400 bg-slate-100 px-2 py-1 rounded-full">Static</span>
+</div>
+<p class="text-sm font-medium text-slate-500">Security Alerts</p>
+<h3 class="text-2xl font-bold mt-1 text-red-600">3</h3>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Trend Chart Placeholder -->
+<div class="lg:col-span-2 space-y-8">
+<div class="bg-white p-6 rounded-xl border border-slate-200">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-bold">Access Trends</h3>
+<div class="flex gap-2">
+<button class="px-3 py-1 text-xs font-medium border border-slate-200 rounded-md bg-white hover:bg-slate-50">7 Days</button>
+<button class="px-3 py-1 text-xs font-medium border border-slate-200 rounded-md bg-slate-50 text-primary">30 Days</button>
+</div>
+</div>
+<!-- Mockup Chart Area -->
+<div class="h-64 flex items-end justify-between gap-2 px-2 relative">
+<div class="absolute inset-0 flex flex-col justify-between py-2">
+<div class="w-full border-t border-slate-100"></div>
+<div class="w-full border-t border-slate-100"></div>
+<div class="w-full border-t border-slate-100"></div>
+<div class="w-full border-t border-slate-100"></div>
+</div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-1/2 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-2/3 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-3/4 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-1/2 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/30 rounded-t-sm h-[90%] relative group transition-all hover:bg-primary/40 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-2/3 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-1/3 relative group transition-all hover:bg-primary/30 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-1/2 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/40 rounded-t-sm h-4/5 relative group transition-all hover:bg-primary/50 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-3/4 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+<div class="flex-1 bg-primary/20 rounded-t-sm h-1/2 relative group transition-all hover:bg-primary/30 cursor-pointer"></div>
+<div class="flex-1 bg-primary/10 rounded-t-sm h-2/3 relative group transition-all hover:bg-primary/20 cursor-pointer"></div>
+</div>
+<div class="flex justify-between mt-4 px-2 text-[10px] text-slate-400 font-semibold uppercase tracking-widest">
+<span>Week 01</span>
+<span>Week 02</span>
+<span>Week 03</span>
+<span>Week 04</span>
+</div>
+</div>
+<!-- Recent Activity -->
+<div class="bg-white rounded-xl border border-slate-200 overflow-hidden">
+<div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+<h3 class="text-lg font-bold">Audit Feed</h3>
+<button class="text-primary text-sm font-semibold hover:underline">View all</button>
+</div>
+<div class="divide-y divide-slate-100">
+<div class="px-6 py-4 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+<div class="w-10 h-10 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+<span class="material-symbols-outlined text-xl">vpn_key</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium">Secret Accessed: <span class="text-slate-500 font-normal">AWS Production Key</span></p>
+<p class="text-xs text-slate-400">by r.miller@rmcorp.io · 2 mins ago</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-xs font-medium text-slate-500">Authorized</span>
+</div>
+</div>
+<div class="px-6 py-4 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+<div class="w-10 h-10 rounded-full bg-purple-50 flex items-center justify-center text-purple-600">
+<span class="material-symbols-outlined text-xl">folder_shared</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium">Vault Membership Updated</p>
+<p class="text-xs text-slate-400">to Engineering · 14 mins ago</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-500"></span>
+<span class="text-xs font-medium text-slate-500">Success</span>
+</div>
+</div>
+<div class="px-6 py-4 flex items-center gap-4 hover:bg-slate-50 transition-colors">
+<div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center text-red-600">
+<span class="material-symbols-outlined text-xl">warning</span>
+</div>
+<div class="flex-1 min-w-0">
+<p class="text-sm font-medium">Failed Authentication Attempt</p>
+<p class="text-xs text-slate-400">IP: 192.168.1.45 · 22 mins ago</p>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-red-500"></span>
+<span class="text-xs font-medium text-slate-500">Flagged</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Side Cards -->
+<div class="space-y-6">
+<!-- Security Health -->
+<div class="bg-primary p-6 rounded-xl text-white shadow-lg shadow-primary/20">
+<h3 class="font-bold text-lg mb-2">Security Health</h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="text-4xl font-extrabold">98<span class="text-primary-100 text-xl font-normal opacity-70">/100</span></div>
+<div class="h-2 flex-1 bg-white/20 rounded-full overflow-hidden">
+<div class="w-[98%] h-full bg-white"></div>
+</div>
+</div>
+<p class="text-primary-50 text-sm opacity-90 leading-relaxed mb-4">
+                                Your infrastructure is highly secure. Two minor policies need review to reach 100%.
+                            </p>
+<button class="w-full bg-white text-primary font-bold py-2 rounded-lg text-sm hover:bg-slate-100 transition-colors">Improve Score</button>
+</div>
+<!-- Active Vaults -->
+<div class="bg-white p-6 rounded-xl border border-slate-200">
+<h3 class="text-lg font-bold mb-4">Top Vaults</h3>
+<div class="space-y-4">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">dns</span>
+<span class="text-sm font-medium">Infrastructure</span>
+</div>
+<span class="text-xs font-bold bg-slate-100 px-2 py-0.5 rounded">412 secrets</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">code</span>
+<span class="text-sm font-medium">Dev APIs</span>
+</div>
+<span class="text-xs font-bold bg-slate-100 px-2 py-0.5 rounded">218 secrets</span>
+</div>
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-slate-400">payments</span>
+<span class="text-sm font-medium">Finance Prod</span>
+</div>
+<span class="text-xs font-bold bg-slate-100 px-2 py-0.5 rounded">84 secrets</span>
+</div>
+</div>
+<button class="w-full mt-6 border border-slate-200 text-slate-600 font-semibold py-2 rounded-lg text-sm hover:bg-slate-50 transition-colors">Manage Vaults</button>
+</div>
+<!-- Quick Integration -->
+<div class="bg-slate-900 p-6 rounded-xl text-white">
+<div class="flex items-center gap-2 text-primary mb-3">
+<span class="material-symbols-outlined">bolt</span>
+<span class="text-xs font-bold uppercase tracking-widest">Automation</span>
+</div>
+<h3 class="font-bold text-lg mb-2">CLI Access</h3>
+<div class="bg-slate-800 p-3 rounded-lg font-mono text-xs text-slate-300 mb-4 overflow-hidden border border-white/5">
+<code class="whitespace-nowrap">$ rmwallet auth login --org=dev</code>
+</div>
+<button class="text-xs text-slate-400 font-medium hover:text-white flex items-center gap-1 transition-colors">
+                                View documentation <span class="material-symbols-outlined text-[14px]">arrow_outward</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

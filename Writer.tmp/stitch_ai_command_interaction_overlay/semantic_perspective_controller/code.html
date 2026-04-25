@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Semantic Perspective Controller - RM Writer</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        sans: ["Space Grotesk", "sans-serif"],
+                        display: ["Space Grotesk", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        };
+    </script>
+</head>
+<body class="bg-background-light text-slate-900 font-sans antialiased overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex-none bg-white border-b border-slate-200 px-6 py-3">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900">
+<div class="size-8 rounded-lg bg-primary text-white flex items-center justify-center">
+<span class="material-symbols-outlined text-xl">auto_stories</span>
+</div>
+<h2 class="text-xl font-bold tracking-tight">RM Writer</h2>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="#">Workspace</a>
+<a class="text-slate-900 text-sm font-medium border-b-2 border-primary pb-0.5" href="#">Library</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="#">Perspectives</a>
+<a class="text-slate-600 hover:text-primary text-sm font-medium transition-colors" href="#">Export</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-[20px]">search</span>
+<input class="pl-10 pr-4 py-2 bg-slate-100 border-none rounded-lg text-sm focus:ring-2 focus:ring-primary/20 w-64 placeholder-slate-400 text-slate-700" placeholder="Search knowledge graph..." type="text"/>
+</div>
+<div class="h-6 w-px bg-slate-200 mx-2"></div>
+<button class="p-2 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-slate-500 hover:text-primary hover:bg-slate-50 rounded-lg transition-colors">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="size-9 rounded-full bg-slate-200 overflow-hidden border border-slate-100 ml-2">
+<img alt="User Avatar" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCRoWYAov3TYJBZpPKjlek0J-bk7s1BWEXCrMXJH_7QQwpEeAQK3CWoYujjHeMbixmste5MSH64bF9LsTl4bHhcmqlSCDZsU7PGSE-rBHcUaeJ70sIxW-NXImTT1zJMXdb9UrHInoI_0z3lGn9RynDXzc2W4ilY_hJTYDHEAeK4VoaBYi6GVkU5_vIUzcRDFQawYzIuDkYlT8_Lf5-EOuOaXl78LeDP_FPIlQUsYK7FJT_6NFvpO4-XnXADs26j2QiQb84XW3C4z-I"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex-1 flex overflow-hidden">
+<!-- Left Sidebar: Context / Nav -->
+<aside class="w-16 flex-none bg-white border-r border-slate-200 flex flex-col items-center py-6 gap-6 z-10">
+<button class="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center hover:bg-primary hover:text-white transition-all shadow-sm">
+<span class="material-symbols-outlined">layers</span>
+</button>
+<button class="size-10 rounded-xl text-slate-400 hover:text-primary hover:bg-slate-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">account_tree</span>
+</button>
+<button class="size-10 rounded-xl text-slate-400 hover:text-primary hover:bg-slate-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">dataset</span>
+</button>
+<button class="size-10 rounded-xl text-slate-400 hover:text-primary hover:bg-slate-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">view_quilt</span>
+</button>
+<div class="mt-auto">
+<button class="size-10 rounded-xl text-slate-400 hover:text-slate-600 hover:bg-slate-50 flex items-center justify-center transition-all">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</aside>
+<!-- Center Canvas Area -->
+<section class="flex-1 bg-slate-50 relative overflow-hidden flex flex-col">
+<!-- Breadcrumbs & Title -->
+<div class="flex items-center gap-2 px-8 py-4 border-b border-slate-200/60 bg-white/50 backdrop-blur-sm z-10">
+<a class="text-slate-400 hover:text-primary text-sm font-medium" href="#">Project Alpha</a>
+<span class="text-slate-300 text-sm">/</span>
+<a class="text-slate-400 hover:text-primary text-sm font-medium" href="#">Q3 Roadmap</a>
+<span class="text-slate-300 text-sm">/</span>
+<span class="text-slate-900 text-sm font-medium bg-primary/5 px-2 py-0.5 rounded text-primary">Perspective Controller</span>
+</div>
+<!-- Canvas Placeholder -->
+<div class="flex-1 relative p-8 overflow-auto">
+<div class="absolute inset-0 z-0 opacity-[0.03] pointer-events-none" style="background-image: radial-gradient(#2b6cee 1px, transparent 1px); background-size: 24px 24px;"></div>
+<!-- This simulates the "Content" being manipulated -->
+<div class="max-w-4xl mx-auto space-y-8">
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 relative group">
+<div class="absolute -left-3 top-8 w-1 h-12 bg-primary rounded-r-lg"></div>
+<h1 class="text-4xl font-bold text-slate-900 mb-4 tracking-tight">Enterprise Architecture Review</h1>
+<p class="text-lg text-slate-600 leading-relaxed">
+                            The current infrastructure relies heavily on monolithic services. To increase velocity, we propose a strategic decoupling of core services into independent domains.
+                        </p>
+<div class="mt-6 p-4 bg-slate-50 rounded-xl border border-slate-100 flex items-start gap-4">
+<span class="material-symbols-outlined text-primary mt-1">lightbulb</span>
+<div>
+<h4 class="font-bold text-slate-900 text-sm">Insight Node #4291</h4>
+<p class="text-sm text-slate-500 mt-1">Microservices reduce deployment friction by 40% based on Q2 metrics.</p>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-6">
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-64 flex flex-col justify-center items-center text-center relative overflow-hidden">
+<!-- Abstract Data Vis Placeholder -->
+<div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-white opacity-50"></div>
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl text-slate-300 mb-2">donut_small</span>
+<p class="text-slate-400 text-sm font-medium">Resource Allocation Model</p>
+</div>
+</div>
+<div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100 h-64 flex flex-col justify-center items-center text-center relative">
+<div class="absolute inset-0 bg-gradient-to-br from-indigo-50 to-white opacity-50"></div>
+<div class="relative z-10">
+<span class="material-symbols-outlined text-4xl text-slate-300 mb-2">hub</span>
+<p class="text-slate-400 text-sm font-medium">Dependency Graph</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Toolbar -->
+<div class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-white rounded-full shadow-lg border border-slate-200 p-2 flex items-center gap-1 z-20">
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-500 hover:text-primary transition-colors tooltip" title="Select">
+<span class="material-symbols-outlined text-[20px]">near_me</span>
+</button>
+<div class="w-px h-4 bg-slate-200 mx-1"></div>
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-500 hover:text-primary transition-colors" title="Pen Tool">
+<span class="material-symbols-outlined text-[20px]">edit</span>
+</button>
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-500 hover:text-primary transition-colors" title="Connect">
+<span class="material-symbols-outlined text-[20px]">linear_scale</span>
+</button>
+<button class="p-2 hover:bg-slate-100 rounded-full text-slate-500 hover:text-primary transition-colors" title="Comment">
+<span class="material-symbols-outlined text-[20px]">chat_bubble_outline</span>
+</button>
+</div>
+</section>
+<!-- Right Panel: Perspective Controller -->
+<aside class="w-80 flex-none bg-white border-l border-slate-200 flex flex-col shadow-xl z-20">
+<div class="p-5 border-b border-slate-100 bg-slate-50/50">
+<div class="flex items-center justify-between mb-1">
+<h3 class="text-base font-bold text-slate-900">Workspace Anatomy</h3>
+<button class="text-slate-400 hover:text-primary transition-colors">
+<span class="material-symbols-outlined text-[20px]">tune</span>
+</button>
+</div>
+<p class="text-xs text-slate-500">Toggle visibility of truths &amp; structures.</p>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Section 1: Source Data Nodes -->
+<div>
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Source Data Nodes</span>
+<span class="bg-primary/10 text-primary text-[10px] font-bold px-1.5 py-0.5 rounded">3 Active</span>
+</div>
+<div class="space-y-2">
+<!-- Item -->
+<div class="group flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer border border-transparent hover:border-slate-100">
+<button class="text-primary hover:text-primary/80">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-blue-500">database</span>
+<span class="text-sm font-medium text-slate-800 truncate">Q2 Financials</span>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+</div>
+<!-- Item -->
+<div class="group flex items-center gap-3 p-2 rounded-lg bg-primary/5 border border-primary/20 transition-colors cursor-pointer">
+<button class="text-primary hover:text-primary/80">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-purple-500">psychology</span>
+<span class="text-sm font-medium text-slate-900 truncate">User Interviews</span>
+</div>
+</div>
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+</div>
+<!-- Item (Hidden) -->
+<div class="group flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 transition-colors cursor-pointer opacity-60">
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+<div class="flex-1 min-w-0">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-400">description</span>
+<span class="text-sm font-medium text-slate-500 truncate decoration-slate-400">Legacy Specs</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-px bg-slate-100"></div>
+<!-- Section 2: Narrative Layers -->
+<div>
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Narrative Layers</span>
+<button class="text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-[16px]">add</span>
+</button>
+</div>
+<div class="space-y-2">
+<!-- Layer Item -->
+<div class="relative">
+<div class="absolute left-[19px] top-8 bottom-[-8px] w-px bg-slate-200 z-0"></div>
+<div class="flex items-center gap-3 p-2 rounded-lg bg-slate-50 border border-slate-200 relative z-10">
+<button class="text-slate-600 hover:text-slate-900">
+<span class="material-symbols-outlined text-[20px]">visibility</span>
+</button>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-orange-500">tips_and_updates</span>
+<span class="text-sm font-bold text-slate-800">Core Argument</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-[16px]">drag_indicator</span>
+</div>
+<!-- Sub Layer -->
+<div class="ml-6 mt-2 flex items-center gap-3 p-1.5 pl-2 rounded hover:bg-slate-50 cursor-pointer">
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<span class="text-xs font-medium text-slate-600">Supporting Evidence A</span>
+</div>
+<!-- Sub Layer -->
+<div class="ml-6 flex items-center gap-3 p-1.5 pl-2 rounded hover:bg-slate-50 cursor-pointer">
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[18px]">visibility</span>
+</button>
+<span class="text-xs font-medium text-slate-600">Counter-Argument Refutation</span>
+</div>
+</div>
+<!-- Layer Item -->
+<div class="flex items-center gap-3 p-2 rounded-lg hover:bg-slate-50 border border-transparent hover:border-slate-100 transition-colors mt-2">
+<button class="text-slate-400 hover:text-slate-600">
+<span class="material-symbols-outlined text-[20px]">visibility_off</span>
+</button>
+<div class="flex-1">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[16px] text-slate-400">sentiment_satisfied</span>
+<span class="text-sm font-medium text-slate-500">Tone: Technical</span>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-300 text-[16px]">drag_indicator</span>
+</div>
+</div>
+</div>
+<div class="h-px bg-slate-100"></div>
+<!-- Section 3: Visual Outputs -->
+<div>
+<div class="flex items-center justify-between mb-3 px-1">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Visual Outputs</span>
+</div>
+<div class="grid grid-cols-2 gap-2">
+<div class="border border-primary bg-primary/5 rounded-lg p-3 cursor-pointer relative overflow-hidden group">
+<div class="absolute top-2 right-2 text-primary">
+<span class="material-symbols-outlined text-[16px]">check_circle</span>
+</div>
+<span class="material-symbols-outlined text-primary mb-2 block">article</span>
+<span class="text-xs font-bold text-slate-800">Document</span>
+<p class="text-[10px] text-slate-500 mt-1">PDF, Docx</p>
+</div>
+<div class="border border-slate-200 bg-white rounded-lg p-3 cursor-pointer relative overflow-hidden hover:border-primary/50 hover:shadow-sm transition-all group">
+<div class="absolute top-2 right-2 text-slate-200 group-hover:text-primary/50">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary mb-2 block">slideshow</span>
+<span class="text-xs font-medium text-slate-600 group-hover:text-slate-800">Deck</span>
+<p class="text-[10px] text-slate-400 mt-1">PPTX, Keynote</p>
+</div>
+<div class="border border-slate-200 bg-white rounded-lg p-3 cursor-pointer relative overflow-hidden hover:border-primary/50 hover:shadow-sm transition-all group">
+<div class="absolute top-2 right-2 text-slate-200 group-hover:text-primary/50">
+<span class="material-symbols-outlined text-[16px]">radio_button_unchecked</span>
+</div>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary mb-2 block">schema</span>
+<span class="text-xs font-medium text-slate-600 group-hover:text-slate-800">Graph</span>
+<p class="text-[10px] text-slate-400 mt-1">JSON, SVG</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Panel Footer -->
+<div class="p-4 border-t border-slate-200 bg-slate-50">
+<button class="w-full flex items-center justify-center gap-2 bg-slate-900 hover:bg-slate-800 text-white py-2.5 px-4 rounded-lg font-medium text-sm transition-colors shadow-lg shadow-slate-900/10">
+<span class="material-symbols-outlined text-[18px]">auto_awesome</span>
+                    Synthesize View
+                </button>
+</div>
+</aside>
+</main>
+</body></html>

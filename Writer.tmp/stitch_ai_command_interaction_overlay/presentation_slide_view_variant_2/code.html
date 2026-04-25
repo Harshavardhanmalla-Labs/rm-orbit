@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Presentation View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#101622", // Deep Navy as requested primary accent
+                        "primary-hover": "#1e293b",
+                        "accent-blue": "#0f49bd", // Keeping the bright blue for specific highlights
+                        "background-light": "#f3f4f6", // Light gray for interface
+                        "background-dark": "#ffffff", // White for content areas
+                        "surface-light": "#ffffff", // White for cards
+                        "border-light": "#e2e8f0", // Light border
+                        "text-main": "#1e293b",
+                        "text-muted": "#64748b",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                        sans: ["Inter", "sans-serif"],
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light text-text-main font-display min-h-screen flex flex-col overflow-hidden">
+<header class="flex flex-col w-full border-b border-border-light bg-white z-20">
+<div class="flex items-center justify-between px-6 py-3 h-16 border-b border-border-light">
+<div class="flex items-center gap-4">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h1 class="text-text-main text-lg font-bold tracking-tight">RM Writer</h1>
+<div class="h-6 w-px bg-border-light mx-2"></div>
+<span class="text-text-muted text-sm font-medium truncate">Q3 Quarterly Review.slides</span>
+</div>
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">Documents</a>
+<a class="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">Sheets</a>
+<a class="text-primary text-sm font-medium border-b-2 border-primary pb-0.5" href="#">Slides</a>
+<a class="text-text-muted hover:text-primary transition-colors text-sm font-medium" href="#">Whiteboard</a>
+</nav>
+<div class="flex items-center gap-3">
+<div class="flex -space-x-2 mr-2">
+<img alt="User 1" class="inline-block size-8 rounded-full ring-2 ring-white" data-alt="Female portrait user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCs05AMCoqpOc6-11nxnScREkeo-8yvcSQRoNp2kYdd0Cf-taLKH9qJgQJukSGFEDNv9Dp6d1ql_SPIdOFjpQm6eLjjTzx6hQqXOM1xP0I5VOjZLnQ7gxe-IUVuIq2JA26YapBImkyeJCG1ulMzipA-vsOLOnrU_Ndi8QJJFPAVDDxpqel77F-eQxAN3pb2OHPF_lMbv7TkuRMhBx0CTTiqW6uAo7rWqv5yDacmDZOX0nsSRQNq-g5z8kF2BnfS_mz7Z6e21GR86OQ"/>
+<img alt="User 2" class="inline-block size-8 rounded-full ring-2 ring-white" data-alt="Male portrait user avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDS50MAsEBr4u2HprjZrCk3W9kH2PhQgEocMhZXJSwFUviuZUUPIS_p0oAFMWTruu46l1wiUrHmbRggap5jiadk37zCgUNetJso-ROjTNF5p3vyfsODSfjPWAV45M2UlvBrAa7v00TLIy2XODixalFiFID-mkxr-GxK6_PqCDWF2gclBecOB8pY0yLRjtwC9sfeDY9fOV1E870hxBEPsx9nitO9CojXRQi2vNWAAn9SIw_zy-0SA3AOEH7VDO8ZyjdbIBtZSd_cIXo"/>
+</div>
+<button class="h-9 px-4 rounded-lg bg-white border border-border-light hover:bg-gray-50 text-text-main text-sm font-semibold transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">share</span>
+<span class="hidden sm:inline">Share</span>
+</button>
+<button class="h-9 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-bold shadow-lg shadow-primary/10 transition-colors flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">play_arrow</span>
+<span class="hidden sm:inline">Present</span>
+</button>
+<div class="w-px h-6 bg-border-light mx-1"></div>
+<div class="size-9 rounded-full bg-cover bg-center ring-2 ring-border-light cursor-pointer" data-alt="Current user profile picture" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD69Z6uXjBwWjcGpA2mu7uLNOcx_Tecc1mIujNLGycuum6GYtWxwVmKWJpUQS4-WQtSSNMx0qBsnCQ8_AIulqeOicwzNIeT3G726TA7CZsxxHdJ7s0ExPTLtnw-pAARRhFmzfJwYzIydL3Xcq8vdpISW_suOn6UkGBcKyyQy7Vm8nMLHLidDHmW3mTZyBLH1KQPZxxWI-LnQfI_W6v0LZSapOQ5jhtRol96W4FibZF0iVj3tyD1IKFDk4oYa_V8ux4htpvDq7bceMg');"></div>
+</div>
+</div>
+<div class="flex items-center justify-between px-6 py-2 bg-gray-50/50">
+<div class="flex items-center gap-1">
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-200 text-text-muted transition-colors group relative" title="Select">
+<span class="material-symbols-outlined text-xl">arrow_selector_tool</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-200 text-text-muted transition-colors" title="Text">
+<span class="material-symbols-outlined text-xl">title</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-200 text-text-muted transition-colors" title="Image">
+<span class="material-symbols-outlined text-xl">image</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-200 text-text-muted transition-colors" title="Shapes">
+<span class="material-symbols-outlined text-xl">shapes</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-200 text-text-muted transition-colors" title="Chart">
+<span class="material-symbols-outlined text-xl">bar_chart</span>
+</button>
+<div class="w-px h-5 bg-border-light mx-2"></div>
+<button class="size-9 flex items-center justify-center rounded-lg hover:bg-gray-200 text-text-muted transition-colors" title="AI Assistant">
+<span class="material-symbols-outlined text-xl text-primary">colors_spark</span>
+</button>
+</div>
+<div class="flex bg-gray-100 rounded-lg p-1 border border-border-light">
+<button class="px-3 py-1.5 rounded text-xs font-medium text-text-muted hover:text-primary transition-colors">Edit</button>
+<button class="px-3 py-1.5 rounded text-xs font-medium text-text-muted hover:text-primary transition-colors">Design</button>
+<button class="px-3 py-1.5 rounded bg-white text-primary shadow-sm ring-1 ring-black/5 text-xs font-medium">Present</button>
+</div>
+<div class="flex items-center gap-2 text-text-muted">
+<button class="hover:text-primary"><span class="material-symbols-outlined text-xl">remove</span></button>
+<span class="text-xs font-mono text-text-main">100%</span>
+<button class="hover:text-primary"><span class="material-symbols-outlined text-xl">add</span></button>
+</div>
+</div>
+</header>
+<main class="flex-1 flex flex-col relative overflow-hidden bg-background-light">
+<div class="absolute inset-0 flex items-center justify-center overflow-auto p-8">
+<div class="w-full max-w-5xl aspect-video bg-white relative rounded-xl shadow-[0_20px_50px_-12px_rgba(0,0,0,0.1)] overflow-hidden ring-1 ring-black/5 group">
+<div class="absolute inset-0 bg-white flex">
+<div class="w-1/3 h-full bg-[#f8fafc] border-r border-gray-100 p-8 flex flex-col justify-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-accent-blue text-xs font-bold w-fit mb-6">
+                            GROWTH METRICS
+                        </div>
+<h2 class="text-4xl font-bold text-primary mb-4 leading-tight">Q3 User Acquisition &amp; Retention</h2>
+<p class="text-text-muted text-sm leading-relaxed mb-8">
+                            We've seen a 45% increase in daily active users primarily driven by the new "Collab" feature release in early August.
+                        </p>
+<div class="flex gap-4">
+<div>
+<div class="text-3xl font-bold text-primary">2.4M</div>
+<div class="text-xs text-text-muted uppercase tracking-wider font-semibold mt-1">Total Users</div>
+</div>
+<div class="w-px bg-gray-200"></div>
+<div>
+<div class="text-3xl font-bold text-emerald-600">+12%</div>
+<div class="text-xs text-text-muted uppercase tracking-wider font-semibold mt-1">MoM Growth</div>
+</div>
+</div>
+</div>
+<div class="w-2/3 h-full p-8 relative overflow-hidden bg-white">
+<div class="absolute top-0 right-0 w-[400px] h-[400px] bg-blue-50 rounded-full blur-[100px] -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+<div class="h-full flex flex-col justify-end pb-8 relative z-10">
+<div class="flex items-end justify-between h-64 w-full gap-4 px-4">
+<div class="w-full bg-gray-100 rounded-t-lg relative group/bar hover:bg-blue-50 transition-colors h-[40%]">
+<div class="absolute -top-8 w-full text-center text-xs text-text-muted opacity-0 group-hover/bar:opacity-100 transition-opacity">40%</div>
+</div>
+<div class="w-full bg-gray-100 rounded-t-lg relative group/bar hover:bg-blue-50 transition-colors h-[55%]">
+<div class="absolute -top-8 w-full text-center text-xs text-text-muted opacity-0 group-hover/bar:opacity-100 transition-opacity">55%</div>
+</div>
+<div class="w-full bg-gray-100 rounded-t-lg relative group/bar hover:bg-blue-50 transition-colors h-[45%]">
+<div class="absolute -top-8 w-full text-center text-xs text-text-muted opacity-0 group-hover/bar:opacity-100 transition-opacity">45%</div>
+</div>
+<div class="w-full bg-primary rounded-t-lg relative shadow-lg h-[85%]">
+<div class="absolute -top-8 w-full text-center text-sm font-bold text-primary">85%</div>
+</div>
+<div class="w-full bg-gray-100 rounded-t-lg relative group/bar hover:bg-blue-50 transition-colors h-[60%]">
+<div class="absolute -top-8 w-full text-center text-xs text-text-muted opacity-0 group-hover/bar:opacity-100 transition-opacity">60%</div>
+</div>
+</div>
+<div class="h-px w-full bg-gray-100 mt-2"></div>
+<div class="flex justify-between w-full px-4 mt-2 text-xs text-gray-400 font-mono">
+<span>MAY</span>
+<span>JUN</span>
+<span>JUL</span>
+<span class="text-primary font-bold">AUG</span>
+<span>SEP</span>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex justify-center pb-6 bg-gradient-to-t from-white/90 to-transparent">
+<div class="bg-white/90 backdrop-blur-md rounded-full px-4 py-2 flex items-center gap-4 border border-gray-200 shadow-xl ring-1 ring-black/5">
+<button class="p-2 hover:bg-gray-100 rounded-full text-text-main"><span class="material-symbols-outlined">skip_previous</span></button>
+<span class="text-xs font-mono text-text-muted">Slide 4 / 12</span>
+<button class="p-2 hover:bg-gray-100 rounded-full text-text-main"><span class="material-symbols-outlined">skip_next</span></button>
+</div>
+</div>
+</div>
+</div>
+<div class="absolute top-4 right-4 z-10">
+<button class="bg-white border border-gray-200 text-text-muted hover:text-text-main px-4 py-2 rounded-lg shadow-sm hover:shadow-md transition-shadow flex items-center gap-2 text-sm">
+<span class="material-symbols-outlined text-lg">speaker_notes</span>
+<span>Speaker Notes</span>
+</button>
+</div>
+<div class="h-40 bg-white border-t border-border-light flex flex-col z-20 shrink-0 shadow-[0_-4px_20px_rgba(0,0,0,0.02)]">
+<div class="flex items-center justify-between px-6 py-2 border-b border-border-light bg-gray-50/50">
+<span class="text-xs font-bold text-text-muted uppercase tracking-wider">Timeline</span>
+<div class="flex gap-2">
+<button class="p-1 text-text-muted hover:text-primary"><span class="material-symbols-outlined text-lg">grid_view</span></button>
+<button class="p-1 text-text-muted hover:text-primary"><span class="material-symbols-outlined text-lg">view_list</span></button>
+</div>
+</div>
+<div class="flex-1 overflow-x-auto overflow-y-hidden flex items-center px-6 gap-4 custom-scrollbar">
+<button class="shrink-0 w-32 aspect-video rounded-lg border-2 border-dashed border-gray-200 hover:border-primary/30 hover:bg-gray-50 flex flex-col items-center justify-center gap-2 transition-all group bg-white">
+<div class="size-8 rounded-full bg-gray-100 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-colors text-text-muted">
+<span class="material-symbols-outlined text-lg">add</span>
+</div>
+<span class="text-xs text-text-muted font-medium">New Slide</span>
+</button>
+<div class="shrink-0 w-40 aspect-video rounded-lg bg-white border border-gray-200 relative overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer opacity-80 hover:opacity-100 shadow-sm">
+<img alt="Slide 1 thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all" data-alt="Abstract blue meeting room background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDq6pU05gZy7-XgDKKnhPSaDlPWwvIz4JY9gCxLGT0zkEzcX-mkiswyI8zGsP38L3Kup2n4NB-R8DS5I23xSw85kgzlMb0W4Xdhos2lExalNCRy9Jb9NM_xiK7wSs43iQsx-6X5WRt6DtDXDS8MJMuoZSGm773oWE2tZyuBOP_ObU8-PIDuvHyPZJlYsHsz2GiBn-xbXTuzBNiSLOMHgGadDwMul7-lLF_5D5ZOnLS6SGiBY9YXp3THT7okJ63IQvGS2Z3XHI6PSJw"/>
+<div class="absolute bottom-1 left-2 text-[10px] font-bold text-white shadow-black drop-shadow-md bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm">1. Intro</div>
+</div>
+<div class="shrink-0 w-40 aspect-video rounded-lg bg-white border border-gray-200 relative overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer opacity-80 hover:opacity-100 shadow-sm">
+<div class="w-full h-full p-2 flex flex-col gap-1 bg-white">
+<div class="h-2 w-1/2 bg-gray-200 rounded-full"></div>
+<div class="h-1 w-full bg-gray-100 rounded-full mt-2"></div>
+<div class="h-1 w-3/4 bg-gray-100 rounded-full"></div>
+<div class="mt-auto flex gap-1 h-8 items-end">
+<div class="w-1/4 h-1/2 bg-primary/20 rounded-sm"></div>
+<div class="w-1/4 h-3/4 bg-primary/20 rounded-sm"></div>
+<div class="w-1/4 h-full bg-primary/20 rounded-sm"></div>
+</div>
+</div>
+<div class="absolute bottom-1 left-2 text-[10px] font-bold text-white shadow-black drop-shadow-md bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm">2. Market</div>
+</div>
+<div class="shrink-0 w-40 aspect-video rounded-lg bg-white border border-gray-200 relative overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer opacity-80 hover:opacity-100 shadow-sm">
+<img alt="Slide 3 thumbnail" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-all" data-alt="Product mockup wireframe on screen" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDF0MAMcpXO_yDKlOPqEPiqYvzQEIsh-mGqA3H3uFboecC-2Dz6uazv5K-zEaMJ8jH4VKBaJtBvQJI-FqDgI5AZOgXqHgzghfe5DHtax1Dp9dXMMNZd4GTS-k88kMJ3s85ft338TUeHFhgd2HEnl_m5nKJmbTFAbRj2dnzUvj2cZ6t8ad0p7FykF7x_8DtrQXkK_mqhTEBcoY4eTJTYyWj3QxONbJtjvFyeH3GjbQmjkPiuSe44TFMA07W_2o0X-Y0UrU1hph0FCBg"/>
+<div class="absolute bottom-1 left-2 text-[10px] font-bold text-white shadow-black drop-shadow-md bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm">3. Product</div>
+</div>
+<div class="shrink-0 w-40 aspect-video rounded-lg bg-white ring-2 ring-primary relative overflow-hidden group cursor-pointer shadow-md">
+<div class="w-full h-full bg-white p-2 flex">
+<div class="w-1/3 border-r border-gray-100 pr-1">
+<div class="h-1 w-full bg-gray-200 mb-1"></div>
+<div class="h-3 w-8 bg-gray-100 mb-1"></div>
+</div>
+<div class="w-2/3 pl-1 flex items-end justify-around pb-1">
+<div class="w-2 bg-gray-200 h-4"></div>
+<div class="w-2 bg-gray-100 h-6"></div>
+<div class="w-2 bg-primary h-8"></div>
+<div class="w-2 bg-gray-100 h-5"></div>
+</div>
+</div>
+<div class="absolute bottom-1 left-2 text-[10px] font-bold text-white shadow-black drop-shadow-md bg-primary px-1.5 py-0.5 rounded shadow-sm">4. Growth</div>
+<div class="absolute top-1 right-2 size-2 rounded-full bg-primary animate-pulse"></div>
+</div>
+<div class="shrink-0 w-40 aspect-video rounded-lg bg-white border border-gray-200 relative overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer opacity-80 hover:opacity-100 shadow-sm">
+<div class="w-full h-full p-2 grid grid-cols-2 gap-2 bg-white">
+<div class="bg-gray-100 rounded"></div>
+<div class="bg-gray-100 rounded"></div>
+<div class="bg-gray-100 rounded"></div>
+<div class="bg-gray-100 rounded"></div>
+</div>
+<div class="absolute bottom-1 left-2 text-[10px] font-bold text-white shadow-black drop-shadow-md bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm">5. Team</div>
+</div>
+<div class="shrink-0 w-40 aspect-video rounded-lg bg-white border border-gray-200 relative overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-pointer opacity-80 hover:opacity-100 shadow-sm">
+<div class="w-full h-full flex items-center justify-center bg-gray-50">
+<span class="text-xs font-bold text-gray-300 uppercase">Thank You</span>
+</div>
+<div class="absolute bottom-1 left-2 text-[10px] font-bold text-white shadow-black drop-shadow-md bg-black/30 px-1.5 py-0.5 rounded backdrop-blur-sm">6. Ask</div>
+</div>
+</div>
+</div>
+</main>
+<style>.custom-scrollbar::-webkit-scrollbar {
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+
+</body></html>

@@ -1,0 +1,21 @@
+{
+  "none":  "0px",
+  "xs":    "4px",
+  "sm":    "6px",
+  "md":    "8px",
+  "lg":    "12px",
+  "xl":    "16px",
+  "2xl":   "20px",
+  "3xl":   "24px",
+  "full":  "9999px",
+
+  "button":  "8px",
+  "input":   "8px",
+  "card":    "12px",
+  "modal":   "16px",
+  "badge":   "9999px",
+  "avatar":  "9999px",
+  "tooltip": "6px",
+  "panel":   "14px",
+  "chip":    "9999px"
+}

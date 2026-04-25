@@ -1,0 +1,6 @@
+Connect/node_modules
+Connect/server/node_modules
+Connect/server/uploads
+Connect/.env
+Connect/.env.production
+**/npm-debug.log*

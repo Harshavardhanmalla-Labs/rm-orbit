@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Global Dashboard - Light Mode</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1e3a8a", // Deep Navy
+                        "primary-hover": "#172554",
+                        "background-light": "#F9FAFB", // Soft off-white
+                        "sidebar-light": "#F3F4F6", // Sophisticated light gray
+                        "card-light": "#FFFFFF", 
+                        "border-light": "#E5E7EB",
+                        "text-main": "#1F2937", // Dark charcoal
+                        "text-muted": "#6B7280", // Slate 500 equivalent
+                        "background-dark": "#101622", // Kept for reference but unused in light mode
+                        "card-dark": "#161b26", 
+                        "border-dark": "#282e39",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light font-display text-text-main antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<div class="flex w-64 flex-col border-r border-border-light bg-sidebar-light py-4 px-3 flex-shrink-0">
+<div class="flex items-center gap-3 px-2 mb-8 mt-2">
+<div class="flex items-center justify-center size-10 rounded-lg bg-primary text-white shadow-md shadow-primary/20">
+<span class="material-symbols-outlined text-2xl">draw</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-text-main text-base font-bold leading-tight">RM Writer</h1>
+<p class="text-text-muted text-xs font-medium">Global Dashboard</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white border border-border-light shadow-sm group transition-all" href="#">
+<span class="material-symbols-outlined text-primary transition-colors">dashboard</span>
+<span class="text-text-main text-sm font-medium">Dashboard</span>
+</a>
+<div class="h-px bg-border-light my-2 mx-2"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white hover:shadow-sm text-text-muted hover:text-text-main transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">grid_view</span>
+<span class="text-sm font-medium">Spaces</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white hover:shadow-sm text-text-muted hover:text-text-main transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">description</span>
+<span class="text-sm font-medium">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white hover:shadow-sm text-text-muted hover:text-text-main transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">hub</span>
+<span class="text-sm font-medium">Graph View</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white hover:shadow-sm text-text-muted hover:text-text-main transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">memory</span>
+<span class="text-sm font-medium">AI Studio</span>
+</a>
+</nav>
+<div class="flex flex-col gap-1 mt-auto">
+<div class="h-px bg-border-light my-2 mx-2"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white hover:shadow-sm text-text-muted hover:text-text-main transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white hover:shadow-sm text-text-muted hover:text-text-main transition-all group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">help</span>
+<span class="text-sm font-medium">Help &amp; Support</span>
+</a>
+<div class="flex items-center gap-3 mt-4 px-3 py-2">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center ring-2 ring-white shadow-sm" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDcy9RJWhuB4Lp5-KrDbU8RSWen48-yWc6eZVKESjk4eyKFrQMV_Zgplo7Ri_H6tTXrDJ0-f0kuBw3cwrP14L1FN0CcWQRVgnteLWRew3PKW7qt4uDolIFTsPVPbn0LC7noytNLc6lkVtys8v4FYP5e3i2KVHoyrvxic66lK3fK8N-pVTHrGgzbs-0hgz4P6O1DweSBalvKs-sxR3x5d8YkmuR7GrPSTy0LafcEsQ61kSVNw5oohSINicjJzRW5RCnh3MNARI5r18");'></div>
+<div class="flex flex-col">
+<p class="text-sm font-medium text-text-main">Alex Chen</p>
+<p class="text-xs text-text-muted">Pro Plan</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-background-light">
+<header class="flex items-center justify-between border-b border-border-light px-6 py-4 bg-white/80 backdrop-blur-md sticky top-0 z-30">
+<div class="flex flex-1 max-w-xl">
+<div class="relative w-full group">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+<span class="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+</div>
+<input class="block w-full p-2.5 pl-10 text-sm text-text-main bg-white border border-border-light rounded-lg focus:ring-1 focus:ring-primary focus:border-primary placeholder-slate-400 shadow-sm transition-all" placeholder="Search commands, documents, or ask AI..." type="text"/>
+<div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+<span class="text-xs text-slate-500 border border-slate-200 bg-slate-50 rounded px-1.5 py-0.5">⌘K</span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4 ml-6">
+<button class="relative p-2 text-slate-500 hover:text-text-main transition-colors rounded-lg hover:bg-slate-100">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-primary rounded-full border-2 border-white"></span>
+</button>
+<div class="h-6 w-px bg-border-light"></div>
+<button class="flex items-center justify-center gap-2 h-9 px-4 rounded-lg bg-white hover:bg-slate-50 text-text-main text-sm font-medium border border-border-light shadow-sm transition-all">
+<span class="material-symbols-outlined text-[18px]">person_add</span>
+<span>Invite</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-9 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-md shadow-primary/20 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>New Project</span>
+</button>
+</div>
+</header>
+<main class="flex-1 overflow-y-auto p-8 custom-scrollbar">
+<div class="max-w-5xl mx-auto mb-10">
+<h2 class="text-2xl font-bold text-text-main mb-6">Good morning, Alex</h2>
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-blue-400/50 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+<div class="relative flex items-center bg-white rounded-xl border border-border-light shadow-sm p-1">
+<div class="pl-4 pr-2 text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+<input class="w-full bg-transparent border-none text-text-main placeholder-slate-400 focus:ring-0 py-3 px-2 text-base" placeholder="Ask RM AI to generate a report, summarize notes, or draft an email..." type="text"/>
+<button class="bg-primary hover:bg-primary-hover text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors shadow-sm">
+                            Generate
+                        </button>
+</div>
+</div>
+<div class="flex gap-3 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border-light bg-white hover:bg-slate-50 text-slate-600 hover:text-text-main text-xs transition-colors whitespace-nowrap shadow-sm">
+<span class="material-symbols-outlined text-[16px]">summarize</span> Summarize last meeting
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border-light bg-white hover:bg-slate-50 text-slate-600 hover:text-text-main text-xs transition-colors whitespace-nowrap shadow-sm">
+<span class="material-symbols-outlined text-[16px]">edit_document</span> Draft Q4 proposal
+                    </button>
+<button class="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border-light bg-white hover:bg-slate-50 text-slate-600 hover:text-text-main text-xs transition-colors whitespace-nowrap shadow-sm">
+<span class="material-symbols-outlined text-[16px]">monitoring</span> Analyze Q3 metrics
+                    </button>
+</div>
+</div>
+<div class="max-w-5xl mx-auto">
+<div class="flex items-center justify-between mb-6">
+<h3 class="text-lg font-semibold text-text-main flex items-center gap-2">
+<span class="material-symbols-outlined text-slate-400">schedule</span>
+                        Recent Work
+                    </h3>
+<div class="flex items-center gap-2">
+<button class="p-1.5 rounded hover:bg-slate-100 text-slate-500 hover:text-text-main transition-colors">
+<span class="material-symbols-outlined text-[20px]">view_list</span>
+</button>
+<button class="p-1.5 rounded bg-white text-primary border border-border-light shadow-sm">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</button>
+</div>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+<div class="group relative flex flex-col bg-white border border-border-light rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-md transition-all cursor-pointer h-64">
+<div class="h-32 bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Abstract financial data visualization chart" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAQdm4oz3-FfZ2MG5eUhCaqYJRSoN6KZKS9xEvqc3NdG9ZHEfTTmy-WoLkFm_5NiuC5tdKFg3vsaHMy9Abfmk1QEDNae-Wv2V9F01YZp44eVjPCZiAjej-yOG4yVxNaBbxNQeDZZE0BTbArsWkQ2QWHFXjuXcu8vEKw9fI9_8I0ON3ixLDK4Gh2KI34IXC_9zJVs-PNKUGGjlm6AGVgF3h0bKUMhUGDVc9_Ckufd8VM0k_RGmrn6ZptDDabDQzV6nM6dLnaet89ygI");'></div>
+<div class="absolute top-3 right-3 z-20">
+<div class="bg-white/80 backdrop-blur rounded p-1 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">bar_chart</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<h4 class="text-text-main font-semibold text-sm mb-1 group-hover:text-primary transition-colors">Q3 Financials</h4>
+<p class="text-text-muted text-xs line-clamp-2 mb-auto">Comprehensive analysis of revenue streams and projected growth for the upcoming quarter.</p>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-light">
+<span class="text-[10px] text-slate-400">Edited 2h ago</span>
+<div class="flex -space-x-1.5">
+<img alt="User" class="size-5 rounded-full border border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDklYLrKPQV7NjcpyweCbf_Xpohun7GSTi0hJEI-SmLBjVYgKtC5v34O_B2ukPLzFXhs0XTC7Eo9wlH1b0GBoTbnVfXivpRvr-9drkkFPN5mH6tJr-a7aLMwQkezWOcRcAO6Bpc3MsIcokOrgs-8Zq6wKJOQpa8l3D27j1VPtm7rHIBTmTlrhMqGWgVgCota0hRj8p5ximbOJ9nV3OoZ09JjHC5wEKWCP7Gs0kmq8palBUWKwbBeB2OrHhG8Ld4LTB0BTbMuzvafCY"/>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white border border-border-light rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-md transition-all cursor-pointer h-64">
+<div class="h-32 bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Modern office meeting room discussion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD-fdafhuDjGp37tjBIruNfd4eftuPyNxROb9pjU98oLSo-fGPMGc3I3Mn40KICwM3z8rWbxX1JAx3irJjitl2Y5A4u7cH88u60EimVvkGPaydO-X14O3ihZolCYaZ80rdfHEaA2wom-ZogeJkYrAHMm5zQ-C77H9esXHQulm05yJGMC9t0LXoNRFfQnjjzSGHUeGBboiUY1FgrnyJpwH_kNGG--npVir6cAbqcW2_ars5JAUajOUqTMNbXx9QShRwgcgMiS9M-lNY");'></div>
+<div class="absolute top-3 right-3 z-20">
+<div class="bg-white/80 backdrop-blur rounded p-1 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">slideshow</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<h4 class="text-text-main font-semibold text-sm mb-1 group-hover:text-primary transition-colors">Product Roadmap 2024</h4>
+<p class="text-text-muted text-xs line-clamp-2 mb-auto">Strategic milestones for engineering and design teams including AI integration phases.</p>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-light">
+<span class="text-[10px] text-slate-400">Edited 5h ago</span>
+<div class="flex -space-x-1.5">
+<img alt="User" class="size-5 rounded-full border border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA47Od-AujFOQ1h-iSKRnWy81gbdIMcPsqiBQtNJxyfk0MPbe2lvZP0H0Z44kRlvGnrNGol9t-VAtO5eaJmmlwKCJIf6XDGgr1HMckGwC30vdKbylXwhkH29ZoXfzHwtUApdjM78tAV09pDZ9jvUz_0BrQTPlvTNtFBw8AQQgHu1I5pFp6FePv1THxcvSR8YnqUXJXPiHGljdA-04qMvdyAjuQtx1ukFL2cnARNz4A4eY8hfOlQFwyCrRmdhg6ScE-b5Ngp5cQFxys"/>
+<img alt="User" class="size-5 rounded-full border border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdQglYYRPYKDf4_-KR_nfeG9nmKpZ3wQGLGiVVFgyKi1goqAIJ594ykPosiQZKSPujokDwF0t92lvfFCuzPbqn9kpyJJ8vQm1snzdRSyf6yuqKoKWc3eogAC7J0Zt-e_X58K6LadqYbtpKWYvBhg5-pGiIGGpkJUubcPkxq5bYIRbCILlLouY2HLgy7GLAdD2p8EdwVBWlaG29Aw_IHez-GUR10bzGfTBdjkgdltTJcuh30vZDNJdmAfIXnkmn-aVQHXh-pwDf5Tc"/>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white border border-border-light rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-md transition-all cursor-pointer h-64">
+<div class="h-32 bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Abstract technology background circuitry" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBDpoALM1J5L1eEMNB9EQXR_6q92xOsc-qK0DwGWQeuLbKas_plH0bv5Tf8ZRcM5goDRvgmQ9VWJSKPBdebuTMD4ZaeGiobuBosFjEx0-udJKebFz-DYA88rq0IgaTaZpiKNRdKjRJQ0EwqyfBsLiA43oCy_6Suz_WlCCt0hXc3NUIEy6AYum6yMbXpFMkte-10gBHbxDyfyZUuau7njVWCi8KNgKfMiKPgBUHk6ByeCmfTgX-jzMt-3s9WN9h-TzCpw5qgeuWVB6E");'></div>
+<div class="absolute top-3 right-3 z-20">
+<div class="bg-white/80 backdrop-blur rounded p-1 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">article</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<h4 class="text-text-main font-semibold text-sm mb-1 group-hover:text-primary transition-colors">System Architecture V2</h4>
+<p class="text-text-muted text-xs line-clamp-2 mb-auto">Technical documentation regarding the new microservices deployment strategy.</p>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-light">
+<span class="text-[10px] text-slate-400">Edited yesterday</span>
+<div class="flex -space-x-1.5">
+<img alt="User" class="size-5 rounded-full border border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAr--cL8KqOaS1rmqALGES3kA6XPNb9I3lKkGyIMkR5gGivoMUNmzdtmYcnw_WsHIf2l7JBc9k5xou5i4msdO1axZr9ZblB9gFIEvGw106qAKWBmjmgVh8szLcfi1BhdmavKeBRpxJZ6zqirZQbfGrPN2GjfIoNOLAqZtZTOxJ0Qux8M9GYq-eZBRAlSebinhG7Ck6IVLlNptBOVDtm417VHXIRh_zaFT1JrRgCwSGLbqcq9TJARk13jAi0LRfz2zuzhtoN4bU7cnY"/>
+</div>
+</div>
+</div>
+</div>
+<div class="group relative flex flex-col bg-white border border-border-light rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-md transition-all cursor-pointer h-64">
+<div class="h-32 bg-slate-100 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-t from-white/90 to-transparent z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Minimalist fluid abstract shapes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBsyf04fC4P_rwG6qF2AFaHEo5mLpuW7iJlOosCkGRVFuNMgvDeWGAzSTEu8mKPgAz1L5POYg3-plfB7hMIaTUaG2zOr9f7At7e06Wg5nr1sho7N-y2fTTdx5XDI5hUdUEK5_ytDjso_dE2eR1K17NuuiQIRk7yXuOIdgjx15xfd64f2b4CqEaphsHimlL-zZvPmZxZXgscZNXpAJMSVOhKyoAdbuI9HH6jMWWUXmTtIWcHriOpHQ3TwHDUYfTnObF98EA0hCnuPCM");'></div>
+<div class="absolute top-3 right-3 z-20">
+<div class="bg-white/80 backdrop-blur rounded p-1 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[16px]">folder_open</span>
+</div>
+</div>
+</div>
+<div class="flex flex-col flex-1 p-4">
+<h4 class="text-text-main font-semibold text-sm mb-1 group-hover:text-primary transition-colors">User Research Notes</h4>
+<p class="text-text-muted text-xs line-clamp-2 mb-auto">Raw data and synthesized findings from the latest round of user interviews.</p>
+<div class="flex items-center justify-between mt-3 pt-3 border-t border-border-light">
+<span class="text-[10px] text-slate-400">Edited 2 days ago</span>
+<div class="flex -space-x-1.5">
+<img alt="User" class="size-5 rounded-full border border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD-_hBV1zC9Jm-u4dd7caTkZyI8I-et-ZBZJQKc6DGL30yZrSqOS7yfqsCcHJ8qhPV4QOpR8VfP_YQsKB9aRQBvnTlDBV2t5Wormh5NdPOWtGGKDDBLtiOQ-L3YyRMzcGcxhtKxxha8hVlo7xEk5zd-w9yqBPO-JqD_h_lFe0TrSvGkJhH-clItYeLhl8mrKByVK8pldBBMlFE3MzHS5UxM2U6e4kOk51R03mELCn3BQn_65G313w0jPB0J9TGXya_GwwkzafQ0lOs"/>
+<img alt="User" class="size-5 rounded-full border border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBx2GpiIe41w9s8s-9GuTfByDbMZvJr4d9wnLXOvjeW8Wi6779vfYNrtBZ6S6hn_OqWL7rXltqkqCZ1jS7b2_sLoyuVXNPgnwuL7aMaaFsDUdkad8J8VTl_J9AOLuS570iis9cbXVrBPbc27CEYVPow9pfwC_BhLJhX_u-eQx4aJKf_PCJgXBY6PJeEwVUEixr2nl1gjGUtknd036jM2wfeiQ7pqlxauYfI8ZiLdBGgGTqCUTxQGjfXfK8aWVV--2NpoZQhcwe7fNs"/>
+<div class="size-5 rounded-full border border-white bg-slate-100 flex items-center justify-center text-[8px] text-text-muted">+2</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-6">
+<div class="lg:col-span-2 bg-white border border-border-light rounded-xl p-5 shadow-sm">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-sm font-semibold text-text-main">Team Activity</h3>
+<button class="text-xs text-primary hover:text-blue-600 font-medium">View All</button>
+</div>
+<div class="space-y-4">
+<div class="flex gap-3">
+<div class="relative mt-1">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBfWWaQMtCwxkcF-pfHRtd4Y2FNH1tTFyc4F2sbWHYFSVambj9k58Kps2wA3FoCQhHFZGgY7QKtZWtAeD2jNGUEA_oRyrRhuvYWqYq7szClulHMcjOfdjS3FazfngtbO8W7E0fSpquowCRFkMIaGrDVaLM6muT36sGApUPCLAGOjyeBBQDAnh6OcQA3UCzCkGDrX48DkZvMA5OshL6Pc2jNWYHE8qwli4t5pA5QpPqUgJnsXHRb8D7pBtTS4KhTC-U3J9hPpq1IFSA");'></div>
+<div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-green-600 bg-green-50 rounded-full p-0.5">add</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-text-main"><span class="font-semibold">Sarah Miller</span> created a new space <span class="text-slate-600">"Marketing Q4"</span></p>
+<p class="text-xs text-slate-400 mt-0.5">10 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="relative mt-1">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDDKMHMZQdEPkH7M8LbqpNTibz2F9YwT3QUkZf0wm3RGKJ4cbZPmJVcptDXZBxYaBQCbHB7NjWGin02x8MNU4eJOjSoSipwyNbD9aIdLyESiyPiwED5nFNGBeI_-ql2QfeqsNuzh1OhsDUMQ658xBKm_lhBgr3-4B5E-P4eg3CAqOXp5KGvJF9F86OSTL_hgFxplrDiOvG5jCfPV2oSfHLgkvJETCoMlbp3h-r7ypEMMMrhWw6Uz5OdmBLiMbeaza7pj4E9qoVrpd0");'></div>
+<div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-blue-600 bg-blue-50 rounded-full p-0.5">comment</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-text-main"><span class="font-semibold">David Park</span> commented on <span class="text-slate-600">"System Architecture V2"</span></p>
+<p class="text-sm text-slate-500 mt-1 italic border-l-2 border-slate-200 pl-2">"This looks solid, but let's double check the latency requirements for the auth service."</p>
+<p class="text-xs text-slate-400 mt-1">45 minutes ago</p>
+</div>
+</div>
+<div class="flex gap-3">
+<div class="relative mt-1">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAD1X76AN_9Bo0z7JpLgPRGpCJHrfC087dP34-nhu3ZMCZoJLlSoIFx28MgXEBu9a1NoR1C4FafEJx-VBDkAlJeLT8TDw1I_oMYDGT08PFxVjL6oNAErpPtDZq-piqrLZf6hJJO1NMPBfeP9GBWM09FjG14acvbF4KdsKWJ2yLCZ8gW-ROTd6jYFJHe9Py_mvqOOUOK8a6_31uubgjAJ5U5ZEeldD9h85diNurn-eXOBjmFcZGiIxkbTD15BVKpq5-_JKq0eeeG_U");'></div>
+<div class="absolute -bottom-1 -right-1 bg-white rounded-full p-0.5 shadow-sm">
+<span class="material-symbols-outlined text-[12px] text-purple-600 bg-purple-50 rounded-full p-0.5">auto_awesome</span>
+</div>
+</div>
+<div>
+<p class="text-sm text-text-main"><span class="font-semibold">AI Assistant</span> generated summary for <span class="text-slate-600">"Weekly Sync"</span></p>
+<p class="text-xs text-slate-400 mt-0.5">1 hour ago</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex flex-col gap-4">
+<div class="bg-white border border-border-light rounded-xl p-5 flex-1 shadow-sm">
+<h3 class="text-sm font-semibold text-text-main mb-4">Storage Usage</h3>
+<div class="flex items-end gap-2 mb-2">
+<span class="text-3xl font-bold text-text-main">75%</span>
+<span class="text-xs text-slate-500 mb-1">of 1TB used</span>
+</div>
+<div class="w-full bg-slate-200 rounded-full h-2">
+<div class="bg-primary h-2 rounded-full" style="width: 75%"></div>
+</div>
+<div class="mt-4 flex flex-col gap-2">
+<div class="flex justify-between text-xs">
+<span class="text-slate-600 flex items-center gap-1"><span class="size-2 rounded-full bg-primary"></span> Documents</span>
+<span class="text-text-main font-medium">450 GB</span>
+</div>
+<div class="flex justify-between text-xs">
+<span class="text-slate-600 flex items-center gap-1"><span class="size-2 rounded-full bg-blue-400"></span> Media</span>
+<span class="text-text-main font-medium">210 GB</span>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-br from-primary to-blue-700 rounded-xl p-5 text-white flex-1 flex flex-col justify-between relative overflow-hidden shadow-md">
+<div class="absolute right-0 top-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-[80px]">auto_awesome</span>
+</div>
+<div>
+<h3 class="text-sm font-semibold opacity-90">AI Credits</h3>
+<p class="text-2xl font-bold mt-1">2,450 <span class="text-sm font-normal opacity-70">/ 5,000</span></p>
+</div>
+<button class="mt-3 w-full py-2 bg-white/20 hover:bg-white/30 backdrop-blur rounded text-xs font-medium transition-colors border border-white/10">
+                                 Top up Credits
+                             </button>
+</div>
+</div>
+</div>
+</div>
+<footer class="max-w-5xl mx-auto mt-10 pb-4 text-center">
+<p class="text-slate-500 text-xs">© 2024 RM Writer Inc. All rights reserved. <a class="hover:text-primary transition-colors" href="#">Privacy Policy</a> • <a class="hover:text-primary transition-colors" href="#">Terms</a></p>
+</footer>
+</main>
+</div>
+</div>
+
+</body></html>

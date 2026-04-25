@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Document View</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f49bd",
+                        "bg-canvas": "#ffffff",
+                        "bg-sidebar": "#f8f9fa",
+                        "bg-panel": "#ffffff",
+                        "border-light": "#e2e4e7",
+                        "text-main": "#1f2937",
+                        "text-secondary": "#6b7280",
+                        "ai-tint": "#f0f7ff",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    boxShadow: {
+                        'soft': '0 2px 8px rgba(0, 0, 0, 0.04)',
+                    }
+                },
+            },
+        }
+    </script>
+<style>::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e2e4e7;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #cbd5e1;
+        }
+    </style>
+</head>
+<body class="bg-bg-sidebar text-text-main font-display overflow-hidden h-screen flex flex-col">
+<header class="flex flex-none items-center justify-between whitespace-nowrap border-b border-solid border-border-light bg-white px-6 py-3 shadow-sm z-10">
+<div class="flex items-center gap-4 text-text-main">
+<div class="size-6 text-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">design_services</span>
+</div>
+<h2 class="text-text-main text-lg font-bold leading-tight tracking-[-0.015em]">RM Writer</h2>
+</div>
+<div class="flex flex-1 justify-center">
+<div class="flex bg-gray-100 rounded-lg p-1 border border-border-light">
+<button class="px-4 py-1.5 rounded text-xs font-medium bg-white text-primary shadow-sm ring-1 ring-black/5">Document</button>
+<button class="px-4 py-1.5 rounded text-xs font-medium text-text-secondary hover:text-text-main hover:bg-white/50 transition-colors">Whiteboard</button>
+<button class="px-4 py-1.5 rounded text-xs font-medium text-text-secondary hover:text-text-main hover:bg-white/50 transition-colors">Database</button>
+</div>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<div class="hidden md:flex items-center gap-6">
+<button class="text-text-secondary hover:text-text-main text-sm font-medium leading-normal transition-colors">File</button>
+<button class="text-text-secondary hover:text-text-main text-sm font-medium leading-normal transition-colors">Edit</button>
+<button class="text-text-secondary hover:text-text-main text-sm font-medium leading-normal transition-colors">View</button>
+<button class="text-text-secondary hover:text-text-main text-sm font-medium leading-normal transition-colors flex items-center gap-1">
+                AI Tools
+                <span class="material-symbols-outlined text-[16px]">colors_spark</span>
+</button>
+</div>
+<div class="h-6 w-px bg-border-light mx-2 hidden md:block"></div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 transition-colors text-white text-sm font-bold shadow-md shadow-primary/20">
+<span class="truncate">Share</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border border-border-light ring-2 ring-white" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA5mwoQtIAVW8Nsum-pVMTSWQbw8hdGFbLqLCKLnwrOiYO-pLjgOxd_TNZFKbaOT6SDOOEIo0POLDx6gZ2iuwHhAeu4OdSLzjaFQB7rwow1KCJI0eFhTi4388Vhi7QDq6GjFpS4oI4kwPKTRCBwtXVzlt7A2d7nh8uMUKK5kHPDGfhyqLIw7M1I9eEcUpc0PgGKFWYO9dYdTxP-2U6cAFnHbHOj2bxvyWYmYnkFFsIky6D1bueEQabIM8Iwk-t_oslyIBrGXLFiCVk");'></div>
+</div>
+</header>
+<div class="flex flex-1 overflow-hidden">
+<aside class="w-64 flex-none flex flex-col border-r border-border-light bg-bg-sidebar hidden lg:flex">
+<div class="p-4 border-b border-border-light">
+<button class="flex items-center justify-between w-full p-2 hover:bg-white hover:shadow-sm rounded-lg transition-all group border border-transparent hover:border-border-light">
+<div class="flex flex-col items-start">
+<span class="text-text-main text-sm font-semibold">Project Alpha</span>
+<span class="text-text-secondary text-xs">v2.4.0</span>
+</div>
+<span class="material-symbols-outlined text-text-secondary group-hover:text-text-main text-[20px]">expand_more</span>
+</button>
+</div>
+<nav class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
+<div class="px-3 pb-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Workspace</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-white hover:shadow-sm hover:text-text-main transition-all group border border-transparent hover:border-border-light" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">folder_open</span>
+<span class="text-sm font-medium">All Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-white text-primary border border-border-light shadow-sm transition-colors" href="#">
+<span class="material-symbols-outlined text-[20px] text-primary">terminal</span>
+<span class="text-sm font-medium">Engineering Specs</span>
+</a>
+<div class="pl-9 pr-2 space-y-0.5">
+<a class="block px-3 py-1.5 rounded-md text-sm text-text-secondary hover:text-text-main hover:bg-gray-100 transition-colors" href="#">Frontend Architecture</a>
+<a class="block px-3 py-1.5 rounded-md text-sm text-primary font-medium bg-primary/5 border-l-2 border-primary" href="#">Auth Service</a>
+<a class="block px-3 py-1.5 rounded-md text-sm text-text-secondary hover:text-text-main hover:bg-gray-100 transition-colors" href="#">Database Schema</a>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-white hover:shadow-sm hover:text-text-main transition-all group border border-transparent hover:border-border-light" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">sticky_note_2</span>
+<span class="text-sm font-medium">Founder Notes</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-white hover:shadow-sm hover:text-text-main transition-all group border border-transparent hover:border-border-light" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">bolt</span>
+<span class="text-sm font-medium">Sprints</span>
+</a>
+<div class="mt-6 px-3 pb-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Resources</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-white hover:shadow-sm hover:text-text-main transition-all group border border-transparent hover:border-border-light" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">book</span>
+<span class="text-sm font-medium">Design System</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-text-secondary hover:bg-white hover:shadow-sm hover:text-text-main transition-all group border border-transparent hover:border-border-light" href="#">
+<span class="material-symbols-outlined text-[20px] group-hover:text-primary transition-colors">inventory_2</span>
+<span class="text-sm font-medium">Archive</span>
+</a>
+</nav>
+<div class="p-4 border-t border-border-light">
+<button class="flex w-full cursor-pointer items-center justify-center rounded-lg h-10 bg-white border border-border-light hover:border-primary/50 hover:text-primary text-text-secondary hover:shadow-sm text-sm font-semibold transition-all">
+<span class="material-symbols-outlined text-[20px] mr-2">add</span>
+                New Page
+            </button>
+</div>
+</aside>
+<main class="flex-1 flex flex-col relative bg-bg-canvas overflow-hidden">
+<div class="flex-none px-12 pt-8 pb-4 border-b border-transparent">
+<div class="flex items-center gap-2 text-sm text-text-secondary mb-4">
+<span class="hover:text-text-main cursor-pointer transition-colors">Engineering Specs</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="hover:text-text-main cursor-pointer transition-colors">Backend</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-text-main font-medium bg-gray-100 px-2 py-0.5 rounded border border-border-light">Auth Service</span>
+</div>
+<h1 class="text-4xl font-bold text-gray-900 tracking-tight mb-3">Authentication Service Architecture</h1>
+<div class="flex items-center gap-4 text-xs text-text-secondary">
+<div class="flex items-center gap-1.5">
+<div class="size-5 rounded-full bg-cover bg-center ring-1 ring-border-light" data-alt="Editor avatar" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCci99N0tVllabDarkTI3Wx8wVKTDAuOJtK2Mr-h4GPo2PiOWubjm8PR69eTrXWQzRtVi4NEoe4cjdfWJ3SvJIevDmlLAUrY2MrZPYMWbH23c0X8vHAY0P2Y5pgcCfMGCU1jvZ6Pwx-Af7dTgix3R992vtXhxsFMasuWS4OEZn3WZE7pjqmMaJxKh3MIhlhiPX8-98iDREatybVIZVqYDHaa_rKh4fFuORBl-rCA1VsxoQN9ilcdz7sZ3RvgKYAu9ac719bcv_VCfI')"></div>
+<span class="text-gray-500">Last edited 2 mins ago by Sarah</span>
+</div>
+<span class="size-1 rounded-full bg-gray-300"></span>
+<div class="flex items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-[14px] filled">auto_awesome</span>
+<span class="font-medium">AI Context Active</span>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto px-12 py-6">
+<div class="max-w-[800px] mx-auto pb-20">
+<p class="text-lg text-gray-700 leading-relaxed mb-8">
+                    This document outlines the architectural decisions and implementation details for the new authentication microservice. The goal is to provide a secure, scalable, and standards-compliant identity provider for the RM ecosystem.
+                </p>
+<div class="bg-ai-tint border border-blue-100 rounded-xl p-6 mb-8 relative group">
+<div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-1.5 hover:bg-white hover:shadow-sm rounded text-text-secondary hover:text-text-main">
+<span class="material-symbols-outlined text-[18px]">content_copy</span>
+</button>
+</div>
+<h3 class="text-sm font-semibold text-blue-900/70 uppercase tracking-wider mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+                        Core Components
+                    </h3>
+<ul class="space-y-3">
+<li class="flex items-start gap-3">
+<span class="mt-1.5 size-1.5 rounded-full bg-primary flex-none"></span>
+<span class="text-gray-800"><strong>Identity Provider (IdP)</strong>: Handles user login, MFA, and session management using OAuth2 / OIDC protocols.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="mt-1.5 size-1.5 rounded-full bg-primary flex-none"></span>
+<span class="text-gray-800"><strong>Token Service</strong>: Issues JWT access and refresh tokens with specific scopes.</span>
+</li>
+<li class="flex items-start gap-3">
+<span class="mt-1.5 size-1.5 rounded-full bg-primary flex-none"></span>
+<span class="text-gray-800"><strong>User Directory</strong>: Encrypted storage for user profiles and credentials using PostgreSQL.</span>
+</li>
+</ul>
+</div>
+<h2 class="text-2xl font-bold text-gray-900 mb-4 mt-8">System Flow</h2>
+<p class="text-gray-700 leading-relaxed mb-6">
+                    The authentication flow follows the standard Authorization Code Flow with PKCE for public clients (SPA/Mobile) and Client Credentials Flow for service-to-service communication.
+                </p>
+<div class="rounded-lg overflow-hidden border border-border-light bg-gray-50 mb-8 font-mono text-sm shadow-sm">
+<div class="flex items-center justify-between px-4 py-2 bg-gray-100 border-b border-border-light">
+<span class="text-xs text-gray-500 font-medium">auth-config.ts</span>
+<span class="text-xs text-gray-500">Typescript</span>
+</div>
+<div class="p-4 overflow-x-auto bg-white">
+<pre><code class="language-typescript"><span class="text-purple-600">export</span> <span class="text-purple-600">const</span> <span class="text-blue-600">authConfig</span> = {
+  <span class="text-sky-600">domain</span>: <span class="text-emerald-600">process.env.AUTH_DOMAIN</span>,
+  <span class="text-sky-600">clientId</span>: <span class="text-emerald-600">process.env.AUTH_CLIENT_ID</span>,
+  <span class="text-sky-600">audience</span>: <span class="text-emerald-600">"https://api.rmwriter.com"</span>,
+  <span class="text-sky-600">scope</span>: <span class="text-emerald-600">"read:documents write:documents"</span>
+};</code></pre>
+</div>
+</div>
+<h2 class="text-2xl font-bold text-gray-900 mb-4">Security Considerations</h2>
+<p class="text-gray-700 leading-relaxed">
+                    All tokens must be signed using RS256. The public key will be exposed via a JWKS endpoint for services to validate signatures. Sensitive environment variables are stored in Vault.
+                </p>
+</div>
+</div>
+<div class="absolute bottom-8 right-8">
+<button class="size-14 bg-primary rounded-full shadow-lg shadow-primary/30 flex items-center justify-center text-white hover:scale-105 transition-transform">
+<span class="material-symbols-outlined text-[28px]">edit</span>
+</button>
+</div>
+</main>
+<aside class="w-80 flex-none bg-bg-sidebar border-l border-border-light flex flex-col hidden xl:flex">
+<div class="p-4 border-b border-border-light flex items-center justify-between bg-white/50 backdrop-blur-sm">
+<h3 class="text-sm font-semibold text-text-main">Context Intelligence</h3>
+<span class="material-symbols-outlined text-text-secondary text-[20px] cursor-pointer hover:text-text-main">tune</span>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<h4 class="text-xs font-semibold text-text-secondary uppercase tracking-wider">TL;DR Summary</h4>
+<span class="bg-primary/10 text-primary border border-primary/20 text-[10px] px-1.5 py-0.5 rounded font-mono font-medium">AI</span>
+</div>
+<p class="text-sm text-gray-700 leading-snug p-3 bg-white border border-border-light rounded-lg shadow-sm">
+                    Architecture for new Auth Service using OAuth2/OIDC. Includes IdP, Token Service, and User Directory. Public clients use PKCE.
+                </p>
+</div>
+<div class="space-y-3">
+<h4 class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Related Context</h4>
+<div class="space-y-2">
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-border-light cursor-pointer transition-all">
+<div class="mt-0.5 bg-blue-50 p-1.5 rounded text-blue-600 border border-blue-100">
+<span class="material-symbols-outlined text-[16px]">description</span>
+</div>
+<div>
+<p class="text-sm text-text-main font-medium group-hover:text-primary transition-colors">API Gateway Config</p>
+<p class="text-xs text-text-secondary">Mentioned as consumer of tokens</p>
+</div>
+</div>
+<div class="group flex items-start gap-3 p-2 rounded hover:bg-white hover:shadow-sm border border-transparent hover:border-border-light cursor-pointer transition-all">
+<div class="mt-0.5 bg-purple-50 p-1.5 rounded text-purple-600 border border-purple-100">
+<span class="material-symbols-outlined text-[16px]">task</span>
+</div>
+<div>
+<p class="text-sm text-text-main font-medium group-hover:text-primary transition-colors">Q3 Security Audit</p>
+<p class="text-xs text-text-secondary">Blocks deployment until resolved</p>
+</div>
+</div>
+</div>
+</div>
+<div class="space-y-3">
+<h4 class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Suggested Tags</h4>
+<div class="flex flex-wrap gap-2">
+<span class="px-2 py-1 rounded bg-white border border-border-light text-xs text-text-secondary hover:bg-primary hover:text-white hover:border-primary cursor-pointer transition-colors shadow-sm">#backend</span>
+<span class="px-2 py-1 rounded bg-white border border-border-light text-xs text-text-secondary hover:bg-primary hover:text-white hover:border-primary cursor-pointer transition-colors shadow-sm">#security</span>
+<span class="px-2 py-1 rounded bg-white border border-border-light text-xs text-text-secondary hover:bg-primary hover:text-white hover:border-primary cursor-pointer transition-colors shadow-sm">#architecture</span>
+<span class="px-2 py-1 rounded border border-dashed border-gray-300 text-xs text-text-secondary hover:text-text-main hover:border-gray-400 cursor-pointer flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">add</span> Add
+                    </span>
+</div>
+</div>
+<div class="space-y-3 pt-4 border-t border-border-light">
+<h4 class="text-xs font-semibold text-text-secondary uppercase tracking-wider">Active Contributors</h4>
+<div class="flex -space-x-2">
+<div class="size-8 rounded-full ring-2 ring-white bg-cover bg-center shadow-sm" data-alt="Contributor Sarah" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBMx4xdB2uSFw0poCgDrv7vALdZ7T_gKEgULpCJqq7_gfvkXBd_6BNsZOgkC_1pkNHKmQC1PMSCxr2bFG7eq4zLDySLhjhCpfMnOYEJJhVuRbjJDKPpgREFFWorDJ8XmmUF9hubkxcCD4ZR4dC9W7DDbfHeoNfaMb7wZr59hPMX4yQ4rSayCKSf81_CON9u8x7jaUjSDw2dawF1ughfwbR-BFp_BjTkTDlUVFGcHP5SCdrP2KwCpBA-W75S024rJ4Ag5qvgHAGwNA8')"></div>
+<div class="size-8 rounded-full ring-2 ring-white bg-cover bg-center shadow-sm" data-alt="Contributor Mike" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuA5yY2IBqUqG8l7htg2RJ8l0PF-gtmTwSQY13_9rKNx1kT6rrzApNj01PFWvubrdLI_iXvkkMo-gzUfU60h2r2BSp1-RYbFh5uO_-6XFnB4bug18N_uySEGN5aNgTGIsFHDc4apevhLZKlQjzDmU8uJgn17G3iTRGOD1yXNV_YPE_D8r9APwHQTRzEk7PX63p5iJlSds8DHQNPNZMztjI_53HXOM0llL6NwEg1I8I4VnCXrGE-R5tY5JpTLniWN4VihCtmfN6hrUsE')"></div>
+<div class="size-8 rounded-full ring-2 ring-white bg-cover bg-center shadow-sm" data-alt="Contributor John" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBTzFxxccGqSMEpvCIbf-U4qDA15Thd9UD4ilgCQ-E8r7G2kyj-EnUStRRzcUNhXu762F3jjNyIc1S53hCHj5J21f-5xnLd-jzd40ZMSLdOFp698KAPPm77pL-dpSotNpQkiL6PvdU-4oTBV1mi3h93StyAdhem0p2LMa2-15xU7nb9vjYvPWfBL1099rIijeLi9JZyuxrxCrb3DspUlNMxaIbXvMuhVIG3e_sCcTvmO0otzdBgQp426jM5AFK1aaP-Ve0XlBcX-Pc')"></div>
+<div class="size-8 rounded-full ring-2 ring-white bg-gray-100 border border-gray-200 flex items-center justify-center text-xs font-medium text-gray-500 shadow-sm">+2</div>
+</div>
+</div>
+</div>
+<div class="p-4 border-t border-border-light bg-white/50 backdrop-blur-sm">
+<button class="w-full py-2 px-3 rounded-lg bg-white border border-border-light hover:border-primary/30 hover:shadow-md text-primary text-sm font-medium transition-all flex items-center justify-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">auto_fix_high</span>
+                Generate Insight
+            </button>
+</div>
+</aside>
+</div>
+
+</body></html>

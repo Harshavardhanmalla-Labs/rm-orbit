@@ -1,0 +1,494 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "calendar_created_standard",
+      "channel": "calendar.event.created",
+      "pattern": "calendar.*",
+      "payload": {
+        "timestamp": "2026-03-01T12:00:00Z",
+        "source": "calendar",
+        "event_type": "calendar.event.created",
+        "org_id": "org-a",
+        "user_id": "u1",
+        "data": {
+          "event_id": "evt-1"
+        }
+      },
+      "expected": {
+        "processed": true,
+        "event_type": "calendar.event.created",
+        "org_id": "org-a",
+        "schema_version": 1
+      }
+    },
+    {
+      "id": "planet_activity_infers_event_type",
+      "channel": "planet.activity",
+      "pattern": "planet.*",
+      "payload": {
+        "timestamp": "2026-03-01T12:01:00Z",
+        "source": "planet",
+        "org_id": "org-b",
+        "user_id": "u2",
+        "action": "create_customer",
+        "details": {
+          "customer_id": "C001"
+        }
+      },
+      "expected": {
+        "processed": true,
+        "event_type": "planet.activity",
+        "org_id": "org-b",
+        "schema_version": 1
+      }
+    },
+    {
+      "id": "mail_activity_promotes_nested_org",
+      "channel": "mail.activity",
+      "pattern": "mail.*",
+      "payload": {
+        "timestamp": "2026-03-01T12:02:00Z",
+        "source": "mail",
+        "data": {
+          "org_id": "org-c",
+          "email_id": "e1"
+        }
+      },
+      "expected": {
+        "processed": true,
+        "event_type": "mail.activity",
+        "org_id": "org-c",
+        "schema_version": 1
+      }
+    },
+    {
+      "id": "meet_offer_preserves_explicit_schema_version",
+      "channel": "meeting.signal.offer",
+      "pattern": "meeting.*",
+      "payload": {
+        "timestamp": "2026-03-01T12:03:00Z",
+        "source": "meet",
+        "event_type": "meeting.signal.offer",
+        "schema_version": 2,
+        "org_id": "org-d",
+        "user_id": "u3",
+        "data": {
+          "meeting_id": "m-1"
+        }
+      },
+      "expected": {
+        "processed": true,
+        "event_type": "meeting.signal.offer",
+        "org_id": "org-d",
+        "schema_version": 2
+      }
+    },
+    {
+      "id": "connect_chat_message_standard",
+      "channel": "chat.message",
+      "pattern": "chat.*",
+      "payload": {
+        "timestamp": "2026-03-01T12:04:00Z",
+        "source": "connect",
+        "event_type": "chat.message",
+        "event_id": "evt-connect-chat-1",
+        "org_id": "org-e",
+        "user_id": "u4",
+        "data": {
+          "channelId": "general",
+          "content": "hello from connect"
+        }
+      },
+      "expected": {
+        "processed": true,
+        "event_type": "chat.message",
+        "org_id": "org-e",
+        "schema_version": 1,
+        "event_id": "evt-connect-chat-1"
+      }
+    },
+    {
+      "id": "project_created_missing_org_rejected",
+      "channel": "project.created",
+      "pattern": "project.*",
+      "payload": {
+        "timestamp": "2026-03-01T12:05:00Z",
+        "source": "atlas",
+        "event_type": "project.created",
+        "data": {
+          "project_id": "p1"
+        }
+      },
+      "expected": {
+        "processed": false
+      }
+    }
+  ],
+  "publisher_cases": [
+    {
+      "id": "calendar_default",
+      "service": "calendar",
+      "channel": "calendar.event.created",
+      "event": {
+        "event_id": "evt-calendar-1",
+        "org_id": "org-a",
+        "user_id": "u1",
+        "data": {
+          "event_id": "evt-1"
+        }
+      },
+      "expected": {
+        "source": "calendar",
+        "event_type": "calendar.event.created",
+        "schema_version": 1,
+        "org_id": "org-a",
+        "user_id": "u1",
+        "event_id": "evt-calendar-1"
+      }
+    },
+    {
+      "id": "calendar_nested_org",
+      "service": "calendar",
+      "channel": "calendar.event.updated",
+      "event": {
+        "data": {
+          "event_id": "evt-2",
+          "org_id": "org-b"
+        }
+      },
+      "expected": {
+        "source": "calendar",
+        "event_type": "calendar.event.updated",
+        "schema_version": 1,
+        "org_id": "org-b"
+      }
+    },
+    {
+      "id": "calendar_explicit_schema",
+      "service": "calendar",
+      "channel": "calendar.event.deleted",
+      "event": {
+        "schema_version": 2,
+        "org_id": "org-c",
+        "data": {
+          "event_id": "evt-3"
+        }
+      },
+      "expected": {
+        "source": "calendar",
+        "event_type": "calendar.event.deleted",
+        "schema_version": 2,
+        "org_id": "org-c"
+      }
+    },
+    {
+      "id": "planet_default",
+      "service": "planet",
+      "channel": "planet.activity",
+      "event": {
+        "event_id": "evt-planet-1",
+        "org_id": "org-a",
+        "user_id": "u1",
+        "action": "create_customer",
+        "details": {
+          "customer_id": "C001"
+        }
+      },
+      "expected": {
+        "source": "planet",
+        "event_type": "planet.activity",
+        "schema_version": 1,
+        "org_id": "org-a",
+        "user_id": "u1",
+        "event_id": "evt-planet-1"
+      }
+    },
+    {
+      "id": "planet_nested_org",
+      "service": "planet",
+      "channel": "planet.deal.closed",
+      "event": {
+        "data": {
+          "org_id": "org-b",
+          "deal_id": "d1"
+        }
+      },
+      "expected": {
+        "source": "planet",
+        "event_type": "planet.deal.closed",
+        "schema_version": 1,
+        "org_id": "org-b"
+      }
+    },
+    {
+      "id": "planet_explicit_schema",
+      "service": "planet",
+      "channel": "planet.activity",
+      "event": {
+        "schema_version": 2,
+        "org_id": "org-c",
+        "action": "update_customer"
+      },
+      "expected": {
+        "source": "planet",
+        "event_type": "planet.activity",
+        "schema_version": 2,
+        "org_id": "org-c"
+      }
+    },
+    {
+      "id": "mail_default",
+      "service": "mail",
+      "channel": "mail.activity",
+      "event": {
+        "event_id": "evt-mail-1",
+        "org_id": "org-a",
+        "user_id": "u1",
+        "action": "mail.send",
+        "details": {
+          "email_id": "e1"
+        }
+      },
+      "expected": {
+        "source": "mail",
+        "event_type": "mail.activity",
+        "schema_version": 1,
+        "org_id": "org-a",
+        "user_id": "u1",
+        "event_id": "evt-mail-1"
+      }
+    },
+    {
+      "id": "mail_nested_org",
+      "service": "mail",
+      "channel": "mail.sent",
+      "event": {
+        "data": {
+          "org_id": "org-b",
+          "email_id": "e2"
+        }
+      },
+      "expected": {
+        "source": "mail",
+        "event_type": "mail.sent",
+        "schema_version": 1,
+        "org_id": "org-b"
+      }
+    },
+    {
+      "id": "mail_explicit_schema",
+      "service": "mail",
+      "channel": "mail.activity",
+      "event": {
+        "schema_version": 2,
+        "org_id": "org-c",
+        "action": "mail.archive"
+      },
+      "expected": {
+        "source": "mail",
+        "event_type": "mail.activity",
+        "schema_version": 2,
+        "org_id": "org-c"
+      }
+    },
+    {
+      "id": "meet_default",
+      "service": "meet",
+      "channel": "meeting.recording.started",
+      "event": {
+        "event_id": "evt-meet-1",
+        "org_id": "org-a",
+        "user_id": "u1",
+        "data": {
+          "meeting_id": "m-1"
+        }
+      },
+      "expected": {
+        "source": "meet",
+        "event_type": "meeting.recording.started",
+        "schema_version": 1,
+        "org_id": "org-a",
+        "user_id": "u1",
+        "event_id": "evt-meet-1"
+      }
+    },
+    {
+      "id": "meet_nested_org",
+      "service": "meet",
+      "channel": "meeting.recording.stopped",
+      "event": {
+        "data": {
+          "org_id": "org-b",
+          "meeting_id": "m-2"
+        }
+      },
+      "expected": {
+        "source": "meet",
+        "event_type": "meeting.recording.stopped",
+        "schema_version": 1,
+        "org_id": "org-b"
+      }
+    },
+    {
+      "id": "meet_explicit_schema",
+      "service": "meet",
+      "channel": "meeting.signal.offer",
+      "event": {
+        "schema_version": 2,
+        "org_id": "org-c",
+        "data": {
+          "meeting_id": "m-3"
+        }
+      },
+      "expected": {
+        "source": "meet",
+        "event_type": "meeting.signal.offer",
+        "schema_version": 2,
+        "org_id": "org-c"
+      }
+    },
+    {
+      "id": "learn_default",
+      "service": "learn",
+      "channel": "learn.doc.created",
+      "event": {
+        "event_id": "evt-learn-1",
+        "org_id": "org-a",
+        "user_id": "u11",
+        "data": {
+          "slug": "getting-started",
+          "title": "Getting Started"
+        }
+      },
+      "expected": {
+        "source": "learn",
+        "event_type": "learn.doc.created",
+        "schema_version": 1,
+        "org_id": "org-a",
+        "user_id": "u11",
+        "event_id": "evt-learn-1"
+      }
+    },
+    {
+      "id": "capitalhub_default",
+      "service": "capitalhub",
+      "channel": "capitalhub.asset.created",
+      "event": {
+        "event_id": "evt-capitalhub-1",
+        "org_id": "org-b",
+        "user_id": "u12",
+        "data": {
+          "id": 7,
+          "name": "Cash Reserve",
+          "value": 120000
+        }
+      },
+      "expected": {
+        "source": "capitalhub",
+        "event_type": "capitalhub.asset.created",
+        "schema_version": 1,
+        "org_id": "org-b",
+        "user_id": "u12",
+        "event_id": "evt-capitalhub-1"
+      }
+    },
+    {
+      "id": "secure_explicit_schema",
+      "service": "secure",
+      "channel": "secure.device.registered",
+      "event": {
+        "event_id": "evt-secure-1",
+        "org_id": "org-c",
+        "schema_version": 2,
+        "data": {
+          "id": 4,
+          "name": "Laptop-22"
+        }
+      },
+      "expected": {
+        "source": "secure",
+        "event_type": "secure.device.registered",
+        "schema_version": 2,
+        "org_id": "org-c",
+        "event_id": "evt-secure-1"
+      }
+    },
+    {
+      "id": "writer_default",
+      "service": "writer",
+      "channel": "writer.document.created",
+      "event": {
+        "event_id": "evt-writer-1",
+        "org_id": "org-w1",
+        "user_id": "u20",
+        "data": {
+          "document_id": "doc-1",
+          "workspace_id": "ws-w1"
+        }
+      },
+      "expected": {
+        "source": "writer",
+        "event_type": "writer.document.created",
+        "schema_version": 1,
+        "org_id": "org-w1",
+        "user_id": "u20",
+        "event_id": "evt-writer-1"
+      }
+    },
+    {
+      "id": "writer_nested_org",
+      "service": "writer",
+      "channel": "writer.block.updated",
+      "event": {
+        "data": {
+          "org_id": "org-w2",
+          "block_id": "blk-2"
+        }
+      },
+      "expected": {
+        "source": "writer",
+        "event_type": "writer.block.updated",
+        "schema_version": 1,
+        "org_id": "org-w2"
+      }
+    },
+    {
+      "id": "writer_explicit_schema",
+      "service": "writer",
+      "channel": "writer.relation.created",
+      "event": {
+        "schema_version": 2,
+        "org_id": "org-w3",
+        "data": {
+          "relation_id": "rel-3"
+        }
+      },
+      "expected": {
+        "source": "writer",
+        "event_type": "writer.relation.created",
+        "schema_version": 2,
+        "org_id": "org-w3"
+      }
+    },
+    {
+      "id": "snitch_eventbus_nested_org",
+      "service": "snitch-eventbus",
+      "channel": "learn.doc.updated",
+      "event": {
+        "event_id": "evt-snitch-eventbus-1",
+        "data": {
+          "org_id": "org-d",
+          "slug": "architecture-guide"
+        }
+      },
+      "expected": {
+        "source": "snitch-eventbus",
+        "event_type": "learn.doc.updated",
+        "schema_version": 1,
+        "org_id": "org-d",
+        "event_id": "evt-snitch-eventbus-1"
+      }
+    }
+  ]
+}

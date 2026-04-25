@@ -1,0 +1,30 @@
+{
+  "_comment": "Authoritative port registry for RM Orbit. Each key is the systemd service name (without .service). Edit here first, then run patch-services.sh.",
+
+  "aibookly-frontend":          10006,
+  "aibookly-backend":           46015,
+
+  "scribe-frontend":            10001,
+  "scribe-backend":             6400,
+
+  "gate-frontend":              45001,
+  "meet-frontend":              45003,
+  "mail-frontend":              45004,
+  "planet-frontend":            45006,
+  "connect-frontend":           45008,
+  "learn-frontend":             45009,
+  "writer-frontend":            45010,
+  "control-center-frontend":    45011,
+  "control-center-backend":     8077,
+  "turbotick-frontend":         45018,
+  "turbotick-backend":          6100,
+
+  "atlas-frontend":             5173,
+  "atlas-backend":              8000,
+  "planet-backend":             46000,
+
+  "crawler-frontend":           5176,
+  "crawler-backend":            8003,
+  "sma-frontend":               5175,
+  "sma-backend":                8002
+}

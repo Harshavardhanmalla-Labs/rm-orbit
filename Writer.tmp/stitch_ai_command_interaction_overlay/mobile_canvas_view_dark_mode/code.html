@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Mobile Canvas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "card-dark": "#1c1f27",
+                        "border-dark": "#282e39",
+                        "text-subtle": "#9da6b9",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282e39;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4354;
+        }
+        .connection-line {
+            position: absolute;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display min-h-screen flex flex-col items-center justify-center overflow-hidden">
+<div class="relative flex h-full w-full max-w-[480px] flex-col bg-background-dark shadow-2xl overflow-hidden border-x border-border-dark min-h-screen">
+<!-- Header -->
+<header class="flex flex-col gap-4 border-b border-border-dark px-5 py-4 bg-background-dark/95 backdrop-blur-sm z-20 sticky top-0">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="size-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-xl">auto_awesome</span>
+</div>
+<h2 class="text-white text-lg font-bold tracking-tight">RM Writer</h2>
+</div>
+<button class="size-10 rounded-full hover:bg-white/5 flex items-center justify-center text-white transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</button>
+</div>
+<!-- Search Bar -->
+<div class="relative w-full">
+<div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-text-subtle">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-card-dark border border-border-dark rounded-xl py-2.5 pl-10 pr-4 text-sm text-white placeholder-text-subtle focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all" placeholder="Search canvas..." type="text"/>
+</div>
+<!-- Tabs -->
+<div class="flex gap-2 overflow-x-auto pb-1 no-scrollbar -mx-5 px-5">
+<button class="whitespace-nowrap rounded-full bg-primary text-white px-4 py-1.5 text-xs font-semibold tracking-wide">
+                    All Notes
+                </button>
+<button class="whitespace-nowrap rounded-full bg-card-dark border border-border-dark text-text-subtle hover:text-white hover:border-white/20 px-4 py-1.5 text-xs font-medium transition-colors">
+                    AI Drafts
+                </button>
+<button class="whitespace-nowrap rounded-full bg-card-dark border border-border-dark text-text-subtle hover:text-white hover:border-white/20 px-4 py-1.5 text-xs font-medium transition-colors">
+                    Connections
+                </button>
+<button class="whitespace-nowrap rounded-full bg-card-dark border border-border-dark text-text-subtle hover:text-white hover:border-white/20 px-4 py-1.5 text-xs font-medium transition-colors">
+                    Archived
+                </button>
+</div>
+</header>
+<!-- Canvas Area -->
+<main class="flex-1 overflow-y-auto relative p-4 bg-[radial-gradient(#282e39_1px,transparent_1px)] [background-size:20px_20px] bg-background-dark">
+<!-- Connection Lines (Visual Decor) -->
+<svg class="connection-line top-20 left-10 w-full h-full" xmlns="http://www.w3.org/2000/svg">
+<path d="M60 50 C 60 100, 180 100, 180 150" fill="none" stroke="#2b6cee" stroke-dasharray="4 4" stroke-width="2"></path>
+<path d="M180 200 C 180 250, 80 250, 80 300" fill="none" opacity="0.5" stroke="#2b6cee" stroke-width="1"></path>
+</svg>
+<!-- Grid Layout -->
+<div class="grid grid-cols-2 gap-3 relative z-10 pb-20">
+<!-- Note 1 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark p-4 shadow-sm hover:border-primary/50 transition-all cursor-pointer active:scale-95">
+<div class="flex items-center justify-between mb-1">
+<div class="size-8 rounded-lg bg-emerald-500/10 flex items-center justify-center text-emerald-400">
+<span class="material-symbols-outlined text-[18px]">description</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Project Alpha</h3>
+<p class="text-text-subtle text-xs leading-relaxed line-clamp-2">Initial scoping meeting notes and requirements gathering for Q3 launch.</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="text-[10px] font-medium text-emerald-400 bg-emerald-400/10 px-1.5 py-0.5 rounded">Active</span>
+<span class="text-[10px] text-text-subtle">2m ago</span>
+</div>
+</div>
+<!-- Note 2 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-primary/40 bg-card-dark p-4 shadow-[0_0_15px_-3px_rgba(43,108,238,0.15)] cursor-pointer active:scale-95 ring-1 ring-primary/20">
+<div class="absolute -top-1 -right-1 flex size-3">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+<span class="relative inline-flex rounded-full size-3 bg-primary"></span>
+</div>
+<div class="flex items-center justify-between mb-1">
+<div class="size-8 rounded-lg bg-primary/20 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Q3 Research</h3>
+<p class="text-text-subtle text-xs leading-relaxed line-clamp-2">Competitor analysis regarding AI feature sets. Key differentiators identified.</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="text-[10px] font-medium text-primary bg-primary/10 px-1.5 py-0.5 rounded">Draft</span>
+<span class="text-[10px] text-text-subtle">1h ago</span>
+</div>
+</div>
+<!-- Note 3 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark p-4 shadow-sm hover:border-primary/50 transition-all cursor-pointer active:scale-95">
+<div class="flex items-center justify-between mb-1">
+<div class="size-8 rounded-lg bg-orange-500/10 flex items-center justify-center text-orange-400">
+<span class="material-symbols-outlined text-[18px]">schedule</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Meeting Minutes</h3>
+<p class="text-text-subtle text-xs leading-relaxed line-clamp-2">Weekly sync with design team. Action items assigned to Sarah and Mike.</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="text-[10px] text-text-subtle">4h ago</span>
+</div>
+</div>
+<!-- Note 4 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark p-4 shadow-sm hover:border-primary/50 transition-all cursor-pointer active:scale-95">
+<div class="flex items-center justify-between mb-1">
+<div class="size-8 rounded-lg bg-purple-500/10 flex items-center justify-center text-purple-400">
+<span class="material-symbols-outlined text-[18px]">palette</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Design System</h3>
+<p class="text-text-subtle text-xs leading-relaxed line-clamp-2">Update color tokens and spacing variables for dark mode consistency.</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="text-[10px] font-medium text-purple-400 bg-purple-400/10 px-1.5 py-0.5 rounded">System</span>
+<span class="text-[10px] text-text-subtle">Yesterday</span>
+</div>
+</div>
+<!-- Note 5 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark p-4 shadow-sm hover:border-primary/50 transition-all cursor-pointer active:scale-95 col-span-2">
+<div class="flex items-center justify-between mb-1">
+<div class="flex items-center gap-2">
+<div class="size-8 rounded-lg bg-pink-500/10 flex items-center justify-center text-pink-400">
+<span class="material-symbols-outlined text-[18px]">edit_note</span>
+</div>
+<span class="text-[10px] font-medium text-pink-400 bg-pink-400/10 px-1.5 py-0.5 rounded">Priority</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Marketing Copy - Q4 Campaign</h3>
+<p class="text-text-subtle text-xs leading-relaxed">Drafting the landing page headers and value propositions for the new module release. Needs review from product.</p>
+<div class="mt-2 flex items-center justify-between">
+<div class="flex -space-x-2">
+<img alt="User avatar" class="inline-block h-5 w-5 rounded-full ring-2 ring-card-dark" data-alt="Portrait of a woman" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDCFmVMeCi_UoqzlbM1GLnYBk59zf6VmP9JA1juMBivrOd2TQ8K6VGaxUsF1bnu34sLpNr1uTNFfhhEujdyqhZ1jX8J56pEI7go3FveiLAREpLtESF5cgoie3o-hzU5BRA8QRC7xIYWbTWz0DFjZd7VSNpJn9SAGeNq7OXXhLFPUX-tfM7cmP9ECz1jgNjOC7Svr7njFge6nZx0QJBCnkfzmeRy4as_1bGzGsYZ5CzZx4DoHXXT7jhevkPNlooo-_2h5acPSnrrjmM"/>
+<img alt="User avatar" class="inline-block h-5 w-5 rounded-full ring-2 ring-card-dark" data-alt="Portrait of a man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrXkD6yWGc9uNPU8kO9z7OeVfdpFahGnYXJFGb06IFlKZ4KQ9on1g3N9WH_eoD61OI7srC4Tvj7tj-oxAqSJzptABzgqt35bJDCbddOIJBByC3z6gc68rIljrXDipAdStXUgz0CaFJ-UEQlO9m4_oKKXByDvwmJOZhD0vjr06opeU3YD1uYj22ZRwjdMPllnJ7kOkoeIa-oNGhBBceWTEFzLCCdPLLyKtCRLsuXOMT8v_GcA0ouUpSNB5-Jgie7UDLXQnAWgV3Ais"/>
+</div>
+<span class="text-[10px] text-text-subtle">2 days ago</span>
+</div>
+</div>
+<!-- Note 6 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark p-4 shadow-sm hover:border-primary/50 transition-all cursor-pointer active:scale-95">
+<div class="flex items-center justify-between mb-1">
+<div class="size-8 rounded-lg bg-blue-500/10 flex items-center justify-center text-blue-400">
+<span class="material-symbols-outlined text-[18px]">bar_chart</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Analytics</h3>
+<p class="text-text-subtle text-xs leading-relaxed line-clamp-2">User retention metrics showing positive trend in cohort A.</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="text-[10px] text-text-subtle">Last week</span>
+</div>
+</div>
+<!-- Note 7 -->
+<div class="group relative flex flex-col gap-2 rounded-2xl border border-border-dark bg-card-dark p-4 shadow-sm hover:border-primary/50 transition-all cursor-pointer active:scale-95 opacity-60 grayscale hover:grayscale-0 hover:opacity-100">
+<div class="flex items-center justify-between mb-1">
+<div class="size-8 rounded-lg bg-slate-500/10 flex items-center justify-center text-slate-400">
+<span class="material-symbols-outlined text-[18px]">archive</span>
+</div>
+<span class="material-symbols-outlined text-text-subtle text-[16px]">more_horiz</span>
+</div>
+<h3 class="text-white text-sm font-bold leading-tight">Old Ideas</h3>
+<p class="text-text-subtle text-xs leading-relaxed line-clamp-2">Discarded concepts from 2023 roadmap planning.</p>
+<div class="mt-2 flex items-center gap-1.5">
+<span class="text-[10px] text-text-subtle">Archived</span>
+</div>
+</div>
+</div>
+</main>
+<!-- Floating Action Button -->
+<div class="absolute bottom-6 right-6 z-30">
+<button class="group flex items-center justify-center size-14 rounded-full bg-primary shadow-lg shadow-primary/30 text-white hover:bg-blue-600 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-2xl group-hover:rotate-90 transition-transform duration-300">add</span>
+</button>
+</div>
+<!-- Bottom Navigation (Simulated) -->
+<nav class="bg-background-dark border-t border-border-dark px-6 py-3 flex justify-between items-center z-20">
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined text-2xl">grid_view</span>
+<span class="text-[10px] font-medium">Canvas</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-text-subtle hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-text-subtle hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">chat_bubble</span>
+<span class="text-[10px] font-medium">AI Chat</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-text-subtle hover:text-white transition-colors">
+<span class="material-symbols-outlined text-2xl">settings</span>
+<span class="text-[10px] font-medium">Settings</span>
+</button>
+</nav>
+</div>
+</body></html>

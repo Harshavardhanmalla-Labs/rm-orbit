@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Access Policy Builder | RM Wallet</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Manrope', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+<div class="relative flex h-screen w-full overflow-hidden">
+<!-- Left Sidebar -->
+<aside class="flex w-64 flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+<div class="flex items-center gap-3 px-6 py-8">
+<div class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary text-white">
+<span class="material-symbols-outlined">account_balance_wallet</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">RM Wallet</h2>
+</div>
+<nav class="flex flex-1 flex-col gap-1 px-4">
+<div class="mb-4">
+<p class="px-2 text-xs font-semibold uppercase tracking-wider text-slate-400">Main Menu</p>
+</div>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-medium">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">lock</span>
+<span class="text-sm font-medium">Vaults</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg bg-primary/10 px-3 py-2 text-primary transition-colors" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">shield_with_heart</span>
+<span class="text-sm font-medium">Access Policies</span>
+</a>
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">group</span>
+<span class="text-sm font-medium">Users &amp; Teams</span>
+</a>
+<div class="mt-auto mb-6 flex flex-col gap-1">
+<a class="flex items-center gap-3 rounded-lg px-3 py-2 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-medium">Settings</span>
+</a>
+<div class="mt-4 flex items-center gap-3 border-t border-slate-100 dark:border-slate-800 pt-4 px-2">
+<div class="h-8 w-8 rounded-full bg-slate-200" data-alt="User avatar placeholder"></div>
+<div class="flex flex-col">
+<span class="text-xs font-bold">Admin User</span>
+<span class="text-[10px] text-slate-400">Enterprise Admin</span>
+</div>
+</div>
+</div>
+</nav>
+</aside>
+<!-- Main Content Area -->
+<main class="flex flex-1 flex-col overflow-y-auto">
+<!-- Top Navigation -->
+<header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 px-8 backdrop-blur-md">
+<div class="flex items-center gap-4">
+<nav class="flex items-center gap-2 text-sm text-slate-500">
+<span>Policies</span>
+<span class="material-symbols-outlined text-xs">chevron_right</span>
+<span class="font-medium text-slate-900 dark:text-slate-100">Create New Policy</span>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">search</span>
+<input class="h-9 w-64 rounded-lg border-slate-200 bg-slate-100 pl-10 text-sm focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-800" placeholder="Search documentation..." type="text"/>
+</div>
+<button class="flex h-9 w-9 items-center justify-center rounded-lg bg-slate-100 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</div>
+</header>
+<!-- Policy Builder Content -->
+<div class="mx-auto flex w-full max-w-5xl flex-col gap-8 p-8">
+<div class="flex flex-col gap-2">
+<h1 class="text-3xl font-extrabold tracking-tight">Create Access Policy</h1>
+<p class="text-slate-500">Define how users and teams interact with sensitive infrastructure secrets.</p>
+</div>
+<!-- Policy Form -->
+<div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+<!-- Main Configuration Column -->
+<div class="lg:col-span-2 flex flex-col gap-8">
+<!-- Section: Basic Info -->
+<section class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+<div class="mb-6 flex items-center gap-3">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">info</span>
+</span>
+<h3 class="text-lg font-bold">Policy Details</h3>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Policy Name</label>
+<input class="rounded-lg border-slate-200 focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-800" placeholder="e.g. DevOps Production Access" type="text"/>
+</div>
+<div class="flex flex-col gap-1.5">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Description</label>
+<textarea class="rounded-lg border-slate-200 focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-800" placeholder="Explain the purpose of this policy..." rows="3"></textarea>
+</div>
+</div>
+</section>
+<!-- Section: Scope & Subjects -->
+<section class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+<div class="mb-6 flex items-center gap-3">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">hub</span>
+</span>
+<h3 class="text-lg font-bold">Scope &amp; Subjects</h3>
+</div>
+<div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+<div class="flex flex-col gap-3">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Target Vaults</label>
+<div class="flex flex-col gap-2">
+<label class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-100 p-3 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800">
+<input checked="" class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium">Infrastructure</span>
+</label>
+<label class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-100 p-3 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium">Production</span>
+</label>
+<label class="flex cursor-pointer items-center gap-3 rounded-lg border border-slate-100 p-3 hover:bg-slate-50 dark:border-slate-800 dark:hover:bg-slate-800">
+<input class="rounded border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+<span class="text-sm font-medium">DevOps Tools</span>
+</label>
+</div>
+</div>
+<div class="flex flex-col gap-3">
+<label class="text-sm font-semibold text-slate-700 dark:text-slate-300">Assigned To</label>
+<div class="flex flex-col gap-2">
+<select class="rounded-lg border-slate-200 focus:border-primary focus:ring-primary dark:border-slate-700 dark:bg-slate-800 text-sm">
+<option>Select User or Team</option>
+<option>Engineering Team</option>
+<option>Security Auditors</option>
+<option>John Doe (Lead)</option>
+</select>
+<div class="flex flex-wrap gap-2 pt-2">
+<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium dark:bg-slate-800">
+                                            DevOps Ops
+                                            <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+<span class="inline-flex items-center gap-1 rounded-full bg-slate-100 px-3 py-1 text-xs font-medium dark:bg-slate-800">
+                                            SRE Team
+                                            <button class="material-symbols-outlined text-[14px]">close</button>
+</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Section: Permissions -->
+<section class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+<div class="mb-6 flex items-center gap-3">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">task_alt</span>
+</span>
+<h3 class="text-lg font-bold">Permissions</h3>
+</div>
+<div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
+<label class="flex flex-col gap-3 rounded-xl border border-slate-100 p-4 text-center transition-all hover:border-primary/50 hover:bg-primary/5 dark:border-slate-800">
+<span class="material-symbols-outlined text-slate-400">visibility</span>
+<span class="text-xs font-bold uppercase tracking-tight">Read</span>
+<input checked="" class="mx-auto rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex flex-col gap-3 rounded-xl border border-slate-100 p-4 text-center transition-all hover:border-primary/50 hover:bg-primary/5 dark:border-slate-800">
+<span class="material-symbols-outlined text-slate-400">edit</span>
+<span class="text-xs font-bold uppercase tracking-tight">Write</span>
+<input class="mx-auto rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex flex-col gap-3 rounded-xl border border-slate-100 p-4 text-center transition-all hover:border-primary/50 hover:bg-primary/5 dark:border-slate-800">
+<span class="material-symbols-outlined text-slate-400">delete</span>
+<span class="text-xs font-bold uppercase tracking-tight">Delete</span>
+<input class="mx-auto rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+<label class="flex flex-col gap-3 rounded-xl border border-slate-100 p-4 text-center transition-all hover:border-primary/50 hover:bg-primary/5 dark:border-slate-800">
+<span class="material-symbols-outlined text-slate-400">sync</span>
+<span class="text-xs font-bold uppercase tracking-tight">Rotate</span>
+<input class="mx-auto rounded-full border-slate-300 text-primary focus:ring-primary" type="checkbox"/>
+</label>
+</div>
+</section>
+</div>
+<!-- Right Configuration Column (Restrictions) -->
+<div class="flex flex-col gap-8">
+<!-- Section: Time Restrictions -->
+<section class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+<div class="mb-6 flex items-center gap-3">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">schedule</span>
+</span>
+<h3 class="text-lg font-bold">Access TTL</h3>
+</div>
+<div class="space-y-4">
+<p class="text-xs text-slate-500">Define how long the secrets remain accessible after initial access.</p>
+<div class="grid grid-cols-2 gap-2">
+<button class="rounded-lg border border-slate-200 py-2 text-sm font-medium hover:border-primary hover:text-primary dark:border-slate-700">1 Hour</button>
+<button class="rounded-lg border border-slate-200 py-2 text-sm font-medium hover:border-primary hover:text-primary dark:border-slate-700">24 Hours</button>
+<button class="rounded-lg border border-primary bg-primary/5 py-2 text-sm font-bold text-primary dark:border-primary">7 Days</button>
+<button class="rounded-lg border border-slate-200 py-2 text-sm font-medium hover:border-primary hover:text-primary dark:border-slate-700">Custom</button>
+</div>
+</div>
+</section>
+<!-- Section: Environment Restrictions -->
+<section class="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-800 dark:bg-slate-900">
+<div class="mb-6 flex items-center gap-3">
+<span class="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined text-sm">cloud</span>
+</span>
+<h3 class="text-lg font-bold">Environment</h3>
+</div>
+<div class="space-y-4">
+<div class="flex flex-col gap-2">
+<label class="flex items-center justify-between">
+<span class="text-sm font-medium">Production</span>
+<div class="relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="absolute left-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-all translate-x-4 bg-primary"></div>
+</div>
+</label>
+<label class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-500">Staging</span>
+<div class="relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="absolute left-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-all"></div>
+</div>
+</label>
+<label class="flex items-center justify-between">
+<span class="text-sm font-medium text-slate-500">Development</span>
+<div class="relative inline-flex h-5 w-9 cursor-pointer items-center rounded-full bg-slate-200 dark:bg-slate-700">
+<div class="absolute left-0.5 h-4 w-4 rounded-full bg-white shadow-sm transition-all"></div>
+</div>
+</label>
+</div>
+</div>
+</section>
+<!-- Summary / Action -->
+<div class="mt-4 flex flex-col gap-4">
+<button class="w-full rounded-xl bg-primary px-6 py-4 text-sm font-bold text-white shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all">
+                            Save Access Policy
+                        </button>
+<button class="w-full rounded-xl border border-slate-200 bg-white px-6 py-4 text-sm font-bold text-slate-600 hover:bg-slate-50 dark:border-slate-800 dark:bg-slate-900 dark:text-slate-400">
+                            Cancel Changes
+                        </button>
+</div>
+</div>
+</div>
+<!-- Footer Meta -->
+<div class="mb-12 border-t border-slate-200 pt-8 dark:border-slate-800">
+<div class="flex items-center gap-2 text-xs text-slate-400">
+<span class="material-symbols-outlined text-sm">verified_user</span>
+<span>All policies are cryptographically signed and logged for compliance auditing.</span>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>

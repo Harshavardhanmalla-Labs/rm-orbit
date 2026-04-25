@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Document Editor View - RM Writer</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "primary-hover": "#0c3b9e",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-dark": "#172033",
+                        "border-dark": "#232d42",
+                        "text-secondary": "#94a3b8"
+                    },
+                    fontFamily: {
+                        "sans": ["Inter", "sans-serif"],
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+        .hide-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .hide-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 flex flex-col h-screen overflow-hidden font-display">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined text-3xl">edit_document</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">RM Writer</h2>
+</div>
+<!-- Breadcrumbs -->
+<div class="hidden md:flex items-center gap-2 text-sm">
+<span class="text-slate-400 dark:text-text-secondary">Workspace</span>
+<span class="text-slate-300 dark:text-border-dark">/</span>
+<span class="text-slate-400 dark:text-text-secondary">Projects</span>
+<span class="text-slate-300 dark:text-border-dark">/</span>
+<span class="font-medium text-slate-700 dark:text-slate-200">Q3 Engineering Roadmap</span>
+</div>
+</div>
+<!-- Search Bar -->
+<label class="hidden lg:flex flex-col min-w-40 w-full max-w-md mx-8">
+<div class="flex w-full items-center rounded-lg h-9 bg-slate-100 dark:bg-surface-dark border border-transparent focus-within:border-primary/50 transition-colors">
+<div class="text-slate-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none focus:ring-0 text-sm text-slate-900 dark:text-white placeholder:text-slate-400 h-full" placeholder="Search or ask AI..."/>
+<div class="pr-3 text-xs text-slate-500 font-mono">⌘K</div>
+</div>
+</label>
+<div class="flex items-center justify-end gap-4">
+<div class="flex items-center gap-1">
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center size-9 rounded-lg hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-500 dark:text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+</button>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-border-dark mx-1"></div>
+<button class="flex items-center gap-2 pl-1 pr-3 py-1 rounded-full hover:bg-slate-100 dark:hover:bg-surface-dark transition-colors">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-7 border border-slate-200 dark:border-border-dark" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCquDTA3tOzB5D-IAjIqNzJoIYX7UdDB61etJdq-VjZIXjpLIO0FzylcLsiUXa4_a-mePQ39-t0ERTLHiJNoK5bNaM8qoFnbdNzoLNqgmKsqSHzwbAhq1qhv5HF0lXqd5PhPwgC5Z6KJZrZk6PNpBYlzrgMRzRRcxNB9O5TN3Yhgd0GdqG60XzkT7vg3TmXogEr-6sYQJKCqTqMQK0YdX3r5_eszUVFHiTbx4HACP6kQkyBqyv1ou53hm5U92hS6JB4zeEWYbfK2yc");'></div>
+<span class="text-sm font-medium hidden sm:block">Sarah</span>
+</button>
+<button class="bg-primary hover:bg-primary-hover text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors shadow-lg shadow-primary/20">
+                Share
+            </button>
+</div>
+</header>
+<!-- Main Workspace Layout -->
+<div class="flex flex-1 overflow-hidden relative">
+<!-- Left Sidebar (Collapsed/Icon only for max space) -->
+<aside class="hidden md:flex flex-col items-center py-4 w-16 border-r border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark shrink-0 z-10">
+<div class="flex flex-col gap-4 w-full px-2">
+<button class="size-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shadow-sm">
+<span class="material-symbols-outlined">description</span>
+</button>
+<button class="size-10 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">folder_open</span>
+</button>
+<button class="size-10 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">hub</span>
+</button>
+<button class="size-10 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">schedule</span>
+</button>
+</div>
+<div class="mt-auto flex flex-col gap-4 w-full px-2">
+<button class="size-10 rounded-xl hover:bg-slate-100 dark:hover:bg-surface-dark text-slate-400 hover:text-slate-900 dark:hover:text-white transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</aside>
+<!-- Center: Document Editor -->
+<main class="flex-1 overflow-y-auto relative bg-white dark:bg-background-dark">
+<div class="max-w-[850px] mx-auto px-8 py-12 pb-32 min-h-full">
+<!-- Document Header -->
+<div class="mb-8 group">
+<div class="h-64 w-full rounded-2xl bg-gradient-to-br from-indigo-900 via-primary to-slate-900 mb-8 relative overflow-hidden group-hover:shadow-lg transition-all duration-500" data-alt="Abstract gradient cover image">
+<div class="absolute inset-0 bg-black/10"></div>
+<button class="absolute top-4 right-4 bg-black/40 hover:bg-black/60 text-white text-xs font-medium px-3 py-1.5 rounded-full backdrop-blur-md opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">image</span>
+                            Change Cover
+                        </button>
+</div>
+<div class="flex items-center gap-3 text-slate-400 mb-4 text-sm">
+<span class="material-symbols-outlined text-lg">calendar_today</span>
+<span>Oct 24, 2023</span>
+<span class="size-1 bg-slate-600 rounded-full"></span>
+<span>Engineering</span>
+<span class="size-1 bg-slate-600 rounded-full"></span>
+<div class="flex items-center gap-1">
+<div class="size-5 rounded-full bg-orange-500 border border-background-dark"></div>
+<div class="size-5 rounded-full bg-blue-500 border border-background-dark -ml-2"></div>
+<span class="ml-1">3 editors</span>
+</div>
+</div>
+<h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight mb-2 outline-none" contenteditable="true">Q3 Engineering Roadmap</h1>
+<p class="text-xl text-slate-500 dark:text-text-secondary outline-none" contenteditable="true">Strategies for scaling our infrastructure and shipping v2.0.</p>
+</div>
+<hr class="border-slate-200 dark:border-border-dark mb-10"/>
+<!-- Editor Content Blocks -->
+<div class="space-y-1">
+<!-- Block 1: Paragraph -->
+<div class="group relative pl-2 -ml-2 rounded hover:bg-slate-50 dark:hover:bg-surface-dark/30 transition-colors py-1">
+<div class="absolute left-[-24px] top-1.5 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab text-slate-400">
+<span class="material-symbols-outlined text-lg">drag_indicator</span>
+</div>
+<div class="absolute left-[-48px] top-1.5 opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer text-slate-400 hover:text-primary">
+<span class="material-symbols-outlined text-lg">add</span>
+</div>
+<p class="text-slate-800 dark:text-slate-200 leading-relaxed text-lg">
+                             The primary objective for Q3 is to stabilize the core platform while laying the groundwork for the upcoming generative features. We've seen a <strong class="text-slate-900 dark:text-white font-semibold">40% increase in daily active users</strong>, putting strain on our current websocket infrastructure.
+                         </p>
+</div>
+<!-- Block 2: Heading 2 -->
+<div class="group relative pl-2 -ml-2 rounded hover:bg-slate-50 dark:hover:bg-surface-dark/30 transition-colors py-1 pt-6">
+<div class="absolute left-[-24px] top-7 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab text-slate-400">
+<span class="material-symbols-outlined text-lg">drag_indicator</span>
+</div>
+<h2 class="text-2xl font-bold text-slate-900 dark:text-white mb-2">1. Infrastructure Scaling</h2>
+</div>
+<!-- Block 3: List -->
+<div class="group relative pl-2 -ml-2 rounded hover:bg-slate-50 dark:hover:bg-surface-dark/30 transition-colors py-1">
+<div class="absolute left-[-24px] top-1.5 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab text-slate-400">
+<span class="material-symbols-outlined text-lg">drag_indicator</span>
+</div>
+<ul class="list-disc list-inside text-slate-800 dark:text-slate-200 leading-relaxed text-lg space-y-1 ml-1">
+<li>Migrate remaining microservices to Kubernetes clusters in US-East.</li>
+<li>Implement Redis caching layer for user session data.</li>
+<li>Optimize database queries for the analytics dashboard (currently p95 is ~400ms).</li>
+</ul>
+</div>
+<!-- Block 4: Active/Focus Block -->
+<div class="group relative pl-2 -ml-2 rounded bg-primary/5 dark:bg-primary/10 transition-colors py-1 border-l-2 border-primary">
+<div class="absolute left-[-24px] top-1.5 opacity-100 cursor-grab text-primary">
+<span class="material-symbols-outlined text-lg">drag_indicator</span>
+</div>
+<p class="text-slate-800 dark:text-slate-200 leading-relaxed text-lg">
+                             Regarding the AI integration, we need to finalize the context window strategy. Current tokens usage suggests we can optimize cost by caching common prompts.
+                         </p>
+</div>
+<!-- Floating AI Command Palette (Positioned relative to active block) -->
+<div class="absolute left-16 mt-2 z-30 animate-fade-in-up">
+<div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-border-dark rounded-xl shadow-2xl shadow-black/40 w-80 overflow-hidden flex flex-col">
+<div class="p-3 border-b border-slate-100 dark:border-border-dark flex items-center gap-2">
+<div class="size-5 rounded bg-primary flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-sm">auto_awesome</span>
+</div>
+<input autofocus="" class="bg-transparent border-none p-0 text-sm w-full focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-400" placeholder="Ask AI to rewrite, summarize..." type="text"/>
+</div>
+<div class="p-1 max-h-60 overflow-y-auto">
+<button class="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 flex items-center gap-2 group transition-colors">
+<span class="material-symbols-outlined text-base text-slate-400 group-hover:text-white/80">short_text</span>
+                                    Make shorter
+                                </button>
+<button class="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 flex items-center gap-2 group transition-colors">
+<span class="material-symbols-outlined text-base text-slate-400 group-hover:text-white/80">campaign</span>
+                                    Change tone to professional
+                                </button>
+<button class="w-full text-left px-3 py-2 text-sm rounded-lg hover:bg-primary hover:text-white text-slate-700 dark:text-slate-300 flex items-center gap-2 group transition-colors">
+<span class="material-symbols-outlined text-base text-slate-400 group-hover:text-white/80">translate</span>
+                                    Translate to Spanish
+                                </button>
+</div>
+<div class="px-3 py-2 bg-slate-50 dark:bg-black/20 text-[10px] text-slate-400 flex justify-between">
+<span>AI model: GPT-4o</span>
+<span>Esc to close</span>
+</div>
+</div>
+</div>
+<!-- Block 5: Empty Placeholder -->
+<div class="group relative pl-2 -ml-2 rounded hover:bg-slate-50 dark:hover:bg-surface-dark/30 transition-colors py-1 h-8 flex items-center">
+<p class="text-slate-400 italic">Type '/' for commands</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Right Contextual Panel -->
+<aside class="w-80 border-l border-slate-200 dark:border-border-dark bg-white dark:bg-background-dark hidden xl:flex flex-col h-full shrink-0">
+<div class="p-4 border-b border-slate-200 dark:border-border-dark">
+<h3 class="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-1">Context</h3>
+<p class="text-sm font-medium text-slate-900 dark:text-white truncate">Q3 Engineering Roadmap</p>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-6">
+<!-- Metadata Section -->
+<div class="space-y-3">
+<div class="flex items-center justify-between">
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">Metadata</h4>
+<button class="text-slate-400 hover:text-primary"><span class="material-symbols-outlined text-sm">edit</span></button>
+</div>
+<div class="bg-slate-50 dark:bg-surface-dark rounded-xl p-3 space-y-3 border border-slate-200 dark:border-border-dark">
+<div class="flex flex-col gap-1">
+<span class="text-xs text-slate-500">Status</span>
+<div class="flex items-center gap-2">
+<span class="size-2 rounded-full bg-yellow-400"></span>
+<span class="text-sm text-slate-700 dark:text-slate-200 font-medium">In Draft</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs text-slate-500">Owner</span>
+<div class="flex items-center gap-2">
+<div class="size-5 rounded-full bg-slate-300 bg-cover" data-alt="Profile picture small" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAyrV_tTIQ1g-2GG0cblunLiQUrj15reee_9xPUI4DLZ9nDNNlsH_GcpUQADZLfQWURO1TgE06Ns7yQc9NKDJVfbltXPeXy0s514SRaSB6gxJoW8iAZ5Dxnk2adZzOIpAaRCPjK-MoB6qsHijVgxzNk2XJWLgWV7REwwDskGiEV5oP95qe4DMA7r3ZZf9qNwqCEWWG78h98qACL-7RiC2XorDXYbUrkGnpO_fuia7CR2mGFCDwxNiCVH2gJdyknrhYs3BsHtQfUgE8");'></div>
+<span class="text-sm text-slate-700 dark:text-slate-200">Sarah Jenkins</span>
+</div>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs text-slate-500">Created</span>
+<span class="text-sm text-slate-700 dark:text-slate-200">Oct 24, 2023</span>
+</div>
+<div class="flex flex-col gap-1">
+<span class="text-xs text-slate-500">Tags</span>
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-primary/10 text-primary text-xs rounded-md border border-primary/20">Engineering</span>
+<span class="px-2 py-0.5 bg-purple-500/10 text-purple-400 text-xs rounded-md border border-purple-500/20">Q3</span>
+</div>
+</div>
+</div>
+</div>
+<!-- AI Actions Section -->
+<div class="space-y-3">
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">spark</span>
+                        AI Actions
+                    </h4>
+<div class="space-y-2">
+<button class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-border-dark border border-slate-200 dark:border-border-dark transition-all group">
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm font-medium text-slate-800 dark:text-slate-200">Summarize</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary text-sm">arrow_forward</span>
+</div>
+<p class="text-xs text-slate-500 leading-snug">Generate a brief executive summary of this roadmap.</p>
+</button>
+<button class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-border-dark border border-slate-200 dark:border-border-dark transition-all group">
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm font-medium text-slate-800 dark:text-slate-200">Find Action Items</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary text-sm">check_box</span>
+</div>
+<p class="text-xs text-slate-500 leading-snug">Extract tasks and assignees from the content.</p>
+</button>
+<button class="w-full text-left p-3 rounded-xl bg-slate-50 dark:bg-surface-dark hover:bg-slate-100 dark:hover:bg-border-dark border border-slate-200 dark:border-border-dark transition-all group">
+<div class="flex items-center justify-between mb-1">
+<span class="text-sm font-medium text-slate-800 dark:text-slate-200">Critique</span>
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary text-sm">rate_review</span>
+</div>
+<p class="text-xs text-slate-500 leading-snug">Get feedback on clarity and tone.</p>
+</button>
+</div>
+</div>
+<!-- Related Documents -->
+<div class="space-y-3 pt-4 border-t border-slate-200 dark:border-border-dark">
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">Related</h4>
+<ul class="space-y-2">
+<li>
+<a class="flex items-center gap-2 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary text-lg">article</span>
+<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary group-hover:underline truncate">Q2 Review &amp; Retrospective</span>
+</a>
+</li>
+<li>
+<a class="flex items-center gap-2 group" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary text-lg">article</span>
+<span class="text-sm text-slate-600 dark:text-slate-400 group-hover:text-primary group-hover:underline truncate">Design System v2 Specs</span>
+</a>
+</li>
+</ul>
+</div>
+</div>
+</aside>
+</div>
+</body></html>

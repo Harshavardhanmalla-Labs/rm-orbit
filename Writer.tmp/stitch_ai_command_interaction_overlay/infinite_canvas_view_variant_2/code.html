@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Infinite Canvas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .grid-pattern {
+            background-size: 40px 40px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+        /* Custom scrollbar for cleanliness */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #101622;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #282e39;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3b4354;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display overflow-hidden h-screen flex flex-col">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-[#282e39] bg-white dark:bg-[#111318] px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<svg fill="currentColor" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M39.475 21.6262C40.358 21.4363 40.6863 21.5589 40.7581 21.5934C40.7876 21.655 40.8547 21.857 40.8082 22.3336C40.7408 23.0255 40.4502 24.0046 39.8572 25.2301C38.6799 27.6631 36.5085 30.6631 33.5858 33.5858C30.6631 36.5085 27.6632 38.6799 25.2301 39.8572C24.0046 40.4502 23.0255 40.7407 22.3336 40.8082C21.8571 40.8547 21.6551 40.7875 21.5934 40.7581C21.5589 40.6863 21.4363 40.358 21.6262 39.475C21.8562 38.4054 22.4689 36.9657 23.5038 35.2817C24.7575 33.2417 26.5497 30.9744 28.7621 28.762C30.9744 26.5497 33.2417 24.7574 35.2817 23.5037C36.9657 22.4689 38.4054 21.8562 39.475 21.6262ZM4.41189 29.2403L18.7597 43.5881C19.8813 44.7097 21.4027 44.9179 22.7217 44.7893C24.0585 44.659 25.5148 44.1631 26.9723 43.4579C29.9052 42.0387 33.2618 39.5667 36.4142 36.4142C39.5667 33.2618 42.0387 29.9052 43.4579 26.9723C44.1631 25.5148 44.659 24.0585 44.7893 22.7217C44.9179 21.4027 44.7097 19.8813 43.5881 18.7597L29.2403 4.41187C27.8527 3.02428 25.8765 3.02573 24.2861 3.36776C22.6081 3.72863 20.7334 4.58419 18.8396 5.74801C16.4978 7.18716 13.9881 9.18353 11.5858 11.5858C9.18354 13.988 7.18717 16.4978 5.74802 18.8396C4.58421 20.7334 3.72865 22.6081 3.36778 24.2861C3.02574 25.8765 3.02429 27.8527 4.41189 29.2403Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">RM Writer</h2>
+</div>
+<!-- Breadcrumbs -->
+<div class="hidden md:flex items-center gap-2 text-slate-500 dark:text-slate-400 text-sm">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span>Engineering</span>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">System Architecture V2</span>
+</div>
+</div>
+<div class="flex flex-1 justify-center max-w-xl px-8">
+<!-- Mode Switcher -->
+<div class="flex h-9 items-center justify-center rounded-lg bg-slate-100 dark:bg-[#282e39] p-1 w-full max-w-[240px]">
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 transition-all duration-200 text-slate-500 dark:text-[#9da6b9] hover:bg-slate-200 dark:hover:bg-[#3b4354]">
+<span class="truncate text-sm font-medium">Document</span>
+<input class="invisible w-0" name="view-mode" type="radio" value="Document"/>
+</label>
+<label class="flex cursor-pointer h-full grow items-center justify-center overflow-hidden rounded-md px-2 bg-white dark:bg-[#111318] shadow-sm text-primary dark:text-white">
+<span class="truncate text-sm font-medium">Canvas</span>
+<input checked="" class="invisible w-0" name="view-mode" type="radio" value="Canvas"/>
+</label>
+</div>
+</div>
+<div class="flex items-center justify-end gap-4">
+<div class="flex items-center -space-x-2">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 border-2 border-white dark:border-[#111318]" data-alt="User avatar 1" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDcYBJqoNOkiaIneKrW9syZ6IJKUoDDJFDMImltfn-0cEOwxai3PMTrRys8ec6uo_0k8_s-AigYJUW2GYMczYIQEVdm2Cbgo76iuj5wVQdW1XvZ-TN-_GDDGXwRoAGu3WrJiulfSdfcdBiwEc9_vzGJcwKmmI8LvHAMmAS9HP4Zu9OW7ZowkiVpcjo4gIm6Uzl1thGONDCLibkepjORrNzy0Eu0O3kwK6Niitq5vQLoECfFVG3ZmrIp_pgZvoR_Mum4rXvnY3FEB80");'></div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-8 border-2 border-white dark:border-[#111318]" data-alt="User avatar 2" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxNuf19DAd-k1Offoo5Z_bQzlBsS_AgvqlticfG4T5Qe3qL_UK4Uu9qJ2Ifu7xLf3M5OFvoM-qOTkYqb6XG9s7bgX3bEz5zy6By6I8m5umCC3aEaIvq3Qe8_LGm4QfJv6xf7F86-PFdvdMGdX88h6PVgyr2fRbJgD7OyMNx2SPPN4EcrIquHVOU-BWYPtY1xMornkSDT5qJ0s-uT7Ar_o_D8eYqrhqywR-0hLz7BIf8EMadZCACvEYS6Srobiw6yTVh--dsGtYZJg");'></div>
+<div class="flex items-center justify-center rounded-full size-8 border-2 border-white dark:border-[#111318] bg-slate-200 dark:bg-[#282e39] text-xs font-medium text-slate-600 dark:text-slate-300">+3</div>
+</div>
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-blue-700 transition-colors text-white text-sm font-bold shadow-lg shadow-blue-900/20">
+<span>Share</span>
+</button>
+<button class="text-slate-500 dark:text-[#9da6b9] hover:text-slate-900 dark:hover:text-white">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Canvas Area -->
+<main class="flex-1 relative overflow-hidden bg-background-light dark:bg-[#0b0e14] grid-pattern cursor-grab active:cursor-grabbing">
+<!-- Toolbar (Floating) -->
+<div class="absolute left-6 top-6 flex flex-col gap-2 z-10">
+<div class="flex flex-col bg-white dark:bg-[#1c1f27] rounded-lg shadow-xl border border-slate-200 dark:border-[#282e39] p-1.5 w-12">
+<button class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-[#282e39] text-primary dark:text-blue-400 mb-1" title="Select">
+<span class="material-symbols-outlined text-[20px]">near_me</span>
+</button>
+<button class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-[#282e39] text-slate-500 dark:text-[#9da6b9] mb-1" title="Sticky Note">
+<span class="material-symbols-outlined text-[20px]">sticky_note_2</span>
+</button>
+<button class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-[#282e39] text-slate-500 dark:text-[#9da6b9] mb-1" title="Text">
+<span class="material-symbols-outlined text-[20px]">text_fields</span>
+</button>
+<button class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-[#282e39] text-slate-500 dark:text-[#9da6b9] mb-1" title="Code Block">
+<span class="material-symbols-outlined text-[20px]">code</span>
+</button>
+<button class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-[#282e39] text-slate-500 dark:text-[#9da6b9] mb-1" title="Connector">
+<span class="material-symbols-outlined text-[20px]">polyline</span>
+</button>
+<div class="h-px w-full bg-slate-200 dark:bg-[#282e39] my-1"></div>
+<button class="p-2 rounded-md hover:bg-slate-100 dark:hover:bg-[#282e39] text-slate-500 dark:text-[#9da6b9]" title="AI Assistant">
+<span class="material-symbols-outlined text-[20px]">auto_awesome</span>
+</button>
+</div>
+</div>
+<!-- Zoom Controls (Floating) -->
+<div class="absolute right-6 bottom-6 flex items-center gap-2 z-10">
+<div class="flex items-center bg-white dark:bg-[#1c1f27] rounded-lg shadow-xl border border-slate-200 dark:border-[#282e39] p-1 text-slate-500 dark:text-[#9da6b9]">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-[#282e39] rounded-md"><span class="material-symbols-outlined text-[20px]">remove</span></button>
+<span class="px-2 text-xs font-mono font-medium">100%</span>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-[#282e39] rounded-md"><span class="material-symbols-outlined text-[20px]">add</span></button>
+</div>
+</div>
+<!-- Canvas Content Container - Simulating pan/zoom wrapper -->
+<div class="absolute inset-0 w-[200%] h-[200%] left-[-25%] top-[-25%] transform scale-100 origin-center">
+<!-- Connection Lines (SVG Layer) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+<!-- Line from Code Block to DB Schema -->
+<path class="opacity-60" d="M 980 620 C 1050 620, 1050 500, 1150 500" fill="none" stroke="#3b4354" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Line from Product Vision to Features -->
+<path d="M 680 450 C 750 450, 750 650, 820 650" fill="none" stroke="#3b4354" stroke-width="2"></path>
+<!-- Line from Features to Tasks -->
+<path d="M 1120 700 C 1180 700, 1180 780, 1250 780" fill="none" stroke="#3b4354" stroke-width="2"></path>
+</svg>
+<!-- Node 1: Text Note (Product Vision) -->
+<div class="absolute left-[380px] top-[350px] w-[300px] bg-[#1c1f27] border border-[#3b4354] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex flex-col z-10 group hover:border-primary/50 transition-colors">
+<div class="h-1.5 w-full bg-yellow-500/80 rounded-t-xl"></div>
+<div class="p-5 flex flex-col gap-3">
+<div class="flex justify-between items-start">
+<h3 class="text-white text-lg font-bold leading-tight">Product Vision</h3>
+<span class="material-symbols-outlined text-[#5a6275] text-[18px] cursor-pointer hover:text-white">more_horiz</span>
+</div>
+<p class="text-[#9da6b9] text-sm leading-relaxed">
+                        RM Writer should feel like an extension of the developer's mind. Fast, keyboard-first, and context-aware.
+                    </p>
+<div class="flex gap-2 mt-2">
+<span class="px-2 py-1 bg-[#282e39] rounded text-[10px] uppercase font-bold text-[#9da6b9] tracking-wider">Strategy</span>
+<span class="px-2 py-1 bg-[#282e39] rounded text-[10px] uppercase font-bold text-[#9da6b9] tracking-wider">Q4</span>
+</div>
+</div>
+<!-- Connector Handles -->
+<div class="absolute -right-1.5 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity cursor-crosshair shadow-sm"></div>
+</div>
+<!-- Node 2: Code Snippet (Backend API) -->
+<div class="absolute left-[820px] top-[580px] w-[420px] bg-[#0d1117] border border-[#30363d] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex flex-col z-10 group hover:border-primary/50 transition-colors">
+<div class="flex items-center justify-between px-4 py-3 border-b border-[#30363d] bg-[#161b22] rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-400 text-[16px]">terminal</span>
+<span class="text-sm font-mono font-medium text-[#c9d1d9]">auth_middleware.py</span>
+</div>
+<div class="flex gap-1.5">
+<div class="size-2.5 rounded-full bg-[#ff5f56]"></div>
+<div class="size-2.5 rounded-full bg-[#ffbd2e]"></div>
+<div class="size-2.5 rounded-full bg-[#27c93f]"></div>
+</div>
+</div>
+<div class="p-4 font-mono text-xs leading-relaxed text-[#c9d1d9] overflow-x-auto">
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">1</span><span class="text-[#ff7b72]">def</span> <span class="text-[#d2a8ff] ml-1">authenticate_user</span><span class="text-[#c9d1d9]">(request):</span></div>
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">2</span><span class="ml-4 text-[#ff7b72]">try</span><span class="text-[#c9d1d9]">:</span></div>
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">3</span><span class="ml-8 text-[#d2a8ff]">token</span> <span class="text-[#ff7b72]">=</span> <span class="text-[#c9d1d9]">request.headers.get(</span><span class="text-[#a5d6ff]">'Authorization'</span><span class="text-[#c9d1d9]">)</span></div>
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">4</span><span class="ml-8 text-[#ff7b72]">if not</span> <span class="text-[#c9d1d9]">token:</span></div>
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">5</span><span class="ml-12 text-[#ff7b72]">return</span> <span class="text-[#c9d1d9]">json_response({</span><span class="text-[#7ee787]">"error"</span><span class="text-[#c9d1d9]">: </span><span class="text-[#a5d6ff]">'Missing token'</span><span class="text-[#c9d1d9]">}, 401)</span></div>
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">6</span><span class="ml-4 text-[#ff7b72]">except</span> <span class="text-[#c9d1d9]">Exception </span><span class="text-[#ff7b72]">as</span> <span class="text-[#c9d1d9]">e:</span></div>
+<div class="flex"><span class="text-[#8b949e] w-6 select-none">7</span><span class="ml-8 text-[#ff7b72]">return</span> <span class="text-[#c9d1d9]">handle_error(e)</span></div>
+</div>
+<!-- Connector Handles -->
+<div class="absolute -left-1.5 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity cursor-crosshair shadow-sm"></div>
+<div class="absolute -right-1.5 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity cursor-crosshair shadow-sm"></div>
+</div>
+<!-- Node 3: Data/Stats (Database Schema) -->
+<div class="absolute left-[1150px] top-[420px] w-[260px] bg-[#1c1f27] border border-[#3b4354] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex flex-col z-10 group hover:border-primary/50 transition-colors">
+<div class="h-1.5 w-full bg-purple-500/80 rounded-t-xl"></div>
+<div class="p-4">
+<div class="flex items-center justify-between mb-3">
+<h4 class="text-white text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-[#9da6b9] text-[18px]">dataset</span>
+                            Users Table
+                        </h4>
+<span class="text-[10px] text-[#9da6b9] bg-[#282e39] px-1.5 py-0.5 rounded">PostgreSQL</span>
+</div>
+<div class="flex flex-col gap-0 border-t border-[#282e39]">
+<div class="flex justify-between py-2 border-b border-[#282e39] text-xs">
+<span class="text-white font-mono">id</span>
+<span class="text-purple-400 font-mono">UUID (PK)</span>
+</div>
+<div class="flex justify-between py-2 border-b border-[#282e39] text-xs">
+<span class="text-white font-mono">email</span>
+<span class="text-purple-400 font-mono">VARCHAR</span>
+</div>
+<div class="flex justify-between py-2 border-b border-[#282e39] text-xs">
+<span class="text-white font-mono">created_at</span>
+<span class="text-purple-400 font-mono">TIMESTAMP</span>
+</div>
+<div class="flex justify-between py-2 text-xs">
+<span class="text-white font-mono">role</span>
+<span class="text-purple-400 font-mono">ENUM</span>
+</div>
+</div>
+</div>
+<!-- Connector Handles -->
+<div class="absolute -left-1.5 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity cursor-crosshair shadow-sm"></div>
+</div>
+<!-- Node 4: Task List (Active Sprint) -->
+<div class="absolute left-[1250px] top-[700px] w-[280px] bg-[#1c1f27] border border-[#3b4354] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex flex-col z-10 group hover:border-primary/50 transition-colors">
+<div class="h-1.5 w-full bg-green-500/80 rounded-t-xl"></div>
+<div class="p-4">
+<h4 class="text-white text-base font-bold mb-3">Active Sprint Tasks</h4>
+<div class="flex flex-col gap-2">
+<label class="flex items-start gap-2 cursor-pointer group/item">
+<div class="relative flex items-center">
+<input checked="" class="peer size-4 appearance-none rounded border border-[#3b4354] bg-[#111318] checked:border-green-500 checked:bg-green-500" type="checkbox"/>
+<span class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] text-white opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+</div>
+<span class="text-sm text-[#9da6b9] line-through peer-checked:text-slate-500">Setup Graph DB</span>
+</label>
+<label class="flex items-start gap-2 cursor-pointer group/item">
+<div class="relative flex items-center">
+<input class="peer size-4 appearance-none rounded border border-[#3b4354] bg-[#111318] checked:border-green-500 checked:bg-green-500" type="checkbox"/>
+<span class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] text-white opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+</div>
+<span class="text-sm text-[#9da6b9] peer-checked:line-through peer-checked:text-slate-500">Implement Auth Flow</span>
+</label>
+<label class="flex items-start gap-2 cursor-pointer group/item">
+<div class="relative flex items-center">
+<input class="peer size-4 appearance-none rounded border border-[#3b4354] bg-[#111318] checked:border-green-500 checked:bg-green-500" type="checkbox"/>
+<span class="material-symbols-outlined absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 text-[12px] text-white opacity-0 peer-checked:opacity-100 pointer-events-none">check</span>
+</div>
+<span class="text-sm text-[#9da6b9] peer-checked:line-through peer-checked:text-slate-500">Design Canvas UI</span>
+<div class="ml-auto size-5 rounded-full bg-pink-500/20 text-pink-500 text-[10px] flex items-center justify-center font-bold">!</div>
+</label>
+</div>
+</div>
+<!-- Connector Handles -->
+<div class="absolute -left-1.5 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity cursor-crosshair shadow-sm"></div>
+</div>
+<!-- Node 5: Image Reference -->
+<div class="absolute left-[750px] top-[250px] w-[240px] bg-[#1c1f27] border border-[#3b4354] rounded-xl shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex flex-col z-10 group hover:border-primary/50 transition-colors">
+<div class="relative w-full h-32 bg-slate-800 rounded-t-xl overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Abstract fluid blue gradient background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCAc3JNgDj1gxzMqKvnLsutrjiYwsRYdUx8tGnsIv4Enw_RuRImX3pNlwjNg10Mf_SS2SSF2sQ8N2ksL1A65ZOrZGqwrNaCgS9WlQEfG78GdZeDPAkEQ3Cb0RCAfZea0Q7N_SS0nQkJpkAMKiVWkMORdgZus6CSWxxORvcYEVigqWFSDr1HoWj2XX37jOvNIr6yGQHSE6QfiDadBBwXi-a0Hq586kBw8NdmdRFLKk4r6hG3rhfms5Oied82PAvHar6caX8-rHABUZo");'></div>
+</div>
+<div class="p-3">
+<p class="text-white text-sm font-medium">Design Moodboard</p>
+</div>
+<!-- Connector Handles -->
+<div class="absolute -right-1.5 top-1/2 -translate-y-1/2 size-3 bg-white rounded-full border-2 border-primary opacity-0 group-hover:opacity-100 transition-opacity cursor-crosshair shadow-sm"></div>
+</div>
+<!-- Floating Badge for a User -->
+<div class="absolute left-[950px] top-[560px] flex items-center gap-2 bg-primary/20 backdrop-blur-md px-2 py-1 rounded-full border border-primary/40 z-20">
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-4 border border-primary" data-alt="User avatar small" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDl76IfxIlfihDmXgmhOrhX4vM6sARYc_VnEp9N8q101qCEnFQPC-2w_5zTImUptqaNhClnl6-LgcwzOeJaDdCLaQwrR43gyupQdwHDUVqZhSyRR8bSE9TEv03Ejes8o9jPZqMG8wC3m9qHu3-JDvoaUFixfUx4N5Cb-LasX73tUiDHAwUOGefCgnmzTo0ub7rx9HcaT3RAmX4Y16amoU6V6q5Armuf-lIHTe4DXCdXsBBDmmnk0E9vLhKno_TnrwEH0pu2EziNfRs");'></div>
+<span class="text-[10px] font-bold text-blue-200">Sarah editing...</span>
+</div>
+</div>
+<!-- Minimap (Bottom Right) -->
+<div class="absolute right-6 bottom-20 w-48 h-32 bg-[#1c1f27] border border-[#3b4354] rounded-lg shadow-xl overflow-hidden z-20 hidden lg:block">
+<div class="w-full h-full relative bg-[#111318] opacity-80">
+<!-- Mini nodes representation -->
+<div class="absolute left-[20%] top-[30%] w-[15%] h-[20%] bg-[#3b4354] rounded-sm"></div>
+<div class="absolute left-[45%] top-[50%] w-[20%] h-[25%] bg-[#3b4354] rounded-sm border border-primary"></div>
+<div class="absolute left-[70%] top-[40%] w-[10%] h-[15%] bg-[#3b4354] rounded-sm"></div>
+<div class="absolute left-[75%] top-[65%] w-[12%] h-[18%] bg-[#3b4354] rounded-sm"></div>
+<!-- Viewport Indicator -->
+<div class="absolute left-[40%] top-[40%] w-[40%] h-[40%] border-2 border-primary bg-primary/10 rounded-sm cursor-move"></div>
+</div>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Real-time Collaboration</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "sans": ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 shrink-0 z-20 relative">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-8 bg-primary rounded-lg flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">RM Writer</h2>
+</div>
+<!-- Search Bar -->
+<label class="hidden md:flex flex-col min-w-64 h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-slate-800 border border-transparent focus-within:border-primary/50 focus-within:ring-2 focus-within:ring-primary/20 transition-all">
+<div class="text-slate-500 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="w-full bg-transparent border-none focus:ring-0 text-sm text-slate-900 dark:text-white placeholder:text-slate-500 px-3" placeholder="Search documents..." value=""/>
+<div class="text-slate-400 flex items-center justify-center pr-3 text-xs font-medium">⌘K</div>
+</div>
+</label>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-900 dark:text-white text-sm font-medium hover:text-primary transition-colors" href="#">Documents</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Projects</a>
+<a class="text-slate-500 dark:text-slate-400 text-sm font-medium hover:text-primary transition-colors" href="#">Team</a>
+</nav>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden lg:block"></div>
+<div class="flex items-center gap-3">
+<!-- Team Presence Stack (Header) -->
+<div class="flex -space-x-2 mr-2">
+<div class="size-8 rounded-full ring-2 ring-white dark:ring-slate-900 bg-green-100 bg-center bg-cover" data-alt="Portrait of Sarah" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD6kVC5d5i8wY_DANlwHwsUTaUlJ68353fbK9HQVgdXS2dpIxX_1YvdPeztlh-z-PYDPF0EPgqD-UwDD8Bn4jqJ4ZeJffmzVZ-GQJM4oixYwg7Hxt9rIQTb2chyRdJUqlnTwslea2rCpYBxa2baABWKtwImXY2hvF9LLznhrC4ecj2UI4_iHK-So7cqKmQh_HuNjVhHzKQ4GT9fyeDphwftLh1J3_Facv0hoUBgEMBvyrUE7qJ4So4JZmPd9k8Y7VAiq2BHhvkwX8o");'></div>
+<div class="size-8 rounded-full ring-2 ring-white dark:ring-slate-900 bg-blue-100 bg-center bg-cover" data-alt="Portrait of Alex" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxEwpwP0-dGiWBZfNwzOm8j9yF3PrzSDsuDeuD1_gqUjOoxTE6kY2pzMexUHEqhJO71gE9d8LtE2o-B8r9-SUezsa10ekZ1G1WprkzfJNrCqLTP5zEnN1UdfyfXjbLdj4D4JFe1pWX42N1vN-DbaVCtfjujBohBmPDEPPKThG3AnTvRKisDnErYjw_JjkDdHGWcNtlBl-mC-5_sv_dMTARUaJmEPw_DqOXmP8ce12GeoP6-Au0acDB7Mgt8sU63vp_f5SBtHBk0yI");'></div>
+<div class="size-8 rounded-full ring-2 ring-white dark:ring-slate-900 bg-slate-100 flex items-center justify-center text-xs font-medium text-slate-600 border border-slate-200">+3</div>
+</div>
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary text-white text-sm font-semibold shadow-sm hover:bg-blue-700 transition-colors gap-2">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span>Share</span>
+</button>
+<button class="size-9 flex items-center justify-center rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-800"></span>
+</button>
+<div class="size-9 rounded-full bg-slate-200 bg-center bg-cover border border-slate-200 dark:border-slate-700 cursor-pointer" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDB-pTPfJc-MbdRZJ_HMSCIMNj52bDUnSzdi5paBUHRK6cdmXZ8ORVvH4CV4aQgow_LAJwgXHyBeLZ3jF063kT-8k0xZtB7PKzz1oZfrCY4dZTSr12CFcaPYmS55lpiM-2obmmIyNdAxnPVfrPCoO3_gZJXHaCLatm7862BKBDJKU29IKEPh5CpI80BZL7jUhhr6c_r9aqjMwQg0OOQ76fYl_zLkVhIndq-yKiAJC49VTjKbSkOFxIvG-ap8Wb_V6rRczx-LgQ2Uhs");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Document Editor -->
+<main class="flex-1 overflow-y-auto bg-white dark:bg-slate-900 relative flex justify-center">
+<!-- Editor Canvas -->
+<div class="w-full max-w-[850px] py-12 px-8 min-h-full bg-white dark:bg-slate-900 shadow-sm relative">
+<!-- Document Header -->
+<div class="mb-10">
+<div class="flex items-center gap-2 mb-4 text-sm">
+<span class="px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-slate-500 font-medium">Workspace</span>
+<span class="text-slate-300">/</span>
+<span class="text-slate-500 hover:text-primary cursor-pointer transition-colors">Engineering</span>
+<span class="text-slate-300">/</span>
+<span class="text-slate-900 dark:text-white font-medium">System Architecture V2</span>
+</div>
+<h1 class="text-4xl font-bold text-slate-900 dark:text-white mb-3 tracking-tight">System Architecture V2</h1>
+<div class="flex items-center justify-between text-sm text-slate-500 border-b border-slate-100 dark:border-slate-800 pb-6">
+<div class="flex items-center gap-2">
+<span>Last edited just now by <strong>Alex</strong></span>
+</div>
+<div class="flex items-center gap-4">
+<div class="flex items-center gap-1.5 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">history</span>
+<span>History</span>
+</div>
+<div class="flex items-center gap-1.5 px-2 py-1 rounded hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-[18px]">star</span>
+<span>Star</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Document Body -->
+<div class="prose prose-slate prose-lg max-w-none dark:prose-invert">
+<h2 class="text-2xl font-semibold mb-4 text-slate-800 dark:text-slate-100">1. Overview</h2>
+<p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+                        The new system architecture focuses on scalability and modularity. By decoupling the frontend from the backend services, we aim to improve deployment velocity and reduce regression risks. This document outlines the core components and their interactions.
+                    </p>
+<h3 class="text-xl font-semibold mb-3 text-slate-800 dark:text-slate-100">1.1 Core Components</h3>
+<p class="text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+                        The primary components of the system include the API Gateway, the Authentication Service, and the Data Processing Pipeline. Each component is containerized and orchestrated via Kubernetes.
+                    </p>
+<!-- Real-time Cursor: Alex -->
+<div class="relative inline">
+<span class="bg-blue-100 dark:bg-blue-900/30 text-slate-800 dark:text-slate-200 px-1 rounded">The Data Processing Pipeline</span>
+<div class="absolute -top-5 -right-2 flex flex-col items-start z-10 pointer-events-none">
+<div class="bg-primary text-white text-xs px-1.5 py-0.5 rounded mb-0.5 font-medium whitespace-nowrap shadow-sm">Alex</div>
+<div class="h-5 w-0.5 bg-primary"></div>
+</div>
+</div>
+<p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed mt-4">
+                        We are introducing a new event-driven architecture using Kafka to handle high-throughput data streams. This will allow us to process user analytics in near real-time.
+                    </p>
+<div class="my-8 p-6 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<h4 class="font-semibold text-slate-900 dark:text-white m-0">Migration Strategy</h4>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 m-0">
+                             The migration will be performed in three phases to ensure zero downtime. Phase 1 involves dual-writing to both the old and new databases.
+                         </p>
+</div>
+<h2 class="text-2xl font-semibold mb-4 text-slate-800 dark:text-slate-100">2. Infrastructure</h2>
+<!-- Real-time Cursor: Sarah (Active typing) -->
+<p class="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed relative">
+                        We will utilize AWS for our cloud infrastructure, leveraging <span class="bg-purple-100 dark:bg-purple-900/30">Auto Scaling Groups</span> for dynamic load management. <span class="border-l-2 border-purple-500 animate-pulse ml-0.5 h-5 inline-block align-middle"></span>
+</p><div class="absolute -top-6 left-[45%] flex flex-col items-start z-10 pointer-events-none">
+<div class="bg-purple-600 text-white text-xs px-1.5 py-0.5 rounded mb-0.5 font-medium whitespace-nowrap shadow-sm">Sarah</div>
+</div>
+<p></p>
+<ul class="list-disc pl-5 space-y-2 text-slate-600 dark:text-slate-300 mb-6">
+<li>ECS for container orchestration</li>
+<li>RDS for relational data storage</li>
+<li>ElastiCache for session management</li>
+</ul>
+</div>
+</div>
+</main>
+<!-- Right Sidebar: Threaded Comments -->
+<aside class="w-80 bg-background-light dark:bg-background-dark border-l border-slate-200 dark:border-slate-800 flex flex-col shrink-0">
+<div class="h-14 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between px-4 bg-white dark:bg-slate-900">
+<div class="flex items-center gap-2 text-slate-900 dark:text-white font-semibold text-sm">
+<span class="material-symbols-outlined text-[20px] text-slate-500">forum</span>
+                    Comments <span class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-xs px-1.5 rounded-full">3</span>
+</div>
+<div class="flex gap-1">
+<button class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+<button class="p-1.5 rounded hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 transition-colors">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-4 space-y-4">
+<!-- AI Suggestion Card -->
+<div class="bg-gradient-to-br from-indigo-50 to-white dark:from-indigo-900/20 dark:to-slate-800 border border-indigo-100 dark:border-indigo-900/50 rounded-xl p-3 shadow-sm">
+<div class="flex items-center gap-2 mb-2">
+<div class="size-5 rounded bg-indigo-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[14px]">auto_awesome</span>
+</div>
+<span class="text-xs font-semibold text-indigo-700 dark:text-indigo-300">AI Suggestion</span>
+</div>
+<p class="text-xs text-slate-600 dark:text-slate-300 mb-2 leading-relaxed">
+                        Based on the context of "Phase 1 dual-writing", consider adding a section about conflict resolution strategies.
+                    </p>
+<div class="flex gap-2">
+<button class="flex-1 bg-white dark:bg-slate-700 border border-slate-200 dark:border-slate-600 hover:border-indigo-300 text-xs font-medium py-1 rounded text-slate-700 dark:text-slate-200 transition-colors">Accept</button>
+<button class="flex-1 hover:bg-slate-100 dark:hover:bg-slate-700 text-xs font-medium py-1 rounded text-slate-500 transition-colors">Dismiss</button>
+</div>
+</div>
+<!-- Comment Thread 1 (Resolved) -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-800 opacity-75">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD0r9gT4OKsSVEax5snluHcvp_qsNB4Tw3OYFHVmZToaw0cnb8a3MwwFYT3zeePOusvQ_LIopxD1j_BL0zdBBDR2uWtmJwr_rlev5ENOHVO8JpxxgnmhyyJOBNApa4xTBVEITcKAfjxXrNlJO_MuL7NTzCpONWa-X1YehgQCLxtp0plP_F3P-HC_DJw63lkph0C0kTYZvMSJIJuLL99KPXLNfs0bo77tJJ9TOAMi2iNr-QcfSRy49Ry8hgCZesb7ZEiwh9P1WTKoqY");'></div>
+<span class="text-xs font-semibold text-slate-900 dark:text-white">Marcus</span>
+<span class="text-[10px] text-slate-400">2h ago</span>
+</div>
+<span class="material-symbols-outlined text-[16px] text-green-500">check_circle</span>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Should we specify the exact Kafka version?</p>
+<div class="pl-3 border-l-2 border-slate-100 dark:border-slate-800 ml-1">
+<div class="flex items-center gap-2 mt-2">
+<div class="size-5 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDef6QZaDsXGuVoKJZZdBs4ZUJRvXbanDypUOiwben86BpGpWe14QXP7Ew_472yoD0P7gBEQW0-BaGI0dvV64FLVcFfGlr-UlpS3F1QfVHjifZ9Ui5ovF5V9yBU7HVyMTEmK_d681ZBuSe0zDZyDFoHUPxLlFQMB8XL5UrGPVEGcgOIQ9klCShlO2QurKGXSLW8Q_ShpxVLYkJHcCnPYnToLqb7yvTv4Ct-pkNWK4H_PPYrK793nsP33yt3XrJD-40_DXK8oYGK-MA");'></div>
+<span class="text-xs font-semibold text-slate-900 dark:text-white">Alex</span>
+</div>
+<p class="text-xs text-slate-600 dark:text-slate-400 mt-1">Added in section 1.2.</p>
+</div>
+</div>
+<!-- Comment Thread 2 (Active) -->
+<div class="bg-white dark:bg-slate-900 rounded-xl p-3 border border-slate-200 dark:border-slate-800 shadow-sm ring-1 ring-primary/10">
+<div class="flex justify-between items-start mb-2">
+<div class="flex items-center gap-2">
+<div class="size-6 rounded-full bg-cover bg-center" data-alt="User avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCVufS7uyqg74v-tC2EeA5-8LgaoGEf3dGRHTpzVi1FUWKfwYz1O5sVpH8H2bNRweO-sarTynIIkDmduFLdoR_j-aGiNejFbNCvpi26MoN5HwSt2H-66lD3_HTNOCyEYLxlXRNsCjrwBE-Oi-RJ3bqBBO3uZkJ-TH7Ji2i-cjm4nlQs-pzGATuIiCGK1od-yG2uo3cA3jFpqdP3M0neYBiVNO116FfaeNCRrBUwyLSRmMp0_tpZNt8kE1ToPMWnnDcOUbZxSQDo6Wo");'></div>
+<span class="text-xs font-semibold text-slate-900 dark:text-white">Sarah</span>
+<span class="text-[10px] text-slate-400">Now</span>
+</div>
+<div class="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 dark:text-yellow-400 text-[10px] font-bold px-1.5 py-0.5 rounded uppercase">Open</div>
+</div>
+<div class="bg-slate-50 dark:bg-slate-800 rounded p-2 mb-2 text-xs text-slate-500 border-l-2 border-purple-400 italic">
+                        "Auto Scaling Groups"
+                    </div>
+<p class="text-sm text-slate-800 dark:text-slate-200 mb-3">
+                        Are we sticking with AWS native ASGs or managing this via Karpenter on EKS?
+                    </p>
+<div class="flex items-center gap-2 mt-3 pt-3 border-t border-slate-100 dark:border-slate-800">
+<div class="flex-1 relative">
+<input class="w-full text-xs bg-slate-50 dark:bg-slate-800 border-none rounded py-1.5 px-2 focus:ring-1 focus:ring-primary placeholder:text-slate-400" placeholder="Reply..." type="text"/>
+</div>
+<button class="bg-primary text-white p-1.5 rounded hover:bg-blue-700 transition-colors">
+<span class="material-symbols-outlined text-[16px]">send</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Thread Footer -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
+<button class="w-full flex items-center justify-center gap-2 border border-dashed border-slate-300 dark:border-slate-600 rounded-lg py-2 text-sm text-slate-500 hover:text-primary hover:border-primary hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">
+<span class="material-symbols-outlined text-[18px]">add_comment</span>
+                     Add general comment
+                 </button>
+</div>
+</aside>
+</div>
+</body></html>

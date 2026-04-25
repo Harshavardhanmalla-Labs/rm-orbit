@@ -1,0 +1,14 @@
+{
+  "base":           "0",
+  "raised":         "10",
+  "dropdown":       "1000",
+  "sticky":         "1100",
+  "fixed":          "1150",
+  "modal-backdrop": "1200",
+  "modal":          "1300",
+  "popover":        "1400",
+  "tooltip":        "1500",
+  "orbit-bar":      "1600",
+  "toast":          "1700",
+  "max":            "9999"
+}

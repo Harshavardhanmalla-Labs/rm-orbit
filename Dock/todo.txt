@@ -1,0 +1,35 @@
+# RM Dock - Execution Checklist
+# Last Updated: 2026-03-09
+
+================================================================================
+## PHASE 0: FOUNDATION
+================================================================================
+
+[x] Backend service scaffold
+[x] Org/user/role context headers
+[x] Gate JWT verification middleware
+[ ] Persistent DB + migrations
+[ ] Procurement and budget policy engine hooks
+
+================================================================================
+## PHASE 1: PORTAL MVP
+================================================================================
+
+[x] App catalog CRUD baseline
+[x] License purchase tracking baseline
+[x] Seat assignment + capacity enforcement
+[x] User views: advertised apps + assigned apps
+[x] CARF (Change App Request Form) request/review lifecycle
+[x] Isolation and role-boundary tests
+[x] Web UI baseline (catalog + CARF + request status updates)
+[x] Audit event emission (`dock.app.*`, `dock.license.*`, `dock.request.*`)
+
+================================================================================
+## PHASE 2: CROSS-FUNCTIONAL LEVERAGE
+================================================================================
+
+[x] Auto-create TurboTick follow-up tasks from CARF approvals (Atlas handoff hint included)
+[ ] Sync assignment changes to Secure access posture
+[ ] License renewal alerts in Mail + Connect
+[ ] Mobile parity (iOS/Android request + approval workflow)
+[ ] Cost center analytics and procurement dashboard

@@ -1,0 +1,48 @@
+services:
+  grobid:
+    image: grobid/grobid:0.8.1
+    container_name: research-grobid
+    ports:
+      - "8070:8070"
+    restart: unless-stopped
+    environment:
+      - JAVA_OPTS=-Xmx4g
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8070/api/isalive"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  languagetool:
+    image: erikvl87/languagetool
+    container_name: research-languagetool
+    ports:
+      - "8072:8010"
+    restart: unless-stopped
+    environment:
+      - Java_Xms512m
+      - Java_Xmx1500m
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8010/v2/languages"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  nougat:
+    image: ghcr.io/facebookresearch/nougat:latest
+    container_name: research-nougat
+    ports:
+      - "8071:8503"
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8503/health"]
+      interval: 60s
+      timeout: 30s
+      retries: 3

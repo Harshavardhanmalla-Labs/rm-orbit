@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Mobile Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1152d4",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Manrope", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light text-slate-900 font-display antialiased min-h-screen flex justify-center items-center p-4 sm:p-8">
+<!-- Mobile Device Container for Presentation -->
+<div class="relative w-full max-w-[400px] h-[850px] bg-white rounded-[2.5rem] shadow-2xl overflow-hidden border-8 border-slate-900 flex flex-col">
+<!-- Status Bar Mockup -->
+<div class="flex justify-between items-center px-6 pt-3 pb-2 bg-white sticky top-0 z-20">
+<span class="text-xs font-bold text-slate-900">9:41</span>
+<div class="flex gap-2 text-slate-900">
+<span class="material-symbols-outlined text-[18px]">signal_cellular_alt</span>
+<span class="material-symbols-outlined text-[18px]">wifi</span>
+<span class="material-symbols-outlined text-[18px]">battery_full</span>
+</div>
+</div>
+<!-- Main Content Area -->
+<div class="flex-1 overflow-y-auto no-scrollbar pb-24 bg-background-light">
+<!-- Header -->
+<header class="bg-white px-6 pt-6 pb-6 sticky top-0 z-10 border-b border-slate-100 shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<div class="flex items-center gap-2 text-primary">
+<div class="size-8 rounded-lg bg-primary/10 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">edit_document</span>
+</div>
+<h2 class="text-slate-900 text-lg font-bold leading-tight tracking-tight">RM Writer</h2>
+</div>
+<button class="relative p-2 rounded-full hover:bg-slate-50 transition-colors">
+<span class="material-symbols-outlined text-slate-600">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border border-white"></span>
+</button>
+</div>
+<h1 class="text-3xl font-bold text-slate-900 leading-tight mb-1">Good morning,</h1>
+<p class="text-slate-500 font-medium">Ready to write something amazing?</p>
+</header>
+<!-- Dashboard Content -->
+<div class="p-6 flex flex-col gap-6">
+<!-- Quick Stats -->
+<div class="grid grid-cols-2 gap-4">
+<div class="flex flex-col gap-3 rounded-2xl p-5 bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-blue-50 rounded-lg text-primary">
+<span class="material-symbols-outlined text-[20px]">description</span>
+</div>
+<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded-full">+1</span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">Active Drafts</p>
+<p class="text-slate-900 text-2xl font-extrabold">3</p>
+</div>
+</div>
+<div class="flex flex-col gap-3 rounded-2xl p-5 bg-white border border-slate-100 shadow-sm hover:shadow-md transition-all">
+<div class="flex justify-between items-start">
+<div class="p-2 bg-indigo-50 rounded-lg text-indigo-600">
+<span class="material-symbols-outlined text-[20px]">bar_chart</span>
+</div>
+<span class="text-emerald-600 text-xs font-bold bg-emerald-50 px-2 py-0.5 rounded-full">+12%</span>
+</div>
+<div>
+<p class="text-slate-500 text-sm font-medium mb-1">Words Written</p>
+<p class="text-slate-900 text-2xl font-extrabold">12.4k</p>
+</div>
+</div>
+</div>
+<!-- Create New Action -->
+<button class="w-full flex items-center justify-between p-4 bg-primary text-white rounded-xl shadow-lg shadow-primary/30 hover:bg-blue-700 transition-all group">
+<div class="flex items-center gap-3">
+<span class="p-2 bg-white/20 rounded-lg material-symbols-outlined">add</span>
+<div class="text-left">
+<p class="font-bold text-base">New Project</p>
+<p class="text-blue-100 text-xs">Start a fresh document</p>
+</div>
+</div>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<!-- Recent Work Section -->
+<div class="flex flex-col gap-4">
+<div class="flex justify-between items-end px-1">
+<h3 class="text-lg font-bold text-slate-900">Recent Work</h3>
+<a class="text-primary text-sm font-bold hover:underline" href="#">View All</a>
+</div>
+<div class="flex flex-col gap-3">
+<!-- Card 1 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 hover:border-primary/30 transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-orange-50 flex items-center justify-center text-orange-600 shrink-0">
+<span class="material-symbols-outlined">article</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-slate-900 truncate group-hover:text-primary transition-colors">Q3 Marketing Strategy</h4>
+<p class="text-slate-500 text-xs mt-1 truncate">Edited 2 hours ago • Marketing</p>
+</div>
+<button class="text-slate-300 hover:text-slate-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Card 2 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 hover:border-primary/30 transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center text-purple-600 shrink-0">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-slate-900 truncate group-hover:text-primary transition-colors">Blog Post Ideas 2024</h4>
+<p class="text-slate-500 text-xs mt-1 truncate">Edited yesterday • Content</p>
+</div>
+<button class="text-slate-300 hover:text-slate-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+<!-- Card 3 -->
+<div class="bg-white p-4 rounded-xl border border-slate-100 shadow-sm flex items-center gap-4 hover:border-primary/30 transition-colors cursor-pointer group">
+<div class="w-12 h-12 rounded-lg bg-teal-50 flex items-center justify-center text-teal-600 shrink-0">
+<span class="material-symbols-outlined">science</span>
+</div>
+<div class="flex-1 min-w-0">
+<h4 class="font-bold text-slate-900 truncate group-hover:text-primary transition-colors">Product Research: AI Trends</h4>
+<p class="text-slate-500 text-xs mt-1 truncate">Edited 3 days ago • Research</p>
+</div>
+<button class="text-slate-300 hover:text-slate-600">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Feature Teaser (Canvas) -->
+<div class="mt-2 p-5 bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl text-white relative overflow-hidden">
+<img class="absolute inset-0 w-full h-full object-cover opacity-20 mix-blend-overlay" data-alt="Abstract deep blue geometric pattern" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD6Op3zrxJN58go6BjzLmJxcsYdLaXwk3FMOzRpvgttPO3msTnSs3k9zECFXLLnFJ__UETAl6Kww_-jz9Mc_oE8Sadio1LTUrXbu6VXM8nLEqD9uNKCe-riWZ5IZw_01yh5jcycn889qCUb-m7hRU-WBXD7fVCmKSEPoHhPxPMAWbLSUGQBRE0LlqRZXCVgH3O-rHlHBkGrIKTRJfkTPBhU4MnULv0HrzFDE1JHQegZZnbDg-Je7bTAjYm9me_x1PsgnHb_3zTpZF4"/>
+<div class="relative z-10">
+<span class="inline-block px-2 py-1 bg-white/10 rounded text-xs font-medium mb-3 border border-white/10">New Feature</span>
+<h3 class="text-lg font-bold mb-1">Try the Infinite Canvas</h3>
+<p class="text-slate-300 text-sm mb-4">Map out your ideas visually before you write.</p>
+<button class="px-4 py-2 bg-white text-slate-900 text-sm font-bold rounded-lg hover:bg-slate-100 transition-colors">
+                            Open Canvas
+                        </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="bg-white border-t border-slate-100 px-6 py-3 flex justify-between items-center absolute bottom-0 w-full z-30 pb-6">
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">home</span>
+<span class="text-[10px] font-bold text-primary">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">search</span>
+<span class="text-[10px] font-medium text-slate-400 group-hover:text-primary transition-colors">Search</span>
+</button>
+<!-- Floating Main Action Button Mockup -->
+<div class="-mt-8">
+<button class="size-14 bg-primary rounded-full shadow-lg shadow-primary/40 flex items-center justify-center text-white hover:scale-105 active:scale-95 transition-transform border-4 border-white">
+<span class="material-symbols-outlined text-[28px]">edit</span>
+</button>
+</div>
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">edit_note</span>
+<span class="text-[10px] font-medium text-slate-400 group-hover:text-primary transition-colors">Canvas</span>
+</button>
+<button class="flex flex-col items-center gap-1 group w-16">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors">person</span>
+<span class="text-[10px] font-medium text-slate-400 group-hover:text-primary transition-colors">Profile</span>
+</button>
+</nav>
+<!-- Home Indicator -->
+<div class="absolute bottom-1 left-1/2 transform -translate-x-1/2 w-1/3 h-1 bg-slate-200 rounded-full z-40"></div>
+</div>
+</body></html>

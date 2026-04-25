@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1349ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101522",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
+<div class="flex h-screen overflow-hidden">
+<!-- Sidebar -->
+<aside class="w-64 flex-shrink-0 border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 flex flex-col">
+<div class="p-6 flex items-center gap-3">
+<div class="bg-primary rounded-lg p-1.5 flex items-center justify-center text-white">
+<span class="material-symbols-outlined text-2xl">dock</span>
+</div>
+<div class="flex flex-col">
+<h1 class="text-slate-900 dark:text-white text-lg font-bold leading-tight">RM Dock</h1>
+<p class="text-slate-500 dark:text-slate-400 text-xs font-medium uppercase tracking-wider">Enterprise</p>
+</div>
+</div>
+<nav class="flex-1 px-4 space-y-1 overflow-y-auto">
+<div class="pb-4">
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.1em] mb-2">Discovery</p>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary/10 text-primary font-semibold group" href="#">
+<span class="material-symbols-outlined">grid_view</span>
+<span class="text-sm">All Apps</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span class="text-sm">Featured</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">update</span>
+<span class="text-sm">Updates</span>
+<span class="ml-auto bg-primary text-white text-[10px] px-1.5 py-0.5 rounded-full font-bold">3</span>
+</a>
+</div>
+<div class="pt-4 border-t border-slate-100 dark:border-slate-800">
+<p class="px-3 text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-[0.1em] mb-2">Categories</p>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400">terminal</span>
+<span class="text-sm font-medium">Developer Tools</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400">palette</span>
+<span class="text-sm font-medium">Design Tools</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400">gpp_maybe</span>
+<span class="text-sm font-medium">Security</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400">settings_input_component</span>
+<span class="text-sm font-medium">Utilities</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined text-slate-400">forum</span>
+<span class="text-sm font-medium">Communication</span>
+</a>
+</div>
+</nav>
+<div class="p-4 mt-auto">
+<div class="bg-slate-50 dark:bg-slate-800/50 rounded-xl p-4 border border-slate-100 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-3">
+<div class="h-8 w-8 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center overflow-hidden">
+<img alt="User Avatar" class="w-full h-full object-cover" data-alt="Corporate professional user profile avatar illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBg2dwROJ8aK7TGoq3E817DDSNOlPWdu2aWKhIHNm8KLQqrpbGLYt7PQET0xBy5Gt40gukP3RVpV-6HZENav0OkzhCqkqaFZCGDsCULf0z2tYDMKTa90wcK4SMIPJLYVFzGFTs5WJ32v5Jxph1rnN7W1PLAFyHu7HoFoL4k4NyVTCV7FL-eF-OEAhDVd75Qr2LS9EkdGsubO3CxvleCMCYcn9Qb1vIm7bOeNLwwRiGbeAZZfO00cdQe7Ko2diYemBObCG5x2fafZo6F"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-slate-900 dark:text-white">Alex Rivera</span>
+<span class="text-[10px] text-slate-500">Engineering</span>
+</div>
+</div>
+<button class="w-full py-2 px-3 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg text-xs font-bold text-slate-700 dark:text-slate-200 hover:bg-slate-50 transition-colors flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">settings</span>
+                    Account Settings
+                </button>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex-1 flex flex-col min-w-0 overflow-hidden bg-white dark:bg-slate-950">
+<!-- Header -->
+<header class="h-16 flex items-center justify-between px-8 border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 z-10">
+<div class="flex-1 max-w-xl">
+<div class="relative group">
+<span class="absolute inset-y-0 left-0 pl-3 flex items-center text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</span>
+<input class="block w-full pl-10 pr-3 py-2 border-none bg-slate-100 dark:bg-slate-800 focus:bg-white dark:focus:bg-slate-700 rounded-xl text-sm placeholder-slate-500 focus:ring-2 focus:ring-primary/20 transition-all" placeholder="Search for apps, categories, or tools..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-4 ml-6">
+<button class="p-2 text-slate-500 hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 h-2 w-2 bg-red-500 rounded-full border-2 border-white dark:border-slate-900"></span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 dark:border-slate-800"></div>
+<button class="bg-primary hover:bg-primary/90 text-white px-4 py-2 rounded-lg text-sm font-bold flex items-center gap-2 transition-all shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-sm">sync</span>
+                    Sync Catalog
+                </button>
+</div>
+</header>
+<!-- Scrollable Area -->
+<div class="flex-1 overflow-y-auto p-8">
+<div class="max-w-6xl mx-auto">
+<div class="flex flex-col gap-1 mb-8">
+<h2 class="text-3xl font-black text-slate-900 dark:text-white tracking-tight">Software Catalog</h2>
+<p class="text-slate-500 dark:text-slate-400">Discover and install pre-approved software for your workstation.</p>
+</div>
+<!-- Filters & Sorting -->
+<div class="flex items-center gap-3 mb-6 overflow-x-auto pb-2 scrollbar-hide">
+<button class="whitespace-nowrap flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900 dark:bg-white text-white dark:text-slate-900 text-sm font-semibold">
+                        All Software
+                    </button>
+<button class="whitespace-nowrap flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-semibold hover:bg-slate-200 transition-colors">
+                        New Releases
+                    </button>
+<button class="whitespace-nowrap flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-semibold hover:bg-slate-200 transition-colors">
+                        Updates Available
+                    </button>
+<button class="whitespace-nowrap flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 text-sm font-semibold hover:bg-slate-200 transition-colors">
+                        Installed
+                    </button>
+<div class="ml-auto flex items-center gap-2">
+<span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Sort by:</span>
+<select class="bg-transparent border-none text-sm font-bold text-slate-900 dark:text-white focus:ring-0 cursor-pointer">
+<option>Popularity</option>
+<option>Alphabetical</option>
+<option>Recently Added</option>
+</select>
+</div>
+</div>
+<!-- App Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- App Card 1 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all group">
+<div class="flex items-start gap-4 mb-4">
+<div class="h-16 w-16 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white shadow-inner flex-shrink-0" data-alt="Visual Studio Code blue app icon logo">
+<span class="material-symbols-outlined text-4xl">code</span>
+</div>
+<div class="min-w-0">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">Visual Studio Code</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Developer Tools • v1.85</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
+                                    Open Source
+                                </div>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-5">Professional code editing redefined, optimized for building and debugging modern web and cloud applications.</p>
+<div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors">Install</button>
+<button class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">info</span>
+</button>
+</div>
+</div>
+<!-- App Card 2 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all group">
+<div class="flex items-start gap-4 mb-4">
+<div class="h-16 w-16 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white shadow-inner flex-shrink-0" data-alt="Figma purple and pink app icon logo">
+<span class="material-symbols-outlined text-4xl">pentagon</span>
+</div>
+<div class="min-w-0">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">Figma Desktop</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Design Tools • v116.15</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-[10px] font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wide">
+                                    Enterprise License
+                                </div>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-5">Collaborative interface design tool. Connect the entire product design process on one canvas.</p>
+<div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex-1 bg-slate-900 dark:bg-slate-800 text-white py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 cursor-default">
+<span class="material-symbols-outlined text-sm">check_circle</span>
+                                Installed
+                            </button>
+<button class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">open_in_new</span>
+</button>
+</div>
+</div>
+<!-- App Card 3 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all group">
+<div class="flex items-start gap-4 mb-4">
+<div class="h-16 w-16 rounded-xl bg-gradient-to-br from-red-500 to-orange-600 flex items-center justify-center text-white shadow-inner flex-shrink-0" data-alt="Security software red falcon icon logo">
+<span class="material-symbols-outlined text-4xl">shield_with_heart</span>
+</div>
+<div class="min-w-0">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">CrowdStrike Falcon</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Security • v7.0.1</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-900/30 text-[10px] font-bold text-blue-700 dark:text-blue-400 uppercase tracking-wide">
+                                    Corporate Standard
+                                </div>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-5">Next-generation endpoint protection to stop breaches and protect sensitive company data.</p>
+<div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex-1 border-2 border-primary text-primary py-1.5 rounded-lg text-sm font-bold hover:bg-primary/5 transition-colors">Request</button>
+<button class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">help</span>
+</button>
+</div>
+</div>
+<!-- App Card 4 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all group">
+<div class="flex items-start gap-4 mb-4">
+<div class="h-16 w-16 rounded-xl bg-gradient-to-br from-cyan-400 to-blue-500 flex items-center justify-center text-white shadow-inner flex-shrink-0" data-alt="Docker blue container app icon logo">
+<span class="material-symbols-outlined text-4xl">set_meal</span>
+</div>
+<div class="min-w-0">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">Docker Desktop</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Developer Tools • v4.26</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
+                                    Subscription
+                                </div>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-5">Build, share, and run containerized applications and microservices on your desktop.</p>
+<div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors">Update Now</button>
+<button class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">list</span>
+</button>
+</div>
+</div>
+<!-- App Card 5 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all group">
+<div class="flex items-start gap-4 mb-4">
+<div class="h-16 w-16 rounded-xl bg-gradient-to-br from-green-400 to-teal-500 flex items-center justify-center text-white shadow-inner flex-shrink-0" data-alt="Slack colorful chat app icon logo">
+<span class="material-symbols-outlined text-4xl">tag</span>
+</div>
+<div class="min-w-0">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">Slack</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Communication • v4.35</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-slate-100 dark:bg-slate-800 text-[10px] font-bold text-slate-600 dark:text-slate-400 uppercase tracking-wide">
+                                    Standard Plan
+                                </div>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-5">Team communication and collaboration platform. All your tools and people in one place.</p>
+<div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors">Install</button>
+<button class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">info</span>
+</button>
+</div>
+</div>
+<!-- App Card 6 -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-5 hover:shadow-xl hover:shadow-slate-200/50 dark:hover:shadow-none transition-all group">
+<div class="flex items-start gap-4 mb-4">
+<div class="h-16 w-16 rounded-xl bg-gradient-to-br from-orange-400 to-red-600 flex items-center justify-center text-white shadow-inner flex-shrink-0" data-alt="IntelliJ IDEA dark orange gradient logo">
+<span class="material-symbols-outlined text-4xl">dynamic_form</span>
+</div>
+<div class="min-w-0">
+<h3 class="text-lg font-bold text-slate-900 dark:text-white truncate">IntelliJ IDEA</h3>
+<p class="text-xs font-medium text-slate-500 dark:text-slate-400">Developer Tools • v2023.3</p>
+<div class="mt-2 inline-flex items-center px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-900/30 text-[10px] font-bold text-amber-700 dark:text-amber-500 uppercase tracking-wide">
+                                    Commercial License
+                                </div>
+</div>
+</div>
+<p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-2 mb-5">The leading Java and Kotlin IDE for enterprise application development.</p>
+<div class="flex items-center gap-2 pt-4 border-t border-slate-100 dark:border-slate-800">
+<button class="flex-1 bg-primary text-white py-2 rounded-lg text-sm font-bold hover:bg-primary/90 transition-colors">Install</button>
+<button class="px-3 py-2 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 rounded-lg hover:bg-slate-200 transition-colors">
+<span class="material-symbols-outlined text-sm">info</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Pagination/Load More -->
+<div class="mt-12 flex justify-center">
+<button class="px-8 py-3 bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-bold rounded-xl hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center gap-2">
+                        Load More Applications
+                        <span class="material-symbols-outlined text-sm">expand_more</span>
+</button>
+</div>
+</div>
+</div>
+</main>
+<!-- App Detail Contextual Sidebar (Hidden by default, could be triggered) -->
+<div class="hidden w-80 border-l border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 p-6 overflow-y-auto">
+<div class="flex justify-between items-center mb-6">
+<h4 class="text-sm font-bold uppercase tracking-widest text-slate-400">App Details</h4>
+<button class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined">close</span></button>
+</div>
+<!-- Detail Content would go here -->
+</div>
+</div>
+</body></html>

@@ -1,0 +1,69 @@
+name: Writer Release Blocker
+
+on:
+  workflow_run:
+    workflows:
+      - Writer QA Gate
+    types:
+      - completed
+  workflow_dispatch:
+
+jobs:
+  block-release-when-writer-qa-red:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enforce Writer QA gate is green for main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+          EVENT_NAME: ${{ github.event_name }}
+          QA_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          QA_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        run: |
+          set -euo pipefail
+          release_branch="${DEFAULT_BRANCH:-main}"
+
+          if [[ "$EVENT_NAME" == "workflow_run" ]]; then
+            echo "Writer QA completion detected (branch=$QA_BRANCH, conclusion=$QA_CONCLUSION, release_branch=$release_branch)."
+            if [[ "$QA_BRANCH" != "$release_branch" ]]; then
+              echo "Release block check applies only to $release_branch. Skipping."
+              exit 0
+            fi
+
+            if [[ "$QA_CONCLUSION" != "success" ]]; then
+              echo "::error::Writer QA Gate is $QA_CONCLUSION on $release_branch. Release is blocked."
+              exit 1
+            fi
+
+            echo "Writer QA Gate is green on $release_branch."
+            exit 0
+          fi
+
+          echo "Manual dispatch: validating latest completed Writer QA run on $release_branch."
+          api_url="https://api.github.com/repos/$REPOSITORY/actions/workflows/writer-qa.yml/runs?branch=$release_branch&status=completed&per_page=1"
+          response="$(curl -fsSL \
+            -H "Authorization: Bearer $GH_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            "$api_url")"
+
+          printf '%s' "$response" | python3 - <<'PY'
+import json
+import sys
+
+payload = json.load(sys.stdin)
+runs = payload.get("workflow_runs", [])
+if not runs:
+    print("::error::No completed Writer QA Gate run found for the release branch.")
+    raise SystemExit(1)
+
+run = runs[0]
+conclusion = run.get("conclusion") or "unknown"
+run_id = run.get("id")
+print(f"Latest Writer QA run id={run_id} conclusion={conclusion}")
+
+if conclusion != "success":
+    print(f"::error::Latest Writer QA Gate run on release branch is {conclusion}. Release is blocked.")
+    raise SystemExit(1)
+print("Writer QA Gate is green on release branch.")
+PY

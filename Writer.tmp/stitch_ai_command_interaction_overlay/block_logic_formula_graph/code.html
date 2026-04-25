@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Logic Graph</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;700&amp;family=Noto+Sans:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "slate-900": "#111318",
+                        "slate-500": "#616f89",
+                        "slate-200": "#e2e8f0",
+                        "slate-100": "#f0f2f4",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom Grid Background for the canvas */
+        .grid-pattern {
+            background-size: 20px 20px;
+            background-image:
+                linear-gradient(to right, #e2e8f0 1px, transparent 1px),
+                linear-gradient(to bottom, #e2e8f0 1px, transparent 1px);
+        }
+        .dark .grid-pattern {
+            background-image:
+                linear-gradient(to right, #1e293b 1px, transparent 1px),
+                linear-gradient(to bottom, #1e293b 1px, transparent 1px);
+        }
+        /* SVG Connection Lines */
+        .connection-line {
+            fill: none;
+            stroke: #94a3b8;
+            stroke-width: 2;
+            pointer-events: none;
+        }
+        .connection-line.active {
+            stroke: #0f49bd;
+            stroke-width: 3;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display antialiased text-slate-900 dark:text-white h-screen flex flex-col overflow-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 shrink-0 z-20">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900 dark:text-white">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-[32px]">schema</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-[-0.015em]">RM Writer</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64 hidden md:flex">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-500 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg border-r-0">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none bg-slate-100 dark:bg-slate-800 focus:border-none h-full placeholder:text-slate-500 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search logic blocks..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="flex items-center gap-6 hidden lg:flex">
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold leading-normal" href="#">Logic Graph</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Documents</a>
+<a class="text-slate-500 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Settings</a>
+</nav>
+<div class="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden lg:block"></div>
+<button class="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors shadow-sm shadow-primary/20">
+<span class="material-symbols-outlined text-[18px] mr-2">add</span>
+<span class="truncate">New Block</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-9 border border-slate-200 dark:border-slate-700" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC6mq02CKErKm_IpklmlXzMzp8F7VsOiCHrl6Vvkkq-QCVs9_OwEQsl_7AicwYjsJBbJJUjUP3ji_kcQzUYz5XRNtlLyG-WfpC6Bl6D4hZaCvwdYVaR73mjTC4Wic_xRH-Wi9HnZuVKX1ug591QMwlgkE-SBtBtphZKRZM_D9r477ZiMK4PCqfFlKEc0SbX4-urQuH3-dW2C-h2oX0xRfF5X4IN434nLyQSy9jl2qSHJjiCP7oWRh8DBLvKNDz2taOsjw-SV7RjdQI");'></div>
+</div>
+</header>
+<!-- Main Workspace -->
+<div class="flex flex-1 overflow-hidden relative group/design-root">
+<!-- Sidebar / Toolbar -->
+<aside class="w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 flex flex-col z-10 shrink-0">
+<div class="p-4 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3 mb-1">
+<div class="bg-primary/10 text-primary p-2 rounded-lg">
+<span class="material-symbols-outlined">dataset</span>
+</div>
+<div>
+<h1 class="text-slate-900 dark:text-white text-sm font-bold leading-tight">Logic Library</h1>
+<p class="text-slate-500 text-xs font-normal">Drag nodes to canvas</p>
+</div>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto p-3 space-y-1">
+<!-- Tool Category: Nodes -->
+<div class="mb-4">
+<h3 class="px-3 text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Basic Nodes</h3>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg bg-slate-100 dark:bg-slate-800 cursor-grab hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">grid_view</span>
+<p class="text-slate-700 dark:text-slate-200 text-sm font-medium">Data Input</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-grab transition-colors group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">calculate</span>
+<p class="text-slate-700 dark:text-slate-200 text-sm font-medium">Calculation</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-grab transition-colors group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">output</span>
+<p class="text-slate-700 dark:text-slate-200 text-sm font-medium">Output</p>
+</div>
+</div>
+<!-- Tool Category: Logic -->
+<div class="mb-4">
+<h3 class="px-3 text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">Logic &amp; Flow</h3>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-grab transition-colors group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">call_split</span>
+<p class="text-slate-700 dark:text-slate-200 text-sm font-medium">If / Else</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-grab transition-colors group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">functions</span>
+<p class="text-slate-700 dark:text-slate-200 text-sm font-medium">Aggregation</p>
+</div>
+<div class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-grab transition-colors group">
+<span class="material-symbols-outlined text-slate-500 group-hover:text-primary">variable_add</span>
+<p class="text-slate-700 dark:text-slate-200 text-sm font-medium">Variable</p>
+</div>
+</div>
+</div>
+<!-- Context Info -->
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
+<div class="flex items-center justify-between text-xs text-slate-500 mb-2">
+<span>Active Scenario</span>
+<span class="font-mono text-primary">Base Case</span>
+</div>
+<div class="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-2/3 rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2 text-[10px] text-slate-400">
+<span>Memory Usage</span>
+<span>64%</span>
+</div>
+</div>
+</aside>
+<!-- Canvas Area -->
+<main class="flex-1 relative overflow-hidden bg-background-light dark:bg-background-dark grid-pattern cursor-move">
+<!-- Breadcrumbs / Top Overlay -->
+<div class="absolute top-4 left-4 z-10 flex flex-col pointer-events-none">
+<div class="flex items-center gap-2 mb-1 pointer-events-auto">
+<a class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-sm font-medium" href="#">Project Alpha</a>
+<span class="text-slate-400 text-sm">/</span>
+<a class="text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 text-sm font-medium" href="#">Financial Model</a>
+<span class="text-slate-400 text-sm">/</span>
+<span class="text-primary text-sm font-bold bg-white dark:bg-slate-800 px-2 py-0.5 rounded shadow-sm border border-slate-200 dark:border-slate-700">COGS Logic</span>
+</div>
+<h1 class="text-slate-900 dark:text-white text-3xl font-bold tracking-tight pointer-events-auto">Unit Economics</h1>
+</div>
+<!-- Canvas Tools Overlay -->
+<div class="absolute top-4 right-4 z-10 flex gap-2 pointer-events-auto">
+<div class="flex bg-white dark:bg-slate-800 rounded-lg shadow-md border border-slate-200 dark:border-slate-700 p-1">
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300 transition-colors" title="Zoom Out">
+<span class="material-symbols-outlined text-[20px]">remove</span>
+</button>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 self-center mx-1"></div>
+<span class="px-2 text-sm font-mono text-slate-500 self-center select-none">100%</span>
+<div class="w-px h-6 bg-slate-200 dark:bg-slate-700 self-center mx-1"></div>
+<button class="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300 transition-colors" title="Zoom In">
+<span class="material-symbols-outlined text-[20px]">add</span>
+</button>
+</div>
+<button class="flex items-center gap-2 bg-primary text-white px-4 py-2 rounded-lg shadow-md hover:bg-primary/90 transition-colors font-bold text-sm">
+<span class="material-symbols-outlined text-[20px]">play_arrow</span>
+                    Run Sim
+                </button>
+</div>
+<!-- SVG Layer for connections -->
+<svg class="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-visible">
+<!-- Connection: Unit Cost -> COGS -->
+<path class="connection-line" d="M 430 250 C 480 250, 480 340, 530 340"></path>
+<!-- Connection: Volume -> COGS -->
+<path class="connection-line" d="M 430 430 C 480 430, 480 360, 530 360"></path>
+<!-- Connection: COGS -> Gross Margin -->
+<path class="connection-line active" d="M 770 350 C 820 350, 820 350, 870 350"></path>
+<!-- Connection: Price -> Gross Margin -->
+<path class="connection-line" d="M 770 180 C 820 180, 820 330, 870 330"></path>
+</svg>
+<!-- NODE 1: Data Input (Unit Cost) -->
+<div class="absolute top-[200px] left-[150px] w-[280px] bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-xl transition-all z-10 cursor-default">
+<!-- Node Header -->
+<div class="flex items-center justify-between px-4 py-2 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-[18px]">attach_money</span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Input</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<!-- Node Body -->
+<div class="p-4">
+<div class="mb-3">
+<label class="block text-slate-900 dark:text-white font-bold text-base mb-1">Unit Cost</label>
+<input class="w-full bg-slate-100 dark:bg-slate-900 border-none rounded p-2 text-right font-mono text-sm focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-200" type="number" value="45.00"/>
+</div>
+<!-- Ports -->
+<div class="relative flex justify-end items-center mt-2">
+<span class="text-[10px] text-slate-400 mr-2 uppercase">Value Out</span>
+<div class="size-3 rounded-full bg-slate-300 dark:bg-slate-600 border-2 border-white dark:border-slate-800 hover:bg-primary cursor-pointer transition-colors"></div>
+</div>
+</div>
+</div>
+<!-- NODE 2: Data Input (Volume) -->
+<div class="absolute top-[380px] left-[150px] w-[280px] bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-xl transition-all z-10 cursor-default">
+<div class="flex items-center justify-between px-4 py-2 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-purple-600 text-[18px]">bar_chart</span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Input</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-[16px]">more_horiz</span></button>
+</div>
+<div class="p-4">
+<div class="mb-3">
+<label class="block text-slate-900 dark:text-white font-bold text-base mb-1">Monthly Volume</label>
+<div class="flex items-center gap-2">
+<input class="w-full h-1 bg-slate-200 rounded-lg appearance-none cursor-pointer range-sm" max="10000" min="0" type="range" value="2500"/>
+<span class="font-mono text-sm text-slate-600 dark:text-slate-300">2,500</span>
+</div>
+</div>
+<div class="relative flex justify-end items-center mt-2">
+<span class="text-[10px] text-slate-400 mr-2 uppercase">Value Out</span>
+<div class="size-3 rounded-full bg-slate-300 dark:bg-slate-600 border-2 border-white dark:border-slate-800 hover:bg-primary cursor-pointer transition-colors"></div>
+</div>
+</div>
+</div>
+<!-- NODE 3: Data Input (Price) -->
+<div class="absolute top-[100px] left-[530px] w-[240px] bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 hover:border-primary/50 hover:shadow-xl transition-all z-10 cursor-default">
+<div class="flex items-center justify-between px-4 py-2 border-b border-slate-100 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/50 rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-green-600 text-[18px]">payments</span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-500">Input</span>
+</div>
+</div>
+<div class="p-4">
+<div class="mb-2">
+<label class="block text-slate-900 dark:text-white font-bold text-base mb-1">Sales Price</label>
+<input class="w-full bg-slate-100 dark:bg-slate-900 border-none rounded p-2 text-right font-mono text-sm focus:ring-1 focus:ring-primary text-slate-700 dark:text-slate-200" type="number" value="120.00"/>
+</div>
+<div class="relative flex justify-end items-center mt-2">
+<span class="text-[10px] text-slate-400 mr-2 uppercase">Value Out</span>
+<div class="size-3 rounded-full bg-slate-300 dark:bg-slate-600 border-2 border-white dark:border-slate-800 hover:bg-primary cursor-pointer transition-colors"></div>
+</div>
+</div>
+</div>
+<!-- NODE 4: Calculation (Total COGS) -->
+<div class="absolute top-[280px] left-[530px] w-[240px] bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-primary border-2 transition-all z-20 cursor-default">
+<div class="flex items-center justify-between px-4 py-2 border-b border-slate-100 dark:border-slate-700 bg-primary/5 rounded-t-lg">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[18px]">function</span>
+<span class="text-xs font-bold uppercase tracking-wider text-primary">Formula</span>
+</div>
+<button class="text-slate-400 hover:text-slate-600"><span class="material-symbols-outlined text-[16px]">settings</span></button>
+</div>
+<div class="p-4 relative">
+<!-- Input Ports -->
+<div class="absolute left-[-6px] top-[30px] flex items-center">
+<div class="size-3 rounded-full bg-primary border-2 border-white dark:border-slate-800"></div>
+<span class="text-[10px] text-slate-400 ml-2 uppercase">A</span>
+</div>
+<div class="absolute left-[-6px] top-[60px] flex items-center">
+<div class="size-3 rounded-full bg-primary border-2 border-white dark:border-slate-800"></div>
+<span class="text-[10px] text-slate-400 ml-2 uppercase">B</span>
+</div>
+<div class="pl-4">
+<label class="block text-slate-900 dark:text-white font-bold text-base mb-1">Total COGS</label>
+<div class="bg-slate-100 dark:bg-slate-900 rounded p-2 text-center border border-slate-200 dark:border-slate-700 mb-2">
+<span class="font-mono text-xs text-slate-500">A * B</span>
+</div>
+<div class="text-right">
+<span class="font-mono text-lg font-bold text-slate-800 dark:text-slate-100">$112,500</span>
+</div>
+</div>
+<!-- Output Port -->
+<div class="relative flex justify-end items-center mt-2">
+<span class="text-[10px] text-slate-400 mr-2 uppercase">Result</span>
+<div class="size-3 rounded-full bg-primary border-2 border-white dark:border-slate-800 hover:scale-125 transition-transform cursor-pointer"></div>
+</div>
+</div>
+</div>
+<!-- NODE 5: Result (Gross Margin) -->
+<div class="absolute top-[280px] left-[870px] w-[260px] bg-slate-900 dark:bg-slate-950 rounded-xl shadow-2xl border border-slate-700 ring-4 ring-slate-100 dark:ring-slate-800 transition-all z-20 cursor-default">
+<div class="flex items-center justify-between px-4 py-2 border-b border-slate-700 bg-slate-800/50 rounded-t-xl">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-white text-[18px]">flag</span>
+<span class="text-xs font-bold uppercase tracking-wider text-slate-300">Goal</span>
+</div>
+</div>
+<div class="p-5 relative">
+<!-- Input Ports -->
+<div class="absolute left-[-6px] top-[40px] flex items-center">
+<div class="size-3 rounded-full bg-slate-500 border-2 border-slate-900"></div>
+<span class="text-[10px] text-slate-400 ml-2 uppercase">Revenue</span>
+</div>
+<div class="absolute left-[-6px] top-[70px] flex items-center">
+<div class="size-3 rounded-full bg-primary border-2 border-slate-900"></div>
+<span class="text-[10px] text-primary ml-2 uppercase">Cost</span>
+</div>
+<div class="pl-4">
+<label class="block text-white font-bold text-lg mb-1">Gross Margin</label>
+<div class="text-left mt-2">
+<span class="font-mono text-2xl font-bold text-green-400">$187,500</span>
+<p class="text-xs text-slate-400 mt-1">62.5% Margin</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Info Bar -->
+<div class="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white dark:bg-slate-900 shadow-lg border border-slate-200 dark:border-slate-800 rounded-full px-6 py-2 flex items-center gap-6 z-20">
+<div class="flex items-center gap-2 text-xs font-medium text-slate-500">
+<span class="size-2 rounded-full bg-green-500"></span>
+<span>Auto-saved 2m ago</span>
+</div>
+<div class="w-px h-4 bg-slate-200 dark:bg-slate-700"></div>
+<div class="flex items-center gap-4 text-slate-700 dark:text-slate-300 text-xs">
+<button class="hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">undo</span> Undo</button>
+<button class="hover:text-primary flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">redo</span> Redo</button>
+</div>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Template Gallery</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              primary: "#427cf0",
+              "primary-dark": "#2b60c9",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "slate-900": "#111318",
+              "slate-800": "#1e293b",
+              "slate-700": "#334155",
+              "slate-600": "#475569",
+              "slate-500": "#64748b",
+              "slate-400": "#94a3b8",
+              "slate-300": "#cbd5e1",
+              "slate-200": "#e2e8f0",
+              "slate-100": "#f1f5f9",
+              "slate-50": "#f8fafc",
+            },
+            fontFamily: {
+              display: ["Inter", "sans-serif"],
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            boxShadow: {
+              'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+              'card': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background-light font-display antialiased text-slate-900">
+<div class="relative flex min-h-screen w-full flex-col overflow-x-hidden">
+<!-- Header -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 bg-white px-10 py-3 sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-slate-900">
+<div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg text-primary">
+<span class="material-symbols-outlined text-2xl">auto_awesome</span>
+</div>
+<h2 class="text-slate-900 text-lg font-bold leading-tight tracking-[-0.015em]">RM Writer</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full group focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+<div class="text-slate-500 flex border-none bg-slate-100 items-center justify-center pl-4 rounded-l-lg border-r-0 group-focus-within:text-primary">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 focus:outline-0 focus:ring-0 border-none bg-slate-100 focus:border-none h-full placeholder:text-slate-400 px-4 rounded-l-none border-l-0 pl-2 text-sm font-normal leading-normal" placeholder="Search templates..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-8">
+<div class="hidden md:flex items-center gap-8">
+<a class="text-slate-600 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Templates</a>
+<a class="text-slate-600 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Documents</a>
+<a class="text-slate-600 hover:text-primary transition-colors text-sm font-medium leading-normal" href="#">Knowledge Base</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary-dark transition-colors text-white text-sm font-semibold leading-normal tracking-[0.015em] shadow-sm">
+<span class="mr-2 material-symbols-outlined text-lg">add</span>
+<span class="truncate">New Doc</span>
+</button>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-slate-100" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAk1Sl8wH8WIk92v_XaMEF0405x7LALsz-Jdy5Bh_LvkZEocXqvBQ8MTq7EQiGOHzwUljfRYQDA0l2IPbPQduXwgf4hdJBgHVaA9BM37DroItAOn2AXzFtCrcu8ROO6wZvS7mx3GvrP8elx-0KCuT9q9MISUxwN_hSe2V4MvvX2lxgoaUQsIta6cHkLAK04m9gN9WciNk-iJRxXroBBlHwO4OvJ66HFuwjjFNpD5vk1TYDkimmk7oQcyW-EvbdxIfYWyfZ2THUFw9I");'></div>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="flex-1 flex justify-center py-8 px-6 md:px-10 lg:px-20">
+<div class="w-full max-w-[1200px] flex flex-col gap-8">
+<!-- Hero Section -->
+<div class="flex flex-col md:flex-row justify-between items-end gap-6 pb-4 border-b border-slate-200">
+<div class="flex flex-col gap-3 max-w-2xl">
+<div class="flex items-center gap-2 text-primary text-sm font-semibold uppercase tracking-wider">
+<span class="material-symbols-outlined text-lg">grid_view</span>
+                            Library
+                        </div>
+<h1 class="text-slate-900 text-3xl md:text-4xl font-extrabold leading-tight tracking-tight">Template Gallery</h1>
+<p class="text-slate-500 text-lg font-normal leading-relaxed">Jumpstart your workflow with professional structures designed for founders and engineers. From technical RFCs to investor updates.</p>
+</div>
+<!-- Filters -->
+<div class="flex gap-2 flex-wrap justify-start md:justify-end">
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-slate-900 text-white px-4 transition-all shadow-sm hover:shadow-md">
+<span class="text-sm font-medium">All</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-primary hover:border-primary/30 px-4 transition-all hover:bg-slate-50">
+<span class="text-sm font-medium">Engineering</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-primary hover:border-primary/30 px-4 transition-all hover:bg-slate-50">
+<span class="text-sm font-medium">Product</span>
+</button>
+<button class="flex h-9 items-center justify-center gap-x-2 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-primary hover:border-primary/30 px-4 transition-all hover:bg-slate-50">
+<span class="text-sm font-medium">Growth</span>
+</button>
+</div>
+</div>
+<!-- Featured / Recommended -->
+<div class="flex flex-col gap-4">
+<div class="flex items-center justify-between">
+<h3 class="text-slate-800 text-lg font-bold">Recommended for you</h3>
+<a class="text-primary text-sm font-medium hover:underline flex items-center gap-1" href="#">
+                            View all 
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Card 1 -->
+<div class="group flex flex-col bg-white rounded-xl overflow-hidden border border-slate-200 hover:border-primary/40 hover:shadow-soft transition-all duration-300 cursor-pointer h-full">
+<div class="relative w-full aspect-[16/9] overflow-hidden bg-slate-100">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Data dashboard with charts" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCV3bgF0UzcyseZrJoS9MrQ45TPmsJLqNZ1Qr4Ktsyr3bqUYOa-ZiOfuaTAmF1md7eL4Y8Ycnzq7mWCXpspgx-DEbB6BGUalLukyf4F2ONs1_ptqqmh8t-1Yb5YNSoFpt8WXXBbaqoVibmL2soCQNfQv1at4H7e5Fjf2xN_uJXCipdrXxD06iPlXNAQdYtVvlt63slO22qCW7oYLW4zhFfTcoMb0Z_PFiFInixsJygHDMFit212SAGOtNozRy8S79d2qzFTSRapp0g");'></div>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-semibold text-slate-700 shadow-sm">
+                                    Investor Relations
+                                </div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-2">
+<div class="flex items-center gap-2 mb-1">
+<div class="bg-blue-50 text-blue-600 p-1 rounded">
+<span class="material-symbols-outlined text-lg">monitoring</span>
+</div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Format: Report</p>
+</div>
+<h4 class="text-slate-900 text-lg font-bold group-hover:text-primary transition-colors">Monthly Investor Update</h4>
+<p class="text-slate-500 text-sm leading-relaxed mb-4">Data-heavy report structure featuring KPI tables, burn-rate charts, and strategic highlights block.</p>
+<div class="mt-auto flex items-center gap-3 pt-3 border-t border-slate-100">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Author" class="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDzgNa9UC3fOu98LuScKTnIiQxJluolBf90zqiivMoYUAw3qCMwoRi9sM_3tLH1UUmRSx0DhJ2v6hw5Vr8iW4t4PRTpTL4fDR72Vz-4CpAYkeR3cQKxwLmO1rLUvJPbXhv2NiJLNFA_Ek-RTC_mpNvC2negcfVjZ5gtIz-WHDuJ1Azhx5cuUW68nSP-O_YjYszYRTSdpvObDKNdaWPdSNkFTfe_tn5xN0vhBlM6TrJYTNvn_u2GWHzqInb8JIkOvSPb7YqTwBSIm0Y"/>
+<img alt="Author" class="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA6OYhelphduzQ0JvykdiBCJljUugKnxirt2AFFAfH9OtBleeI-hYPjkv_nbs-IjrNxRfqj32JMqlqSIQwr_Fsw2FOgiukASI-64IEhOqTR7D8peiBfdsyoQ2DhfDAFY6b4q8p73GOdeFDPnBya3CBtvAeYxVHm_UAatJW6L2R4auWozxjNtkKwm3vL5IQK4UhFRV5lRZEsgmSxoE2-TDxIbhNuGYWjQ4iSU9-w0yRoSNVMXsoQDH95P4wNhAqB7fK2pZ_eUX3zsGU"/>
+</div>
+<span class="text-xs text-slate-400">Used by 2.4k founders</span>
+</div>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="group flex flex-col bg-white rounded-xl overflow-hidden border border-slate-200 hover:border-primary/40 hover:shadow-soft transition-all duration-300 cursor-pointer h-full">
+<div class="relative w-full aspect-[16/9] overflow-hidden bg-slate-100">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Code editor screen" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCiMD23uNEkL4ww9nejjM6YkSLMrfG44lcX89I3r8tDAB3OL0PLbLzycXpzZ523XBfzQik9rjR4EZeOBiGuH3gldEj7pba8eRtZJziS_V8rREJttVlHb5Qli-X967ef7Lct-QytPI1yPb0tDkQ_OiXjEFLOMg6F3fy5n8IPNMhiJBji8-1KN_Z-H_fwR1tXc2V3iG5AKlFa0c_wMT2rnpSUz-bA28fDtYavygRHStjaEBYZ1HWmEc6tHrMjEBEh5Qybk_vOrI7Xrh8");'></div>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-semibold text-slate-700 shadow-sm">
+                                    Engineering
+                                </div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-2">
+<div class="flex items-center gap-2 mb-1">
+<div class="bg-emerald-50 text-emerald-600 p-1 rounded">
+<span class="material-symbols-outlined text-lg">code</span>
+</div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Format: Technical Spec</p>
+</div>
+<h4 class="text-slate-900 text-lg font-bold group-hover:text-primary transition-colors">Engineering RFC</h4>
+<p class="text-slate-500 text-sm leading-relaxed mb-4">Standardized technical specification template including context, proposed solution, trade-offs, and code blocks.</p>
+<div class="mt-auto flex items-center gap-3 pt-3 border-t border-slate-100">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Author" class="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCmFO7aKT3z4yTgFJ-yJ_OLp-Jb_96tpnsF8g0oXMO4hZjkW9HzHmYT3lRzlYg4pIKQyYMTkCchobkNFot8FgDjPGJ7iJA629jyq0iWLt04tBgSjwxRmmMHRDUztijxmlHF0e7ZNlPIXLyjQEvfmFjdUe2OSNBDJ1FZVtqjRrqf80TL97PIljs9JzqpKY8drc8sc7CpQAUC4d048Cya9mqNMijtoYLPHsAfmSNdQdrVTKnSlZ1n3CI84Mq4eA1XQnBHLu7EWVWb8vs"/>
+</div>
+<span class="text-xs text-slate-400">Top rated by Eng Leads</span>
+</div>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="group flex flex-col bg-white rounded-xl overflow-hidden border border-slate-200 hover:border-primary/40 hover:shadow-soft transition-all duration-300 cursor-pointer h-full">
+<div class="relative w-full aspect-[16/9] overflow-hidden bg-slate-100">
+<div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" data-alt="Product planning sticky notes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCxUBS90YUeYefojb7wv19zitEHbdsBtwlXzCafGKQiwOaUq4kFwe1Qjy_YbPMACDiDMRvjMhrhgA2AdincjpBm6ga_TsVQzKq5hLsJUnjZq-XwcsrFXbgHBfiKsSddccJcoKWP2qj81Ibar8Efzro0c-nniffSx3M1f7DWssIMOYk7SuRy0G_ur-EjY8Z7w0HqbSmbdeovkdvhvjRHiCASS0QD2S_FjVfMG20O_JdQaYecn9TPkBgaMxNKKiWKBvP4_ehhUDGrJV0");'></div>
+<div class="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded text-xs font-semibold text-slate-700 shadow-sm">
+                                    Product
+                                </div>
+</div>
+<div class="p-5 flex flex-col flex-1 gap-2">
+<div class="flex items-center gap-2 mb-1">
+<div class="bg-purple-50 text-purple-600 p-1 rounded">
+<span class="material-symbols-outlined text-lg">timeline</span>
+</div>
+<p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Format: Roadmap</p>
+</div>
+<h4 class="text-slate-900 text-lg font-bold group-hover:text-primary transition-colors">Quarterly Product Roadmap</h4>
+<p class="text-slate-500 text-sm leading-relaxed mb-4">Timeline view with feature prioritization matrix, user story mapping sections, and milestone markers.</p>
+<div class="mt-auto flex items-center gap-3 pt-3 border-t border-slate-100">
+<div class="flex -space-x-2 overflow-hidden">
+<img alt="Author" class="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1TbpuFaJrFfJDHnueF4fLZXH-D3O7f6FICKsWu949Ojki8DZ74dKbweEKUKFJcH69DvRqOGIuVGkMOJx3NmXpgswpKCkrTw3Lv6wezMFmtn-i6Nb5aFhXKruJNQBeopz2R95NdMDNa8c5Bt_QrQlEQL1M2PP2vDcSMHA5o8s15XK-7X01usqRTBri9HOsmwy7Qv7lOjVE3o4cJJfnKWOh8mOspi7VGFWT3lNL2bwKyVzRStoVnLBh3ldncOW3qZ0eQ2Gvzxaxnfc"/>
+<img alt="Author" class="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAzPYc7cA1KCveXCIxPij8VmD9phxDMSfTzcnsvPSEFWKdkNEgT4A2uBXlTqcVsaRXy0c4CAWtIPOddTX0UCOjUpnuX_f22lzc_K239dy0WC_HzQWNQ0-NiN6uvNU3HPX55UmHKYY2auCcP2E12Rar4j7YgLPsLY-3k_Cu39RB_sTSeoQbE7GaC0s1zGenGhCt8b_zQMGP3j-Xd6nyOXRTOgnAHNz7DpczAykj0defqzCpN8X1O9HxEFwnMr-oI8Rr50ZfmIni4MP4"/>
+<div class="flex items-center justify-center h-6 w-6 rounded-full ring-2 ring-white bg-slate-100 text-[10px] font-medium text-slate-500">+5</div>
+</div>
+<span class="text-xs text-slate-400">Updated 2 days ago</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Secondary Grid -->
+<div class="flex flex-col gap-4 pt-4">
+<h3 class="text-slate-800 text-lg font-bold">More templates</h3>
+<div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+<!-- Mini Card 1 -->
+<div class="group flex flex-col bg-white rounded-lg border border-slate-200 hover:border-primary/40 hover:shadow-card transition-all cursor-pointer">
+<div class="h-32 bg-slate-50 rounded-t-lg relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Marketing analytics chart" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA6vZ1Toy8XxpQmeo2Uzdh9yY8-rK9RpLTR2osvIFixjRhsgYjHu1W43y873GOaUU2RAa4DZsTOKVU8Vru_IpF8EGnVYqS23PWIOKmpOONrpnHTedyxoHs_jdfqdzh25ywEpBJWuFSrSz1AJm_rwWlsls6pfIf00q83dGCcCX6kuHKiUX9_6tNAIUx_sgDH10pkBHxJySAlL_YilUSW4RLJKorpX1UW3_rUDYLa9EvhPBdqeMA3ha1-mGJLDpanknKuVjeu7XPCLE0");'></div>
+</div>
+<div class="p-3">
+<p class="text-slate-900 text-sm font-semibold truncate">Launch Plan</p>
+<p class="text-slate-500 text-xs mt-1 truncate">GTM strategy &amp; checklist</p>
+</div>
+</div>
+<!-- Mini Card 2 -->
+<div class="group flex flex-col bg-white rounded-lg border border-slate-200 hover:border-primary/40 hover:shadow-card transition-all cursor-pointer">
+<div class="h-32 bg-slate-50 rounded-t-lg relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Team meeting discussion" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDPeXIFCrN3qSqX2KFwqncxtdh2hXA7Kn_c5KS3U2VkXbQD9r_gX114IPZyYfK5ET27CE7SAo_wY_uuokaFGEe20MvDQQkr-W6CtxlSZed1bXlPYROHb0-tKbyE96bLVcxeoBsDmHqQwaCHH-pKz8QZssBSTeOu496BNt-RV4IV7uaf7i8PqFvUsEvLX6_WLcQjDGd4GmJCDiqi0_RKbhMP-CehMBus6FqurriokMz1F-ZC8B_pLepblwhqUc9AYEMAjEHZ5d3sjKQ");'></div>
+</div>
+<div class="p-3">
+<p class="text-slate-900 text-sm font-semibold truncate">Weekly Sprint Sync</p>
+<p class="text-slate-500 text-xs mt-1 truncate">Agile team update</p>
+</div>
+</div>
+<!-- Mini Card 3 -->
+<div class="group flex flex-col bg-white rounded-lg border border-slate-200 hover:border-primary/40 hover:shadow-card transition-all cursor-pointer">
+<div class="h-32 bg-slate-50 rounded-t-lg relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Conference room presentation" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBQwUe1Co4-PBj8R_hlghWH6dC-V-R0FX1UMDEIYgMuvLjY5s99Gtl1977-X6JyuRWXnj9jhYrHHzHURnD9vY9sXkKvdPFqmlpeDt_nigkwTycj5Q4P3LFrkjxDvXSa68taUNrKpFukLFcrO8OoY91fz5p6w41ow8ndkBXpxkWiADWAhSEqdF_0LlhOVTvaewQ9GTlb0_UAEItu_scSXtxkOyYPMd1mgnDpSotlDDVqpIBj9nVbGwgPcEn6BUFcr2ZLvJWTRao9YQg");'></div>
+</div>
+<div class="p-3">
+<p class="text-slate-900 text-sm font-semibold truncate">Board Deck</p>
+<p class="text-slate-500 text-xs mt-1 truncate">Q3 Review presentation</p>
+</div>
+</div>
+<!-- Mini Card 4 -->
+<div class="group flex flex-col bg-white rounded-lg border border-slate-200 hover:border-primary/40 hover:shadow-card transition-all cursor-pointer">
+<div class="h-32 bg-slate-50 rounded-t-lg relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Document signing close up" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDO5D3CLybUS6ejUqA6Ohmlry6tcND5-0ccMepSPeoWbEOvkaJ-fiPSI7B4-NymjG4iUdJjDjNOX47ihiN12E3alfo07IYmYOPsFpbW5pLcEmvVBSoy4pz73ntpcYvycfISnT1youDD9U6MGuAhyCFJ9iv_VFneoeZAhw76OJ-N77Megka4bCONCRMRQuEIbVkqSCxEHbGVE-YL_3ghZ0CY9ajehcVVpVC1xxmpfTyKqjx-DSgDoBZbnXsN2w1Tcx2aMFQC_75t0lM");'></div>
+</div>
+<div class="p-3">
+<p class="text-slate-900 text-sm font-semibold truncate">SaaS Sales Contract</p>
+<p class="text-slate-500 text-xs mt-1 truncate">Standard MSA Agreement</p>
+</div>
+</div>
+<!-- Mini Card 5 -->
+<div class="group flex flex-col bg-white rounded-lg border border-slate-200 hover:border-primary/40 hover:shadow-card transition-all cursor-pointer">
+<div class="h-32 bg-slate-50 rounded-t-lg relative overflow-hidden">
+<div class="absolute inset-0 bg-cover bg-center opacity-80 group-hover:scale-105 transition-transform duration-500" data-alt="Brainstorming session notes" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA68_wyoE4192OKFpabywHpz430XT3VaPFO7ngmXMUIR-RNblZS_sNLGVVrBK0Ui6hLM4HkHpMbMnjhhyvQ_lUq02FaSV5GShLmUOaInPC0AcFHlRzoHWfWzPSsPTizTQ3U79e-E0aHbkv0xR1KzzM_oxR-OJg5Ug7OUdKEREn5JrKsfbXhe3OLRwEiEDw2QKcDxNf7q5v46k-5O4tVUeEAcpYPlp0iKQmecrq_ek6DtSwztQr7WtUBbdQzAeYXYknGfBsLkGoOhwo");'></div>
+</div>
+<div class="p-3">
+<p class="text-slate-900 text-sm font-semibold truncate">Design System Specs</p>
+<p class="text-slate-500 text-xs mt-1 truncate">Component library guide</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="flex flex-col gap-6 px-5 py-10 text-center border-t border-slate-200 bg-white mt-12">
+<div class="flex flex-wrap items-center justify-center gap-8">
+<a class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-normal" href="#">Privacy Policy</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-normal" href="#">Terms of Service</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-normal" href="#">Help Center</a>
+<a class="text-slate-500 hover:text-slate-900 transition-colors text-sm font-normal" href="#">API Documentation</a>
+</div>
+<div class="flex items-center justify-center gap-2 text-slate-400">
+<span class="material-symbols-outlined text-lg">code</span>
+<p class="text-sm font-normal">© 2024 RM Writer Inc.</p>
+</div>
+</footer>
+</div>
+</body></html>

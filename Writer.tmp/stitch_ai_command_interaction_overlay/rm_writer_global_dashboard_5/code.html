@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Split View Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "primary-light": "#eef2ff",
+                        "background-light": "#ffffff",
+                        "background-subtle": "#f8fafc", 
+                        "card-light": "#ffffff", 
+                        "border-light": "#e2e8f0",
+                        "editor-bg": "#ffffff",
+                        "sidebar-bg": "#f1f5f9",
+                        "text-main": "#1e293b",
+                        "text-secondary": "#475569",
+                        "navy-deep": "#0f172a",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"] 
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+        .ProseMirror p {
+            margin-bottom: 1em;
+            line-height: 1.7;
+            color: #334155;
+        }
+        .ProseMirror h1 {
+            font-size: 2.25em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            color: #0f172a;
+        }
+        .ProseMirror h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #1e293b;
+        }
+        .ProseMirror ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body class="bg-background-light font-display text-text-main antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<div class="flex w-16 lg:w-64 flex-col border-r border-border-light bg-sidebar-bg py-4 px-3 flex-shrink-0 transition-all duration-300">
+<div class="flex items-center gap-3 px-2 mb-8 mt-2 overflow-hidden">
+<div class="flex items-center justify-center min-w-10 size-10 rounded-lg bg-gradient-to-br from-primary to-blue-700 text-white shadow-lg shadow-blue-900/10 flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">draw</span>
+</div>
+<div class="flex flex-col whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity duration-300">
+<h1 class="text-navy-deep text-base font-bold leading-tight">RM Writer</h1>
+<p class="text-text-secondary text-xs font-medium">Workspace</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white text-text-secondary hover:text-primary hover:shadow-sm transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">dashboard</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-white border border-border-light text-primary shadow-sm group transition-all overflow-hidden" href="#">
+<span class="material-symbols-outlined text-primary group-hover:text-primary transition-colors flex-shrink-0">description</span>
+<span class="text-primary text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white text-text-secondary hover:text-primary hover:shadow-sm transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">table_chart</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Data Tables</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white text-text-secondary hover:text-primary hover:shadow-sm transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">hub</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Graph View</span>
+</a>
+</nav>
+<div class="flex flex-col gap-1 mt-auto">
+<div class="h-px bg-border-light my-2 mx-2"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-white text-text-secondary hover:text-primary hover:shadow-sm transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">settings</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Settings</span>
+</a>
+<div class="flex items-center gap-3 mt-4 px-3 py-2 overflow-hidden">
+<div class="size-8 rounded-full bg-slate-200 bg-cover bg-center ring-2 ring-white flex-shrink-0 shadow-sm" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDcy9RJWhuB4Lp5-KrDbU8RSWen48-yWc6eZVKESjk4eyKFrQMV_Zgplo7Ri_H6tTXrDJ0-f0kuBw3cwrP14L1FN0CcWQRVgnteLWRew3PKW7qt4uDolIFTsPVPbn0LC7noytNLc6lkVtys8v4FYP5e3i2KVHoyrvxic66lK3fK8N-pVTHrGgzbs-0hgz4P6O1DweSBalvKs-sxR3x5d8YkmuR7GrPSTy0LafcEsQ61kSVNw5oohSINicjJzRW5RCnh3MNARI5r18");'></div>
+<div class="flex flex-col whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">
+<p class="text-sm font-medium text-navy-deep">Alex Chen</p>
+<p class="text-xs text-slate-500">Pro Plan</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-background-subtle">
+<header class="flex items-center justify-between border-b border-border-light px-4 py-3 bg-white/80 backdrop-blur-md z-20 shadow-sm">
+<div class="flex items-center gap-4">
+<div class="flex items-center text-sm text-text-secondary">
+<span class="hover:text-primary cursor-pointer transition-colors">Documents</span>
+<span class="material-symbols-outlined text-base mx-1 text-slate-400">chevron_right</span>
+<span class="text-navy-deep font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">description</span>
+                            Q3 Financial Report
+                        </span>
+</div>
+<div class="h-4 w-px bg-border-light"></div>
+<span class="text-xs bg-green-50 text-green-600 border border-green-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="size-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                        Live
+                    </span>
+</div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+<button class="flex items-center gap-2 bg-white border border-primary/20 text-primary px-3 py-1.5 rounded-full shadow-sm hover:bg-primary-light transition-all text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px] text-primary">link</span>
+                        Link Views Active
+                        <span class="material-symbols-outlined text-[14px] text-slate-400 hover:text-slate-600">close</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center -space-x-2 mr-2">
+<img alt="User" class="size-7 rounded-full border-2 border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA47Od-AujFOQ1h-iSKRnWy81gbdIMcPsqiBQtNJxyfk0MPbe2lvZP0H0Z44kRlvGnrNGol9t-VAtO5eaJmmlwKCJIf6XDGgr1HMckGwC30vdKbylXwhkH29ZoXfzHwtUApdjM78tAV09pDZ9jvUz_0BrQTPlvTNtFBw8AQQgHu1I5pFp6FePv1THxcvSR8YnqUXJXPiHGljdA-04qMvdyAjuQtx1ukFL2cnARNz4A4eY8hfOlQFwyCrRmdhg6ScE-b5Ngp5cQFxys"/>
+<img alt="User" class="size-7 rounded-full border-2 border-white shadow-sm" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdQglYYRPYKDf4_-KR_nfeG9nmKpZ3wQGLGiVVFgyKi1goqAIJ594ykPosiQZKSPujokDwF0t92lvfFCuzPbqn9kpyJJ8vQm1snzdRSyf6yuqKoKWc3eogAC7J0Zt-e_X58K6LadqYbtpKWYvBhg5-pGiIGGpkJUubcPkxq5bYIRbCILlLouY2HLgy7GLAdD2p8EdwVBWlaG29Aw_IHez-GUR10bzGfTBdjkgdltTJcuh30vZDNJdmAfIXnkmn-aVQHXh-pwDf5Tc"/>
+<div class="size-7 rounded-full border-2 border-white bg-slate-100 flex items-center justify-center text-[10px] text-slate-600 font-medium shadow-sm">+3</div>
+</div>
+<button class="p-2 text-text-secondary hover:text-navy-deep transition-colors rounded-lg hover:bg-slate-100">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-8 px-3 rounded-lg bg-primary hover:bg-blue-700 text-white text-xs font-medium shadow-md shadow-blue-200 transition-all">
+<span>Share</span>
+</button>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden relative">
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-white relative group/left">
+<div class="max-w-3xl mx-auto py-12 px-8 min-h-full">
+<div class="ProseMirror">
+<h1 contenteditable="true">Q3 2024 Financial Performance Analysis</h1>
+<div class="flex items-center gap-4 text-sm text-slate-500 mb-8 border-b border-border-light pb-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 12, 2024</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person</span> Alex Chen</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">timer</span> 5 min read</span>
+</div>
+<h2 contenteditable="true">Executive Summary</h2>
+<p contenteditable="true">
+                                The third quarter of 2024 has shown a robust growth trajectory, primarily driven by the enterprise sector's adoption of our new AI modules. Total revenue increased by <span class="bg-primary-light text-blue-700 px-1 rounded cursor-pointer border border-blue-200 hover:bg-blue-100 transition-colors font-medium">12.5%</span> quarter-over-quarter, exceeding initial projections. While operating expenses rose moderately due to infrastructure scaling, net profit margins expanded to 22%.
+                            </p>
+<div class="my-6 p-4 bg-slate-50 border-l-4 border-primary rounded-r-lg">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<div>
+<h4 class="text-sm font-semibold text-navy-deep mb-1">AI Insight</h4>
+<p class="text-sm text-text-secondary">Based on historical data, the current growth rate in the Asia-Pacific region suggests a potential market saturation by Q1 2025 unless new verticals are introduced.</p>
+</div>
+</div>
+</div>
+<h2 contenteditable="true">Revenue Breakdown</h2>
+<p contenteditable="true">
+                                Our SaaS subscription model continues to be the bedrock of our revenue stream. Notably, the churn rate has dropped to an all-time low of <span class="bg-primary-light text-blue-700 px-1 rounded cursor-pointer border border-blue-200 hover:bg-blue-100 transition-colors font-medium">1.8%</span>. The table on the right details the breakdown by region and product line.
+                            </p>
+<ul class="text-text-main" contenteditable="true">
+<li>Enterprise subscriptions up 15% YoY</li>
+<li>Professional services revenue steady</li>
+<li>API usage billing increased by 40% due to new LLM features</li>
+</ul>
+<p contenteditable="true">
+                                We anticipate this trend to continue into Q4, provided the currency exchange rates remain stable in our key EMEA markets.
+                            </p>
+</div>
+</div>
+</div>
+<div class="w-1.5 hover:w-2 bg-border-light hover:bg-primary/50 cursor-col-resize flex flex-col justify-center items-center z-30 transition-all absolute left-1/2 top-0 bottom-0 -ml-0.5">
+<div class="h-8 w-1 bg-slate-300 rounded-full"></div>
+</div>
+<div class="flex-1 flex flex-col bg-background-subtle border-l border-border-light overflow-hidden">
+<div class="flex items-center justify-between px-4 py-2 border-b border-border-light bg-white/50 backdrop-blur-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">table_chart</span>
+<span class="text-xs font-semibold text-navy-deep uppercase tracking-wider">Financial_Metrics_Q3</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">sort</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-primary rounded hover:bg-slate-100 transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-auto custom-scrollbar bg-white">
+<table class="w-full text-left border-collapse">
+<thead class="bg-slate-50 sticky top-0 z-10">
+<tr>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase border-b border-border-light w-10">
+<div class="flex items-center justify-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</div>
+</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase border-b border-border-light">Metric</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase border-b border-border-light text-right">Value (USD)</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase border-b border-border-light text-right">YoY Change</th>
+<th class="px-4 py-3 text-xs font-semibold text-slate-500 uppercase border-b border-border-light">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-light text-sm">
+<tr class="group hover:bg-slate-50 transition-colors bg-blue-50/40 border-l-2 border-l-primary">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">link</span>
+                                        Total Revenue
+                                    </td>
+<td class="px-4 py-3 text-right text-text-main font-mono">$4,250,000</td>
+<td class="px-4 py-3 text-right text-green-600 font-mono font-medium">+12.5%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">Target Met</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">Churn Rate</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">1.8%</td>
+<td class="px-4 py-3 text-right text-green-600 font-mono font-medium">-0.4%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-200">Optimal</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">OpEx</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">$1,850,000</td>
+<td class="px-4 py-3 text-right text-red-600 font-mono font-medium">+5.2%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-yellow-50 text-yellow-700 border border-yellow-200">Review</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">CAC</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">$340</td>
+<td class="px-4 py-3 text-right text-green-600 font-mono font-medium">-2.1%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">Good</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">LTV</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">$4,800</td>
+<td class="px-4 py-3 text-right text-green-600 font-mono font-medium">+8.3%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">Excellent</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">Active Users (MAU)</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">125,400</td>
+<td class="px-4 py-3 text-right text-green-600 font-mono font-medium">+18.0%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">On Track</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">API Calls</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">8.5M</td>
+<td class="px-4 py-3 text-right text-green-600 font-mono font-medium">+40.0%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-blue-50 text-blue-600 border border-blue-200">Scale Up</span>
+</td>
+</tr>
+<tr class="group hover:bg-slate-50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-300 bg-white text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-navy-deep">NPS Score</td>
+<td class="px-4 py-3 text-right text-text-main font-mono">72</td>
+<td class="px-4 py-3 text-right text-slate-400 font-mono">0.0%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-semibold bg-green-50 text-green-700 border border-green-200">High</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t border-border-light bg-slate-50">
+<div class="flex items-center gap-3">
+<div class="p-1.5 bg-primary/10 rounded-lg text-primary border border-primary/20">
+<span class="material-symbols-outlined text-lg">auto_awesome</span>
+</div>
+<input class="bg-transparent border-none text-sm text-navy-deep placeholder-slate-400 w-full focus:ring-0 p-0 font-medium" placeholder="Ask AI to visualize this data or forecast Q4..."/>
+<button class="text-xs bg-white hover:bg-slate-100 text-slate-600 border border-border-light px-2 py-1 rounded transition-colors shadow-sm font-medium">Generate Chart</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+</body></html>

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Infinite Canvas</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#0f49bd",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101622",
+              "surface-dark": "#1a202c",
+              "surface-border": "#2d3748",
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {
+              "DEFAULT": "0.25rem",
+              "lg": "0.5rem",
+              "xl": "0.75rem",
+              "2xl": "1rem",
+              "full": "9999px"
+            },
+          },
+        },
+      }
+    </script>
+<style>
+        .grid-background {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(45, 55, 72, 0.3) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(45, 55, 72, 0.3) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-hidden h-screen flex flex-col">
+<!-- Top Navigation -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-surface-border bg-white dark:bg-background-dark px-6 py-3 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-3 text-slate-900 dark:text-white">
+<div class="size-6 text-primary">
+<span class="material-symbols-outlined !text-[24px]">dataset</span>
+</div>
+<h2 class="text-lg font-bold leading-tight tracking-tight">RM Writer</h2>
+</div>
+<label class="flex flex-col min-w-40 !h-9 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full bg-slate-100 dark:bg-surface-dark border border-transparent focus-within:border-primary transition-colors">
+<div class="text-slate-500 dark:text-slate-400 flex items-center justify-center pl-3">
+<span class="material-symbols-outlined !text-[20px]">search</span>
+</div>
+<input class="flex w-full min-w-0 flex-1 resize-none overflow-hidden bg-transparent text-slate-900 dark:text-white focus:outline-0 focus:ring-0 border-none h-full placeholder:text-slate-500 dark:placeholder:text-slate-400 px-3 text-sm font-normal leading-normal" placeholder="Search notes..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end items-center gap-6">
+<div class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Canvas</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Docs</a>
+<a class="text-slate-600 dark:text-slate-300 hover:text-primary dark:hover:text-white text-sm font-medium transition-colors" href="#">Database</a>
+</div>
+<div class="h-6 w-px bg-slate-200 dark:bg-surface-border hidden md:block"></div>
+<div class="flex gap-3">
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-primary hover:bg-primary/90 text-white text-sm font-semibold transition-colors shadow-sm">
+<span class="truncate">Share</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-9 px-4 bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-800 text-sm font-semibold transition-colors">
+<span class="truncate">Export</span>
+</button>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-9 ring-2 ring-white dark:ring-surface-border" data-alt="User profile picture" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDalBijeRqTlagHxZ5XBXjy21DuKBXUQLn5ILm1Zp-D9hwzZJCDbkNhzRGcrXVLAfvhrR0oqMmTr4j0Zeq8IR4M8aqIEyI_2ZQl-8GicvWcD_BB1YtOAFK-N2rJ1uhe_bkWfHYs0prLyyESRUr-_O_uljFbPXLtHgMotj1uKR-pDa1MU9Z58LlrU3DYvzvRpcJCItLssnzHTWmH3GnpLx3bxQoetRTVfKJp4LQaL_m1-Wuq_pHKaYeHb1R602XOnQa2SP3BfkOEy7M");'></div>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden relative">
+<!-- Floating Toolbar (Left) -->
+<aside class="absolute left-6 top-6 bottom-auto z-40 flex flex-col gap-2 p-2 rounded-xl bg-white/90 dark:bg-surface-dark/90 backdrop-blur-md border border-slate-200 dark:border-surface-border shadow-lg ring-1 ring-black/5">
+<button aria-label="Add Note" class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors tooltip-container relative">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300 group-hover:text-primary">note_add</span>
+<span class="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">New Note</span>
+</button>
+<button aria-label="AI Lasso" class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300 group-hover:text-primary">lasso_select</span>
+<span class="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">AI Lasso</span>
+</button>
+<button aria-label="Connect" class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300 group-hover:text-primary">hub</span>
+<span class="absolute left-full ml-2 px-2 py-1 bg-slate-800 text-white text-xs rounded opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity whitespace-nowrap z-50">Connect</span>
+</button>
+<div class="h-px w-full bg-slate-200 dark:bg-surface-border my-1"></div>
+<button aria-label="Settings" class="group flex items-center justify-center p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors relative">
+<span class="material-symbols-outlined text-slate-600 dark:text-slate-300 group-hover:text-primary">settings</span>
+</button>
+</aside>
+<!-- Canvas Area -->
+<div class="flex-1 relative overflow-auto grid-background bg-slate-50 dark:bg-[#0d1117]">
+<!-- Connection Lines (SVG Overlay) -->
+<svg class="absolute top-0 left-0 w-full h-full pointer-events-none z-0">
+<!-- Line from Strategy Draft to Metrics -->
+<path d="M 520 280 C 580 280, 580 400, 640 400" fill="none" stroke="#334155" stroke-dasharray="4" stroke-width="2"></path>
+<!-- Line from Metrics to Chart -->
+<path d="M 880 450 C 920 450, 920 300, 960 300" fill="none" stroke="#334155" stroke-width="2"></path>
+</svg>
+<!-- Canvas Content Container - positioned absolutely to simulate infinite canvas placement -->
+<div class="relative w-[1600px] h-[1000px] p-20">
+<!-- Project Title Sticky -->
+<div class="absolute top-20 left-20 bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border rounded-xl shadow-sm p-4 w-64 flex flex-col gap-3 group hover:border-primary/50 transition-colors cursor-move z-10">
+<div class="flex items-center gap-3">
+<div class="bg-indigo-500/20 text-indigo-400 p-2 rounded-lg">
+<span class="material-symbols-outlined !text-[20px]">folder_open</span>
+</div>
+<div>
+<h3 class="text-sm font-semibold text-slate-900 dark:text-white">Project Alpha</h3>
+<p class="text-xs text-slate-500 dark:text-slate-400">Main Strategy Board</p>
+</div>
+</div>
+</div>
+<!-- Main Note: Strategy Draft (Image & Text) -->
+<div class="absolute top-40 left-32 bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border rounded-xl shadow-lg w-[400px] overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-move z-10">
+<div class="h-32 bg-cover bg-center relative" data-alt="Abstract business strategy visualization" style='background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%), url("https://lh3.googleusercontent.com/aida-public/AB6AXuDqb3rVMxRgseO_o5q3YkTDsPhHM6_lY9j51RyAxZQ4GiScto5vT88c4gsOok834k8J3u_V1i4IN9oi4PHAxzAeN7ulT1QBrB7NW50eql-9YiP22rH2xqJthvatiH7muzZ2ZI8cnEU9t4GtSFKtnJXhJu-846jkpMwis3Vqg-3jM9xPM8iR0I0MhqwOcvIc4_LWR-hMKWq45fTTqqUTGwPE2ZXlOudtqH-lmokwHsJuANtsp3dFqqedP1qhnFTAagfbDXLsNBLMijE");'>
+<div class="absolute bottom-3 left-4 text-white">
+<h3 class="font-bold text-lg drop-shadow-md">Q3 Strategy Draft</h3>
+</div>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<p class="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Initial thoughts on Q3 expansion into APAC region. Key focus on localized marketing and partnerships with regional distributors.
+                        </p>
+<div class="flex items-center gap-2 mt-2">
+<span class="px-2 py-1 rounded bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 text-xs font-medium">#strategy</span>
+<span class="px-2 py-1 rounded bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-medium">#APAC</span>
+</div>
+<div class="flex justify-between items-center mt-2 pt-3 border-t border-slate-100 dark:border-surface-border">
+<div class="flex -space-x-2">
+<div class="w-6 h-6 rounded-full border-2 border-white dark:border-surface-dark bg-slate-200 dark:bg-slate-700" data-alt="Team member avatar" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD_0dfcIrHbSxuZSKz8cCWfBJXniTImdZqDygNOPmXdWoXpWl0BB4jbYu0iMCeYcourtNlkzdyZt66JpnPl6_ZHiJALLa_MUl7BpoB9uklw6emJVOrn7-Dd15rukNW_rfuLemRCNH72OUmCPVAn3yn4ODVDKctZ7pu6IhSkJ1pTsEOcIXZAv9KRT52zRQCrdp0KyH-1GTGqLzovyVvolhCC12OSyrNqPoIJVdNJV-duaAAb7_LuJA5dzF3l9x5_oy2BIGmWr2JP0ro"); background-size: cover;'></div>
+<div class="w-6 h-6 rounded-full border-2 border-white dark:border-surface-dark bg-slate-300 flex items-center justify-center text-[10px] font-bold text-slate-600">+2</div>
+</div>
+<span class="text-xs text-slate-400">Edited 2m ago</span>
+</div>
+</div>
+</div>
+<!-- Data Table Snippet -->
+<div class="absolute top-[350px] left-[640px] bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border rounded-xl shadow-lg w-[320px] overflow-hidden group hover:ring-2 hover:ring-primary/20 transition-all cursor-move z-10">
+<div class="bg-slate-50 dark:bg-[#151b28] px-4 py-3 border-b border-slate-200 dark:border-surface-border flex justify-between items-center">
+<h4 class="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">Live Metrics</h4>
+<span class="material-symbols-outlined text-slate-400 text-sm">more_horiz</span>
+</div>
+<div>
+<table class="w-full text-sm text-left">
+<thead class="text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-[#151b28]">
+<tr>
+<th class="px-4 py-2 font-medium">Metric</th>
+<th class="px-4 py-2 font-medium text-right">Current</th>
+<th class="px-4 py-2 font-medium text-right">Target</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100 dark:divide-surface-border">
+<tr class="group/row hover:bg-slate-50 dark:hover:bg-white/5">
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">MRR</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-300 text-right font-mono">$50k</td>
+<td class="px-4 py-3 text-emerald-500 text-right font-mono text-xs">$65k</td>
+</tr>
+<tr class="group/row hover:bg-slate-50 dark:hover:bg-white/5">
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">Churn</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-300 text-right font-mono">2.1%</td>
+<td class="px-4 py-3 text-emerald-500 text-right font-mono text-xs">1.5%</td>
+</tr>
+<tr class="group/row hover:bg-slate-50 dark:hover:bg-white/5">
+<td class="px-4 py-3 font-medium text-slate-900 dark:text-white">NPS</td>
+<td class="px-4 py-3 text-slate-600 dark:text-slate-300 text-right font-mono">45</td>
+<td class="px-4 py-3 text-emerald-500 text-right font-mono text-xs">50</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-4 py-2 bg-slate-50 dark:bg-[#151b28] border-t border-slate-200 dark:border-surface-border flex justify-between items-center">
+<span class="text-[10px] text-slate-400">Synced via Stripe</span>
+<span class="material-symbols-outlined text-green-500 text-sm">sync</span>
+</div>
+</div>
+<!-- AI Chart Note -->
+<div class="absolute top-40 left-[960px] bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border rounded-xl shadow-lg w-[360px] p-5 group hover:ring-2 hover:ring-primary/20 transition-all cursor-move z-10">
+<div class="flex justify-between items-start mb-4">
+<div>
+<h4 class="text-sm font-semibold text-slate-900 dark:text-white">User Growth Projection</h4>
+<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">AI forecasted trend based on Q2 data</p>
+</div>
+<div class="bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 p-1 rounded">
+<span class="material-symbols-outlined !text-[16px]">auto_awesome</span>
+</div>
+</div>
+<div class="flex items-baseline gap-2 mb-4">
+<span class="text-2xl font-bold text-slate-900 dark:text-white">+125%</span>
+<span class="text-xs font-medium text-emerald-500 flex items-center">
+<span class="material-symbols-outlined !text-[14px]">trending_up</span>
+                            12% vs last month
+                         </span>
+</div>
+<div class="h-32 w-full">
+<svg class="w-full h-full overflow-visible" viewbox="0 0 100 40">
+<!-- Gradient Defs -->
+<defs>
+<lineargradient id="chartGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.2"></stop>
+<stop offset="100%" stop-color="#8b5cf6" stop-opacity="0"></stop>
+</lineargradient>
+</defs>
+<!-- Area -->
+<path d="M0 35 Q 25 35, 35 25 T 60 20 T 80 10 T 100 5 V 40 H 0 Z" fill="url(#chartGradient)"></path>
+<!-- Line -->
+<path d="M0 35 Q 25 35, 35 25 T 60 20 T 80 10 T 100 5" fill="none" stroke="#8b5cf6" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<!-- Points -->
+<circle class="dark:stroke-surface-dark stroke-white" cx="0" cy="35" fill="#8b5cf6" r="1.5" stroke-width="1"></circle>
+<circle class="dark:stroke-surface-dark stroke-white" cx="35" cy="25" fill="#8b5cf6" r="1.5" stroke-width="1"></circle>
+<circle class="dark:stroke-surface-dark stroke-white" cx="60" cy="20" fill="#8b5cf6" r="1.5" stroke-width="1"></circle>
+<circle class="dark:stroke-surface-dark stroke-white" cx="80" cy="10" fill="#8b5cf6" r="1.5" stroke-width="1"></circle>
+<circle class="dark:stroke-surface-dark stroke-white" cx="100" cy="5" fill="#8b5cf6" r="1.5" stroke-width="1"></circle>
+</svg>
+</div>
+<div class="flex justify-between mt-2 pt-2 border-t border-slate-100 dark:border-surface-border">
+<span class="text-[10px] font-medium text-slate-400">W1</span>
+<span class="text-[10px] font-medium text-slate-400">W2</span>
+<span class="text-[10px] font-medium text-slate-400">W3</span>
+<span class="text-[10px] font-medium text-slate-400">W4</span>
+</div>
+</div>
+<!-- Floating Comment Bubble -->
+<div class="absolute top-[320px] left-[520px] bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-700/50 rounded-lg px-3 py-2 shadow-sm z-20 max-w-[180px]">
+<p class="text-xs text-yellow-800 dark:text-yellow-200">
+<span class="font-bold">@Sarah:</span> Does this match the CRM data?
+                    </p>
+<div class="absolute -bottom-1 left-4 w-2 h-2 bg-yellow-50 dark:bg-[#2e2614] border-b border-r border-yellow-200 dark:border-yellow-700/50 transform rotate-45"></div>
+</div>
+<!-- Cursor Indicator -->
+<div class="absolute top-[340px] left-[550px] z-30 pointer-events-none flex items-start">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+<path d="M5.65376 12.3673H5.46026L5.31717 12.4976L0.500002 16.8829L0.500002 1.19179L11.7841 12.3673H5.65376Z" fill="#10B981" stroke="white"></path>
+</svg>
+<span class="ml-1 px-2 py-0.5 rounded-full bg-emerald-500 text-white text-[10px] font-bold">Sarah</span>
+</div>
+</div>
+</div>
+<!-- Mini Map / Zoom Controls (Bottom Right) -->
+<div class="absolute bottom-6 right-6 flex items-center gap-3">
+<div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border rounded-lg shadow-lg flex flex-col p-1">
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined !text-[20px]">add</span>
+</button>
+<div class="h-px bg-slate-100 dark:bg-surface-border my-0.5"></div>
+<button class="p-1.5 hover:bg-slate-100 dark:hover:bg-slate-700 rounded text-slate-600 dark:text-slate-300">
+<span class="material-symbols-outlined !text-[20px]">remove</span>
+</button>
+</div>
+<div class="bg-white dark:bg-surface-dark border border-slate-200 dark:border-surface-border rounded-lg shadow-lg px-3 py-2 text-xs font-mono text-slate-500 dark:text-slate-400">
+                100%
+             </div>
+</div>
+</main>
+</body></html>

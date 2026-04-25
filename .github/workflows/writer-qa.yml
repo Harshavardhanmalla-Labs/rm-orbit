@@ -1,0 +1,37 @@
+name: Writer QA Gate
+
+on:
+  push:
+    paths:
+      - 'Writer/**'
+      - '.github/workflows/writer-qa.yml'
+  pull_request:
+    paths:
+      - 'Writer/**'
+      - '.github/workflows/writer-qa.yml'
+  workflow_dispatch:
+
+jobs:
+  writer-qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: 'Writer/frontend/package-lock.json'
+
+      - name: Install Writer backend dependencies
+        run: pip install -r Writer/backend/requirements.txt
+
+      - name: Install Writer frontend dependencies
+        run: npm --prefix Writer/frontend ci
+
+      - name: Run Writer QA gate
+        run: Writer/qa-gate.sh

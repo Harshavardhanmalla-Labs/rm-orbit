@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Mobile Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#2b6cee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#111318",
+                        "surface-dark": "#1d2128", 
+                        "surface-light": "#ffffff",
+                    },
+                    fontFamily: {
+                        display: ["Inter", "sans-serif"],
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.25rem",
+                        lg: "0.5rem",
+                        xl: "0.75rem",
+                        full: "9999px",
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display antialiased selection:bg-primary selection:text-white">
+<div class="flex min-h-screen w-full flex-col lg:flex-row overflow-hidden">
+<!-- Sidebar (Desktop) / Mobile Drawer (Hidden on mobile for this specific dashboard view if bottom nav is used, but keeping structure for desktop) -->
+<aside class="hidden lg:flex w-64 flex-col border-r border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark">
+<div class="flex items-center gap-3 px-6 py-5 border-b border-slate-200 dark:border-slate-800">
+<div class="size-8 text-primary">
+<span class="material-symbols-outlined text-[32px]">edit_note</span>
+</div>
+<h2 class="text-lg font-bold tracking-tight">RM Writer</h2>
+</div>
+<div class="flex flex-col gap-1 p-4 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/10 text-primary font-medium" href="#">
+<span class="material-symbols-outlined">home</span>
+<span>Home</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">search</span>
+<span>Search</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span>Files</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">auto_awesome</span>
+<span>AI Tools</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span>Settings</span>
+</a>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800">
+<div class="flex items-center gap-3">
+<img alt="User Profile" class="size-9 rounded-full bg-slate-700 object-cover" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAc1ZFzbkDLMCLAxYptDuYSWQVgulaTrv4UIZBUH9Hd2f2WtVfgp-Meb-TBLZvUi0zlgQ3J4C9y9qYPQP5RkA9680D3UEfbTh1Q5oHG8dbJ-vJYePe69NP2NvZTqQS2zF2dZbavtX6KYMxW_dqxeoSixuvu_r4HTcHJ_OAzzT69YWyxfi80Gku1BFd1b2HOtY2pMQ6Z_oMDeCz8GTUibKTEqUeJRX-SoyytN2IE5TDSBhNL5unlBYpf-QNZ48Y5_Vrq5UmMgbtlnyY"/>
+<div class="flex flex-col">
+<span class="text-sm font-semibold">Alex M.</span>
+<span class="text-xs text-slate-500 dark:text-slate-400">Pro Plan</span>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col h-screen overflow-hidden relative">
+<!-- Mobile Header -->
+<header class="flex lg:hidden items-center justify-between px-4 py-3 border-b border-slate-200 dark:border-slate-800 bg-surface-light dark:bg-surface-dark z-20">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[28px]">edit_note</span>
+<span class="font-bold text-lg">RM Writer</span>
+</div>
+<button class="text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+</header>
+<!-- Desktop Header & AI Search -->
+<header class="hidden lg:flex items-center justify-between px-8 py-5 border-b border-slate-200 dark:border-slate-800 bg-background-light dark:bg-background-dark">
+<div class="flex flex-col">
+<h1 class="text-2xl font-bold">Good evening, Alex</h1>
+<p class="text-sm text-slate-500 dark:text-slate-400">Here's what's happening with your projects.</p>
+</div>
+<div class="flex items-center gap-4">
+<!-- Search Bar -->
+<div class="relative group min-w-[320px]">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full rounded-full border-none bg-white dark:bg-surface-dark py-2.5 pl-10 pr-4 text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:ring-2 focus:ring-primary shadow-sm" placeholder="Ask AI anything about your docs..." type="text"/>
+<div class="absolute inset-y-0 right-2 flex items-center pointer-events-none">
+<div class="size-6 flex items-center justify-center rounded-full bg-slate-100 dark:bg-slate-700">
+<span class="material-symbols-outlined text-[16px] text-slate-500 dark:text-slate-300">auto_awesome</span>
+</div>
+</div>
+</div>
+<button class="relative p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-slate-500 dark:text-slate-400">notifications</span>
+<span class="absolute top-2 right-2 size-2 bg-red-500 rounded-full border-2 border-background-light dark:border-background-dark"></span>
+</button>
+</div>
+</header>
+<!-- Scrollable Content -->
+<div class="flex-1 overflow-y-auto pb-24 lg:pb-8 p-4 lg:p-8">
+<!-- Mobile Welcome & Search (Only visible on Mobile) -->
+<div class="lg:hidden mb-6 space-y-4">
+<h2 class="text-2xl font-bold px-1">Good evening, Alex</h2>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-slate-400">
+<span class="material-symbols-outlined">search</span>
+</div>
+<input class="block w-full rounded-xl border-none bg-surface-light dark:bg-surface-dark py-3 pl-10 pr-10 text-sm placeholder-slate-400 focus:ring-1 focus:ring-primary shadow-sm" placeholder="Ask AI..." type="text"/>
+<div class="absolute inset-y-0 right-3 flex items-center pointer-events-none text-primary">
+<span class="material-symbols-outlined">auto_awesome</span>
+</div>
+</div>
+</div>
+<!-- Stats Grid -->
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+<div class="bg-surface-light dark:bg-surface-dark p-4 lg:p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Words Written</p>
+<span class="material-symbols-outlined text-emerald-500 bg-emerald-500/10 p-1 rounded">trending_up</span>
+</div>
+<p class="text-2xl lg:text-3xl font-bold tracking-tight">12.5k</p>
+<p class="text-xs text-slate-400 mt-1">+12% from last week</p>
+</div>
+<div class="bg-surface-light dark:bg-surface-dark p-4 lg:p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">AI Edits</p>
+<span class="material-symbols-outlined text-primary bg-primary/10 p-1 rounded">auto_fix_high</span>
+</div>
+<p class="text-2xl lg:text-3xl font-bold tracking-tight">843</p>
+<p class="text-xs text-slate-400 mt-1">Saved ~4 hours</p>
+</div>
+<!-- Hidden on very small screens, visible on larger mobile and desktop -->
+<div class="hidden sm:block bg-surface-light dark:bg-surface-dark p-4 lg:p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Documents</p>
+<span class="material-symbols-outlined text-purple-500 bg-purple-500/10 p-1 rounded">description</span>
+</div>
+<p class="text-2xl lg:text-3xl font-bold tracking-tight">24</p>
+<p class="text-xs text-slate-400 mt-1">3 active drafts</p>
+</div>
+<div class="hidden sm:block bg-surface-light dark:bg-surface-dark p-4 lg:p-6 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800">
+<div class="flex justify-between items-start mb-2">
+<p class="text-sm font-medium text-slate-500 dark:text-slate-400">Team</p>
+<span class="material-symbols-outlined text-orange-500 bg-orange-500/10 p-1 rounded">group</span>
+</div>
+<p class="text-2xl lg:text-3xl font-bold tracking-tight">8</p>
+<p class="text-xs text-slate-400 mt-1">Active contributors</p>
+</div>
+</div>
+<!-- Recent Activity & Documents -->
+<div class="flex flex-col gap-6">
+<div class="flex items-center justify-between px-1">
+<h3 class="text-lg font-bold">Recent Documents</h3>
+<a class="text-sm text-primary font-medium hover:underline" href="#">View All</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+<!-- Doc Card 1 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark p-5 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex items-start justify-between mb-4">
+<div class="bg-blue-500/10 p-2.5 rounded-lg text-blue-500">
+<span class="material-symbols-outlined">article</span>
+</div>
+<span class="text-xs text-slate-400">2h ago</span>
+</div>
+<h4 class="font-bold text-lg mb-1 truncate">Q3 Marketing Strategy</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">Comprehensive outline for the upcoming quarter focusing on organic growth channels and social media outreach.</p>
+<div class="flex items-center gap-[-8px]">
+<img alt="Collaborator 1" class="size-6 rounded-full border-2 border-surface-light dark:border-surface-dark" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnfSrdQG7Z4ud8Vtm1nJqiJvPcSiMCvUZzRQmID_JrGXiDMDcKFLTFa-h6_6867DPYdEaTtrxkEn7_ucE7MWI77BVY-HBrY-yCVE-9dBxAzkhax_n39CDUGzTUOpa92eArLXuiEITMtw1X9PJMZJK_q6PFVpws_R9ATu_sN7PcdV8Jt8Ljsj0_xxWzf5-oaX01NX3sGP3PZYO5xdFOCdzIquxyawmd6RYZobm8nzzfkoUv6KW1BKZjiVGZHTMpDGVN1AnGyB6ZRys"/>
+<img alt="Collaborator 2" class="size-6 rounded-full border-2 border-surface-light dark:border-surface-dark -ml-2" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPiJRheuVUiDYB-uZgoQAEjM0VYQfJuD4fX6ewr9VSp_QkFab0aIBpjD2l4-kAKAr1hyIocAubMbnzIo-9rwVUmxluIHZAhEpJ0iyuG6y4hEYkYeQ3Tn75cw6b-lDnXwkABOWgk4p6YV4BYF1VkMh2_2_u5SrvbXLaYPyOrTY4ObfXO_ci8tMhgvlV5hUIwSHM6afPAzsqYkWGRWWZUOmKEpy-ydUwtAVweAIEm7C4gSyMkIg_vEjydEdM8RoHWs_QPmevMUo10vA"/>
+<div class="size-6 rounded-full bg-slate-200 dark:bg-slate-700 border-2 border-surface-light dark:border-surface-dark -ml-2 flex items-center justify-center text-[10px] font-medium text-slate-500 dark:text-slate-300">+2</div>
+</div>
+</div>
+<!-- Doc Card 2 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark p-5 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex items-start justify-between mb-4">
+<div class="bg-green-500/10 p-2.5 rounded-lg text-green-500">
+<span class="material-symbols-outlined">table_chart</span>
+</div>
+<span class="text-xs text-slate-400">5h ago</span>
+</div>
+<h4 class="font-bold text-lg mb-1 truncate">Budget Analysis 2024</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">Detailed breakdown of Q1-Q2 expenses versus projected revenue streams.</p>
+<div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+<span class="material-symbols-outlined text-[16px]">lock</span>
+<span>Private</span>
+</div>
+</div>
+<!-- Doc Card 3 -->
+<div class="group relative bg-surface-light dark:bg-surface-dark p-5 rounded-xl shadow-sm border border-slate-100 dark:border-slate-800 hover:border-primary/50 transition-colors cursor-pointer">
+<div class="flex items-start justify-between mb-4">
+<div class="bg-purple-500/10 p-2.5 rounded-lg text-purple-500">
+<span class="material-symbols-outlined">lightbulb</span>
+</div>
+<span class="text-xs text-slate-400">1d ago</span>
+</div>
+<h4 class="font-bold text-lg mb-1 truncate">Product Ideas Brainstorm</h4>
+<p class="text-sm text-slate-500 dark:text-slate-400 mb-4 line-clamp-2">Raw notes from the team meeting regarding new feature implementation for the mobile app.</p>
+<div class="flex items-center gap-[-8px]">
+<img alt="Collaborator" class="size-6 rounded-full border-2 border-surface-light dark:border-surface-dark" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcMmzFoXlSqWAc8tlDnrqNyTUVQdPwZjurUwrJM3Jo8LlHma2B8e7SSxlLE4JfLBzOY6o9YsCrUNzuQ4KhbcxzlljljZv-rZC8gckeLUskGHGJXCzgNj66zyKUpWk8bsut_NLf3YnhB_1FKW1DByPnPcFHSTUwPBZf-uMNTavAyoqx2a1__jv1VK6GYeZp6OjweN-x_Y87x49gWEe0fz5clzemXjaeE4bL7JxVkEuPJ4urzUqRrRYpxNFK5n1qOrL_IF5qwR4Xur8"/>
+<img alt="Collaborator" class="size-6 rounded-full border-2 border-surface-light dark:border-surface-dark -ml-2" data-alt="User avatar" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDQjg3yykGkFt0slNZ7Bbew2YX777qgXa7VFiUyk4lHlw1PcWP3ynZEqillkt5YzaexxPaBDgF4Ouwjw96ynEZTf53wU-b-gCBR6Nd4HkGy42qafSaiiKQOQD90cNTYfAFmK2L_Ar7GR80Am_FfgfKnLK8MYkLS0juydh1OZyhcyfZ028oG2uE-QcWBa-a4YdxBksih_5BGdWj-obY_FyPjd1Fqs6MV5baLlLAPxvgc_lZOy6tCzDP8RnA0tAVJORUvi6qalxOcCkw"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick Actions Section -->
+<div class="mt-8">
+<h3 class="text-lg font-bold mb-4 px-1">Quick Actions</h3>
+<div class="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+<button class="flex items-center gap-3 bg-surface-light dark:bg-surface-dark px-5 py-3 rounded-xl border border-slate-100 dark:border-slate-800 whitespace-nowrap shadow-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-primary">add_circle</span>
+<span class="font-medium">New Doc</span>
+</button>
+<button class="flex items-center gap-3 bg-surface-light dark:bg-surface-dark px-5 py-3 rounded-xl border border-slate-100 dark:border-slate-800 whitespace-nowrap shadow-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-purple-500">upload_file</span>
+<span class="font-medium">Import</span>
+</button>
+<button class="flex items-center gap-3 bg-surface-light dark:bg-surface-dark px-5 py-3 rounded-xl border border-slate-100 dark:border-slate-800 whitespace-nowrap shadow-sm hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-orange-500">person_add</span>
+<span class="font-medium">Invite</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Mobile Bottom Navigation Bar (Hidden on Desktop) -->
+<div class="lg:hidden fixed bottom-0 left-0 right-0 bg-surface-light dark:bg-surface-dark border-t border-slate-200 dark:border-slate-800 px-6 py-2 pb-5 z-30">
+<nav class="flex justify-between items-center">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined fill">home</span>
+<span class="text-[10px] font-medium">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200" href="#">
+<span class="material-symbols-outlined">folder</span>
+<span class="text-[10px] font-medium">Files</span>
+</a>
+<!-- FAB for New Action -->
+<div class="relative -top-6">
+<button class="flex items-center justify-center size-14 bg-primary rounded-full shadow-lg shadow-primary/30 text-white">
+<span class="material-symbols-outlined text-3xl">add</span>
+</button>
+</div>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200" href="#">
+<span class="material-symbols-outlined">search</span>
+<span class="text-[10px] font-medium">Search</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-400 hover:text-slate-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="text-[10px] font-medium">Profile</span>
+</a>
+</nav>
+</div>
+</main>
+</div>
+</body></html>

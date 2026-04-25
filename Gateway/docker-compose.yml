@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  traefik:
+    image: traefik:v3.0
+    container_name: orbit-gateway
+    restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
+    ports:
+      - "80:80" # HTTP
+      - "443:443" # HTTPS
+      - "8080:8080" # Traefik Dashboard (Internal)
+    environment:
+      - CF_API_EMAIL=${CLOUDFLARE_EMAIL:-""}
+      - CF_API_KEY=${CLOUDFLARE_API_KEY:-""}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro # Allows Traefik to listen to Docker events
+      - ./traefik.yml:/etc/traefik/traefik.yml:ro # Static configuration
+      - ./dynamic.yml:/etc/traefik/dynamic.yml:ro # Dynamic configuration definition
+      - ./certs:/etc/certs:ro # Local TLS certificates (for .local testing)
+      - letsencrypt:/letsencrypt # Store Acme certs safely
+    networks:
+      - orbit_network # The global network all RM Orbit apps must connect to so Traefik can route them
+
+volumes:
+  letsencrypt:
+
+networks:
+  orbit_network:
+    external: true

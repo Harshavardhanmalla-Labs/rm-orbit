@@ -1,0 +1,136 @@
+@import "tailwindcss";
+
+/* ─── Design tokens (Tailwind v4 @theme — deeper dark palette) ────────────── */
+@theme {
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+
+  /* Background ramp — deep dark */
+  --color-bg:           #060709;
+  --color-canvas:       #080B10;
+  --color-surface:      #0E1118;
+  --color-panel:        #111520;
+  --color-raised:       #151A26;
+  --color-border:       #1D2438;
+  --color-border-bright:#2A3250;
+  --color-sidebar:      #08090E;
+
+  /* Text */
+  --color-text:         #E8EBF5;
+  --color-muted:        #6B7499;
+  --color-faint:        #2E3450;
+
+  /* Accent — indigo */
+  --color-accent:       #6366f1;
+  --color-accent-hover: #5254cc;
+
+  /* Status colors */
+  --color-green:        #10b981;
+  --color-green-l:      #34d399;
+  --color-emerald:      #10b981;
+  --color-emerald-l:    #34d399;
+  --color-amber:        #f59e0b;
+  --color-amber-l:      #fbbf24;
+  --color-red:          #ef4444;
+  --color-red-l:        #f87171;
+  --color-blue:         #3b82f6;
+  --color-blue-l:       #60a5fa;
+  --color-slate:        #475569;
+  --color-slate-l:      #94a3b8;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius:    10px;
+  --radius-lg: 14px;
+  --radius-xl: 18px;
+}
+
+/* ─── Base reset ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body, #root { height: 100%; min-height: 100vh; }
+
+body {
+  @apply bg-bg text-text font-sans;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ─── Scrollbar ──────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { @apply bg-border; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { @apply bg-border-bright; }
+
+/* ─── Component classes ──────────────────────────────── */
+@layer components {
+  .card {
+    @apply bg-surface rounded-2xl border border-border;
+  }
+
+  .card-hover {
+    @apply transition-all duration-150;
+  }
+  .card-hover:hover {
+    @apply border-accent/30;
+    box-shadow: 0 0 20px rgba(99,102,241,0.07);
+  }
+
+  /* Base btn style shared via CSS — Tailwind v4 can't @apply custom classes inside @layer */
+  .btn, .btn-primary, .btn-ghost, .btn-danger {
+    @apply inline-flex items-center justify-center gap-1.5 font-semibold
+           px-4 py-2 rounded-xl text-sm transition-all duration-150
+           active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed
+           disabled:active:scale-100 cursor-pointer;
+  }
+
+  .btn-primary {
+    @apply bg-accent hover:bg-accent-hover text-white;
+  }
+  .btn-primary:not(:disabled):hover {
+    box-shadow: 0 4px 16px rgba(99,102,241,0.25);
+  }
+
+  .btn-ghost {
+    @apply text-muted hover:text-text hover:bg-raised border border-border;
+  }
+
+  .btn-danger {
+    @apply text-red-l bg-red/10 border border-red/25 hover:bg-red/20;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 text-[11px] font-semibold
+           px-2 py-0.5 rounded-full;
+  }
+
+  .input {
+    @apply w-full bg-raised border border-border rounded-xl px-4 py-2.5
+           text-text placeholder:text-faint text-sm outline-none
+           focus:border-accent/50 transition-colors;
+  }
+
+  .label {
+    @apply block text-[11px] font-bold text-muted uppercase tracking-wider mb-1;
+  }
+
+  .section-title {
+    @apply text-[11px] font-bold text-faint uppercase tracking-wider mb-3;
+  }
+}
+
+/* ─── Animations ─────────────────────────────────────── */
+@keyframes spin        { to { transform: rotate(360deg); } }
+@keyframes pulse-dot   { 0%,100% { opacity:1; } 50% { opacity:0.35; } }
+@keyframes slide-up    { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+@keyframes slide-in-right { from { opacity:0; transform:translateX(16px); } to { opacity:1; transform:translateX(0); } }
+@keyframes fade-in     { from { opacity:0; } to { opacity:1; } }
+@keyframes scale-in    { from { opacity:0; transform:scale(0.97); } to { opacity:1; transform:scale(1); } }
+@keyframes indeterminate { 0% { transform:translateX(-100%); } 100% { transform:translateX(400%); } }
+
+.animate-slide-up      { animation: slide-up   0.2s ease-out; }
+.animate-slide-in-right { animation: slide-in-right 0.2s ease-out; }
+.animate-fade-in       { animation: fade-in   0.15s ease-out; }
+.animate-scale-in      { animation: scale-in   0.15s ease-out; }
+.animate-pulse-dot     { animation: pulse-dot  1.4s ease-in-out infinite; }
+.animate-indeterminate { animation: indeterminate 1.4s ease-in-out infinite; }

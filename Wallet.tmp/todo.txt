@@ -1,0 +1,35 @@
+# RM Wallet - Execution Checklist
+# Last Updated: 2026-03-09
+
+================================================================================
+## PHASE 0: FOUNDATION
+================================================================================
+
+[x] Create backend service scaffold
+[x] Add org/user/role context headers
+[x] Gate JWT verification middleware (Gate `userinfo` token actor mode)
+[ ] KMS-backed encryption envelope and key rotation
+[ ] Persistent DB + migrations
+[x] Encrypted persistent state file for self-hosted baseline
+
+================================================================================
+## PHASE 1: VAULT MVP
+================================================================================
+
+[x] Secret CRUD endpoints
+[x] Permissioned sharing (user/role + read/use/manage)
+[x] Reveal endpoint with permission checks
+[x] Isolation tests and share-flow tests
+[x] Web UI baseline (create/list/reveal/share)
+[x] Secret access audit envelope (`request_id`, `org_id`, `secret_id`)
+[ ] Secret expiry + rotation reminders
+
+================================================================================
+## PHASE 2: ENTERPRISE WORKFLOWS
+================================================================================
+
+[ ] Project-scoped secret bundles
+[ ] Break-glass approval workflow for high-risk secrets
+[ ] Bot/service-account secret leasing
+[ ] Mobile parity (iOS/Android secure reveal + biometric gate)
+[ ] Cross-app insertion hooks (Mail/Connect/Atlas/Deploy)

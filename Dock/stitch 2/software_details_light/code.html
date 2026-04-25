@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1349ec",
+              "background-light": "#f6f6f8",
+              "background-dark": "#101522",
+            },
+            fontFamily: {
+              "display": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<title>Software Detail - RM Dock</title>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<div class="layout-container flex h-full grow flex-col">
+<!-- Top Navigation Bar -->
+<header class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 lg:px-10 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-4 text-primary">
+<div class="size-6">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M24 4C25.7818 14.2173 33.7827 22.2182 44 24C33.7827 25.7818 25.7818 33.7827 24 44C22.2182 33.7827 14.2173 25.7818 4 24C14.2173 22.2182 22.2182 14.2173 24 4Z" fill="currentColor"></path>
+</svg>
+</div>
+<h2 class="text-slate-900 dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">RM Dock</h2>
+</div>
+<label class="hidden md:flex flex-col min-w-40 h-10 max-w-64">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full">
+<div class="text-slate-500 flex border-none bg-slate-100 dark:bg-slate-800 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="form-input flex w-full min-w-0 flex-1 border-none bg-slate-100 dark:bg-slate-800 focus:ring-0 text-slate-900 dark:text-white placeholder:text-slate-500 px-4 rounded-r-lg text-sm" placeholder="Search apps..." value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Catalog</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Inventory</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Requests</a>
+<a class="text-slate-600 dark:text-slate-300 text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex gap-2">
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+</button>
+<button class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+</div>
+<div class="bg-primary/20 rounded-full size-10 border border-primary/30 bg-cover bg-center" data-alt="User profile avatar showing a professional male" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAjbN31-pInVMZY7qyB_fLif_UiBY3-FTVbABZZTrSoJH05k5_0TW_9xa3vSEdDZe4zHY5tx6pNTz5wrv19IabkNCSdH81y0tAlBFvOcWmFoJJgHDqiQjCWZjlmAQAkTtFMgS1QfSqpS1LnMtshg_wgRA56fqUMxzVfu2pIIkoC2bccRlQibKegmHBDLhgswwDAhIuutSr-efm22-tbQz9Fc9Th3hgz8fQODma3_zPIDr7HsnPdO4Y0YxBOErWana6HiUBgWJszZXDi");'></div>
+</div>
+</header>
+<!-- Main Body -->
+<main class="flex-1 max-w-[1280px] mx-auto w-full px-6 lg:px-10 py-8">
+<!-- Breadcrumbs -->
+<div class="flex items-center gap-2 mb-6 text-sm">
+<a class="text-slate-500 hover:text-primary" href="#">Catalog</a>
+<span class="material-symbols-outlined text-slate-400 text-xs">chevron_right</span>
+<a class="text-slate-500 hover:text-primary" href="#">Design Tools</a>
+<span class="material-symbols-outlined text-slate-400 text-xs">chevron_right</span>
+<span class="text-slate-900 dark:text-white font-medium">Figma Desktop</span>
+</div>
+<div class="flex flex-col lg:flex-row gap-8">
+<!-- Main Content Area -->
+<div class="flex-1">
+<!-- App Header Info -->
+<div class="flex items-start gap-6 mb-8">
+<div class="size-24 rounded-2xl bg-white dark:bg-slate-800 shadow-sm border border-slate-200 dark:border-slate-700 flex items-center justify-center p-4 overflow-hidden">
+<img alt="Figma Logo" class="size-full object-contain" data-alt="Figma logo with colorful geometric shapes" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAJt9bocynLuCOL0xW5bYcCBHLd3d7UdzQwBSLVelp84zCEfLwUBpchogo22B6caTIDEjgjjxAzKIojZzNP5t4T2gkrYzq9M3yyMxwBOO-_bft2oslxlA6RESjGtdGR-ZxzgSvGZoGxXmZszaWdGP6HpOWN2ALfflaYfSYd57IjvSzl2o2NIWiL3fF3g-e000AFslvfNXkO5z6BhW3MQDLDMgCkH1o6QWGumtSccWXeFXeQUw_YVt8xrLbmq-oH19MA4qUsfxAAI5Ys"/>
+</div>
+<div class="flex-1">
+<div class="flex items-center gap-3 mb-2">
+<h1 class="text-3xl font-bold text-slate-900 dark:text-white">Figma Desktop</h1>
+<span class="px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 text-xs font-bold uppercase tracking-wider">Installed</span>
+</div>
+<p class="text-slate-600 dark:text-slate-400 text-lg leading-relaxed max-w-2xl">
+                                Professional graphics editing and user interface design tool. Collaborative design at scale, from wireframing to high-fidelity prototyping.
+                            </p>
+</div>
+</div>
+<!-- Tabs -->
+<div class="border-b border-slate-200 dark:border-slate-800 mb-8">
+<div class="flex gap-8">
+<button class="pb-4 border-b-2 border-primary text-primary font-bold text-sm">Overview</button>
+<button class="pb-4 border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-sm">Requirements</button>
+<button class="pb-4 border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-sm">Screenshots</button>
+<button class="pb-4 border-b-2 border-transparent text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 font-bold text-sm">Changelog</button>
+</div>
+</div>
+<!-- Overview Section -->
+<section class="space-y-10">
+<div>
+<h3 class="text-xl font-bold mb-4">About Figma</h3>
+<p class="text-slate-600 dark:text-slate-400 leading-7">
+                                Figma is the leading collaborative design tool for teams who build products together. Born on the web, Figma helps the entire product team create, test, and ship better designs, faster. With the desktop app, you get the full power of Figma with offline access to recent files and deeper system integration.
+                            </p>
+</div>
+<!-- Screenshots Grid -->
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-xl font-bold">Screenshots</h3>
+<button class="text-primary text-sm font-semibold">View All</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="aspect-video rounded-xl bg-slate-200 dark:bg-slate-800 overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="w-full h-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-slate-400" data-alt="Figma interface showing a complex web design project" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD7atITjWxzXHeF4-GyLFsFme5rkHGft3eVtl4fOHB95nU4-K-1-EKwKv1F5Q09fXkavg_qORPSDoo82jq0FihhxUso8ePuytViRWPz_32y-OLBGUvIYPUhtW42y3S17gZzb6yJS5N7kYgkv_0ssaku1gTpmRHf1aHG1FUr321kmSurHj5lIzSASB_MacIbN5B2VLaVX2LomL6DtuWYSr7qDav-k6KkoROahaZFU2A9ucWx7eY67gMKNG-LgoCtUGfpS81hCO7fZNnr'); background-size: cover; background-position: center;"></div>
+</div>
+<div class="aspect-video rounded-xl bg-slate-200 dark:bg-slate-800 overflow-hidden border border-slate-200 dark:border-slate-700">
+<div class="w-full h-full bg-slate-300 dark:bg-slate-700 flex items-center justify-center text-slate-400" data-alt="Figma application with layers panel and design workspace open" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuAKtfwT5Avk5UFwJI9DUgSf4pVzcV92NG3ZPfwthnynq6jTH6clgK3HXSrk7AffP7JrAAnmJK4ckaIv9gsu7iwODj9YlYvp0MFMgx4Eb27OgpcLRQm2JS9GV-UcKsknJ6fBt-AksOOnKIR0HvpyEmCLhAZCYbGyqg_fwW6C4EquRNVTVwESFybwibboA1YORPHN26dmQHjrM2uGn_4LzXPksxE-pmnRmSuOgK6rybrpkbQmMwMyPMVIHceY8dka53lqXC_eVn5ZFDDQ'); background-size: cover; background-position: center;"></div>
+</div>
+</div>
+</div>
+<!-- System Requirements -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6">
+<h3 class="text-xl font-bold mb-6">System Requirements</h3>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg h-fit">computer</span>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Processor</p>
+<p class="text-sm text-slate-500">Intel Core i3 or Apple Silicon (M1/M2/M3)</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg h-fit">memory</span>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">Memory</p>
+<p class="text-sm text-slate-500">8 GB RAM minimum, 16 GB recommended</p>
+</div>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-primary bg-primary/10 p-2 rounded-lg h-fit">desktop_windows</span>
+<div>
+<p class="text-sm font-bold text-slate-900 dark:text-white">OS Version</p>
+<p class="text-sm text-slate-500">macOS 11+ or Windows 10/11 (64-bit)</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Right Sidebar / Action Panel -->
+<aside class="w-full lg:w-80 space-y-6">
+<!-- Main Actions -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+<div class="mb-6">
+<label class="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-2">Version</label>
+<select class="w-full rounded-lg border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm font-medium focus:ring-primary focus:border-primary">
+<option>v116.15.4 (Latest)</option>
+<option>v116.14.0</option>
+<option>v115.3.2</option>
+</select>
+</div>
+<div class="flex flex-col gap-3">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">download</span>
+                                Open Application
+                            </button>
+<button class="w-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-900 dark:text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[20px]">vpn_key</span>
+                                Request License
+                            </button>
+<button class="w-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 font-bold py-3 rounded-lg flex items-center justify-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+                                View Documentation
+                            </button>
+</div>
+<div class="mt-6 flex items-center justify-center gap-2 py-3 bg-emerald-50 dark:bg-emerald-900/10 rounded-lg">
+<span class="size-2 rounded-full bg-emerald-500 animate-pulse"></span>
+<span class="text-emerald-700 dark:text-emerald-400 text-sm font-bold">142 seats available</span>
+</div>
+</div>
+<!-- Meta Information -->
+<div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-6 shadow-sm">
+<h4 class="text-sm font-bold text-slate-900 dark:text-white mb-4">Information</h4>
+<div class="space-y-4">
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Provider</span>
+<span class="font-medium text-slate-900 dark:text-white">Figma, Inc.</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Category</span>
+<span class="font-medium text-slate-900 dark:text-white">Productivity</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Size</span>
+<span class="font-medium text-slate-900 dark:text-white">124.5 MB</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">License</span>
+<span class="font-medium text-slate-900 dark:text-white">Enterprise</span>
+</div>
+<div class="flex justify-between items-center text-sm">
+<span class="text-slate-500">Updated</span>
+<span class="font-medium text-slate-900 dark:text-white">Oct 24, 2023</span>
+</div>
+</div>
+<div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800">
+<h4 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Supported Platforms</h4>
+<div class="flex gap-4">
+<div class="size-10 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400" title="Windows">
+<span class="material-symbols-outlined text-[24px]">desktop_windows</span>
+</div>
+<div class="size-10 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400" title="macOS">
+<span class="material-symbols-outlined text-[24px]">laptop_mac</span>
+</div>
+<div class="size-10 rounded-lg bg-slate-50 dark:bg-slate-800 flex items-center justify-center text-slate-600 dark:text-slate-400" title="Linux">
+<span class="material-symbols-outlined text-[24px]">terminal</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Feedback / Share -->
+<div class="flex items-center justify-between px-2">
+<div class="flex gap-2">
+<button class="text-slate-400 hover:text-primary transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">share</span>
+<span class="text-xs font-bold">Share</span>
+</button>
+<button class="text-slate-400 hover:text-red-500 transition-colors flex items-center gap-1">
+<span class="material-symbols-outlined text-[18px]">report</span>
+<span class="text-xs font-bold">Report Issue</span>
+</button>
+</div>
+<div class="flex items-center gap-1">
+<span class="material-symbols-outlined text-amber-400 text-[18px] fill-amber-400">star</span>
+<span class="text-sm font-bold text-slate-900 dark:text-white">4.9</span>
+</div>
+</div>
+</aside>
+</div>
+</main>
+</div>
+</body></html>

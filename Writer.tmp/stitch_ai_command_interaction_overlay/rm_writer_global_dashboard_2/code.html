@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>RM Writer - Split View Editor</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#0f49bd",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#0b0f17", 
+                        "card-dark": "#161b26", 
+                        "border-dark": "#282e39",
+                        "editor-bg": "#0d121c",
+                        "sidebar-bg": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"],
+                        "mono": ["JetBrains Mono", "monospace"] 
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background-color: #282e39;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background-color: #3e4757;
+        }
+        .ProseMirror p {
+            margin-bottom: 1em;
+            line-height: 1.7;
+            color: #cbd5e1;
+        }
+        .ProseMirror h1 {
+            font-size: 2.25em;
+            font-weight: 700;
+            margin-bottom: 0.5em;
+            color: #ffffff;
+        }
+        .ProseMirror h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: 1.5em;
+            margin-bottom: 0.5em;
+            color: #f8fafc;
+        }
+        .ProseMirror ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 antialiased overflow-hidden">
+<div class="flex h-screen w-full overflow-hidden">
+<div class="flex w-16 lg:w-64 flex-col border-r border-border-dark bg-sidebar-bg py-4 px-3 flex-shrink-0 transition-all duration-300">
+<div class="flex items-center gap-3 px-2 mb-8 mt-2 overflow-hidden">
+<div class="flex items-center justify-center min-w-10 size-10 rounded-lg bg-gradient-to-br from-primary to-blue-700 text-white shadow-lg flex-shrink-0">
+<span class="material-symbols-outlined text-2xl">draw</span>
+</div>
+<div class="flex flex-col whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity duration-300">
+<h1 class="text-white text-base font-bold leading-tight">RM Writer</h1>
+<p class="text-slate-400 text-xs font-medium">Workspace</p>
+</div>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-card-dark text-slate-300 hover:text-white transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">dashboard</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-primary/20 border border-primary/20 group transition-all overflow-hidden" href="#">
+<span class="material-symbols-outlined text-primary group-hover:text-white transition-colors flex-shrink-0">description</span>
+<span class="text-white text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Documents</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-card-dark text-slate-300 hover:text-white transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">table_chart</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Data Tables</span>
+</a>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-card-dark text-slate-300 hover:text-white transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">hub</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Graph View</span>
+</a>
+</nav>
+<div class="flex flex-col gap-1 mt-auto">
+<div class="h-px bg-border-dark my-2 mx-2"></div>
+<a class="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-card-dark text-slate-300 hover:text-white transition-all group overflow-hidden" href="#">
+<span class="material-symbols-outlined text-slate-400 group-hover:text-primary transition-colors flex-shrink-0">settings</span>
+<span class="text-sm font-medium whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">Settings</span>
+</a>
+<div class="flex items-center gap-3 mt-4 px-3 py-2 overflow-hidden">
+<div class="size-8 rounded-full bg-slate-700 bg-cover bg-center ring-2 ring-card-dark flex-shrink-0" data-alt="User avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCDcy9RJWhuB4Lp5-KrDbU8RSWen48-yWc6eZVKESjk4eyKFrQMV_Zgplo7Ri_H6tTXrDJ0-f0kuBw3cwrP14L1FN0CcWQRVgnteLWRew3PKW7qt4uDolIFTsPVPbn0LC7noytNLc6lkVtys8v4FYP5e3i2KVHoyrvxic66lK3fK8N-pVTHrGgzbs-0hgz4P6O1DweSBalvKs-sxR3x5d8YkmuR7GrPSTy0LafcEsQ61kSVNw5oohSINicjJzRW5RCnh3MNARI5r18");'></div>
+<div class="flex flex-col whitespace-nowrap opacity-0 lg:opacity-100 transition-opacity">
+<p class="text-sm font-medium text-white">Alex Chen</p>
+<p class="text-xs text-slate-400">Pro Plan</p>
+</div>
+</div>
+</div>
+</div>
+<div class="flex-1 flex flex-col h-full overflow-hidden bg-editor-bg">
+<header class="flex items-center justify-between border-b border-border-dark px-4 py-3 bg-sidebar-bg/50 backdrop-blur-md z-20">
+<div class="flex items-center gap-4">
+<div class="flex items-center text-sm text-slate-400">
+<span class="hover:text-white cursor-pointer transition-colors">Documents</span>
+<span class="material-symbols-outlined text-base mx-1">chevron_right</span>
+<span class="text-white font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-lg">description</span>
+                            Q3 Financial Report
+                        </span>
+</div>
+<div class="h-4 w-px bg-border-dark"></div>
+<span class="text-xs bg-green-500/10 text-green-500 border border-green-500/20 px-2 py-0.5 rounded-full flex items-center gap-1">
+<span class="size-1.5 rounded-full bg-green-500 animate-pulse"></span>
+                        Live
+                    </span>
+</div>
+<div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+<button class="flex items-center gap-2 bg-card-dark border border-primary/30 text-primary px-3 py-1.5 rounded-full shadow-lg shadow-primary/5 hover:bg-primary/5 transition-all text-xs font-semibold">
+<span class="material-symbols-outlined text-[16px] text-primary">link</span>
+                        Link Views Active
+                        <span class="material-symbols-outlined text-[14px] text-slate-500 hover:text-slate-300">close</span>
+</button>
+</div>
+<div class="flex items-center gap-3">
+<div class="flex items-center -space-x-2 mr-2">
+<img alt="User" class="size-7 rounded-full border-2 border-sidebar-bg" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA47Od-AujFOQ1h-iSKRnWy81gbdIMcPsqiBQtNJxyfk0MPbe2lvZP0H0Z44kRlvGnrNGol9t-VAtO5eaJmmlwKCJIf6XDGgr1HMckGwC30vdKbylXwhkH29ZoXfzHwtUApdjM78tAV09pDZ9jvUz_0BrQTPlvTNtFBw8AQQgHu1I5pFp6FePv1THxcvSR8YnqUXJXPiHGljdA-04qMvdyAjuQtx1ukFL2cnARNz4A4eY8hfOlQFwyCrRmdhg6ScE-b5Ngp5cQFxys"/>
+<img alt="User" class="size-7 rounded-full border-2 border-sidebar-bg" data-alt="User avatar small" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCdQglYYRPYKDf4_-KR_nfeG9nmKpZ3wQGLGiVVFgyKi1goqAIJ594ykPosiQZKSPujokDwF0t92lvfFCuzPbqn9kpyJJ8vQm1snzdRSyf6yuqKoKWc3eogAC7J0Zt-e_X58K6LadqYbtpKWYvBhg5-pGiIGGpkJUubcPkxq5bYIRbCILlLouY2HLgy7GLAdD2p8EdwVBWlaG29Aw_IHez-GUR10bzGfTBdjkgdltTJcuh30vZDNJdmAfIXnkmn-aVQHXh-pwDf5Tc"/>
+<div class="size-7 rounded-full border-2 border-sidebar-bg bg-card-dark flex items-center justify-center text-[10px] text-slate-300">+3</div>
+</div>
+<button class="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-card-dark">
+<span class="material-symbols-outlined text-[20px]">history</span>
+</button>
+<button class="flex items-center justify-center gap-2 h-8 px-3 rounded-lg bg-primary hover:bg-blue-700 text-white text-xs font-medium shadow-lg shadow-primary/20 transition-all">
+<span>Share</span>
+</button>
+</div>
+</header>
+<main class="flex-1 flex overflow-hidden relative">
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-editor-bg relative group/left">
+<div class="max-w-3xl mx-auto py-12 px-8 min-h-full">
+<div class="ProseMirror">
+<h1 contenteditable="true">Q3 2024 Financial Performance Analysis</h1>
+<div class="flex items-center gap-4 text-sm text-slate-500 mb-8 border-b border-border-dark pb-4">
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> Oct 12, 2024</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">person</span> Alex Chen</span>
+<span class="flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">timer</span> 5 min read</span>
+</div>
+<h2 contenteditable="true">Executive Summary</h2>
+<p contenteditable="true">
+                                The third quarter of 2024 has shown a robust growth trajectory, primarily driven by the enterprise sector's adoption of our new AI modules. Total revenue increased by <span class="bg-primary/20 text-blue-200 px-1 rounded cursor-pointer border border-primary/30 hover:bg-primary/30 transition-colors">12.5%</span> quarter-over-quarter, exceeding initial projections. While operating expenses rose moderately due to infrastructure scaling, net profit margins expanded to 22%.
+                            </p>
+<div class="my-6 p-4 bg-card-dark border-l-4 border-primary rounded-r-lg">
+<div class="flex gap-3">
+<span class="material-symbols-outlined text-primary">auto_awesome</span>
+<div>
+<h4 class="text-sm font-semibold text-white mb-1">AI Insight</h4>
+<p class="text-sm text-slate-400">Based on historical data, the current growth rate in the Asia-Pacific region suggests a potential market saturation by Q1 2025 unless new verticals are introduced.</p>
+</div>
+</div>
+</div>
+<h2 contenteditable="true">Revenue Breakdown</h2>
+<p contenteditable="true">
+                                Our SaaS subscription model continues to be the bedrock of our revenue stream. Notably, the churn rate has dropped to an all-time low of <span class="bg-primary/20 text-blue-200 px-1 rounded cursor-pointer border border-primary/30 hover:bg-primary/30 transition-colors">1.8%</span>. The table on the right details the breakdown by region and product line.
+                            </p>
+<ul class="text-slate-300" contenteditable="true">
+<li>Enterprise subscriptions up 15% YoY</li>
+<li>Professional services revenue steady</li>
+<li>API usage billing increased by 40% due to new LLM features</li>
+</ul>
+<p contenteditable="true">
+                                We anticipate this trend to continue into Q4, provided the currency exchange rates remain stable in our key EMEA markets.
+                            </p>
+</div>
+</div>
+</div>
+<div class="w-1.5 hover:w-2 bg-border-dark hover:bg-primary/50 cursor-col-resize flex flex-col justify-center items-center z-30 transition-all absolute left-1/2 top-0 bottom-0 -ml-0.5">
+<div class="h-8 w-1 bg-slate-500 rounded-full"></div>
+</div>
+<div class="flex-1 flex flex-col bg-sidebar-bg border-l border-border-dark overflow-hidden">
+<div class="flex items-center justify-between px-4 py-2 border-b border-border-dark bg-card-dark/50">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-sm">table_chart</span>
+<span class="text-xs font-semibold text-white uppercase tracking-wider">Financial_Metrics_Q3</span>
+</div>
+<div class="flex items-center gap-2">
+<button class="p-1 text-slate-400 hover:text-white rounded hover:bg-card-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">filter_list</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-white rounded hover:bg-card-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">sort</span>
+</button>
+<button class="p-1 text-slate-400 hover:text-white rounded hover:bg-card-dark transition-colors">
+<span class="material-symbols-outlined text-[18px]">download</span>
+</button>
+</div>
+</div>
+<div class="flex-1 overflow-auto custom-scrollbar">
+<table class="w-full text-left border-collapse">
+<thead class="bg-card-dark sticky top-0 z-10">
+<tr>
+<th class="px-4 py-3 text-xs font-medium text-slate-400 uppercase border-b border-border-dark w-10">
+<div class="flex items-center justify-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</div>
+</th>
+<th class="px-4 py-3 text-xs font-medium text-slate-400 uppercase border-b border-border-dark">Metric</th>
+<th class="px-4 py-3 text-xs font-medium text-slate-400 uppercase border-b border-border-dark text-right">Value (USD)</th>
+<th class="px-4 py-3 text-xs font-medium text-slate-400 uppercase border-b border-border-dark text-right">YoY Change</th>
+<th class="px-4 py-3 text-xs font-medium text-slate-400 uppercase border-b border-border-dark">Status</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-border-dark text-sm">
+<tr class="group hover:bg-card-dark/50 transition-colors bg-primary/5 border-l-2 border-l-primary">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white font-medium flex items-center gap-2">
+<span class="material-symbols-outlined text-xs text-primary">link</span>
+                                        Total Revenue
+                                    </td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">$4,250,000</td>
+<td class="px-4 py-3 text-right text-green-400 font-mono">+12.5%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">Target Met</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">Churn Rate</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">1.8%</td>
+<td class="px-4 py-3 text-right text-green-400 font-mono">-0.4%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">Optimal</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">OpEx</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">$1,850,000</td>
+<td class="px-4 py-3 text-right text-red-400 font-mono">+5.2%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-yellow-500/10 text-yellow-400 border border-yellow-500/20">Review</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">CAC</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">$340</td>
+<td class="px-4 py-3 text-right text-green-400 font-mono">-2.1%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">Good</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">LTV</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">$4,800</td>
+<td class="px-4 py-3 text-right text-green-400 font-mono">+8.3%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">Excellent</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">Active Users (MAU)</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">125,400</td>
+<td class="px-4 py-3 text-right text-green-400 font-mono">+18.0%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">On Track</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">API Calls</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">8.5M</td>
+<td class="px-4 py-3 text-right text-green-400 font-mono">+40.0%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-blue-500/10 text-blue-400 border border-blue-500/20">Scale Up</span>
+</td>
+</tr>
+<tr class="group hover:bg-card-dark/50 transition-colors">
+<td class="px-4 py-3 text-center">
+<input class="rounded border-slate-600 bg-transparent text-primary focus:ring-0 focus:ring-offset-0" type="checkbox"/>
+</td>
+<td class="px-4 py-3 text-white">NPS Score</td>
+<td class="px-4 py-3 text-right text-slate-300 font-mono">72</td>
+<td class="px-4 py-3 text-right text-slate-500 font-mono">0.0%</td>
+<td class="px-4 py-3">
+<span class="px-2 py-0.5 rounded text-[10px] font-medium bg-green-500/10 text-green-400 border border-green-500/20">High</span>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-3 border-t border-border-dark bg-card-dark">
+<div class="flex items-center gap-3">
+<div class="p-1.5 bg-primary/20 rounded-lg text-primary">
+<span class="material-symbols-outlined text-lg">auto_awesome</span>
+</div>
+<input class="bg-transparent border-none text-sm text-white placeholder-slate-500 w-full focus:ring-0 p-0" placeholder="Ask AI to visualize this data or forecast Q4..."/>
+<button class="text-xs bg-border-dark hover:bg-slate-700 text-slate-300 px-2 py-1 rounded transition-colors">Generate Chart</button>
+</div>
+</div>
+</div>
+</main>
+</div>
+</div>
+
+</body></html>

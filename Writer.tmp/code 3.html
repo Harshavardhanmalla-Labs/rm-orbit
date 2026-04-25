@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>RM Writer - Global Prototype</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <link href="./assets/orbit-ui.css" rel="stylesheet"/>
+    <script defer src="./assets/orbit-bar.js"></script>
+
+    <!-- React & Router -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js"></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js"></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#0f49bd",
+                        "primary-hover": "#0a3690",
+                        "primary-light": "#eef4ff",
+                        "primary-dark": "#1a4bb0",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1e293b",
+                        "border-light": "#e2e8f0",
+                        "border-dark": "#282e39",
+                        "text-main": "#1e293b",
+                        "text-secondary": "#64748b",
+                        "text-muted": "#64748b",
+                        "navy-deep": "#0f172a",
+                    },
+                    fontFamily: {
+                        display: ["RM Samplet", "RM Forma", "sans-serif"],
+                        sans: ["RM Forma", "system-ui", "sans-serif"],
+                        mono: ["JetBrains Mono", "monospace"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(0, 0, 0, 0.05)',
+                        'card': '0 1px 3px rgba(0,0,0,0.05), 0 1px 2px rgba(0,0,0,0.1)',
+                        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.15)',
+                    },
+                    backgroundImage: {
+                         'grid-pattern': "linear-gradient(to right, #e2e8f0 1px, transparent 1px), linear-gradient(to bottom, #e2e8f0 1px, transparent 1px)",
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: "RM Forma";
+            src: url("./fonts/RMForma-Regular.woff2") format("woff2");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "RM Forma";
+            src: url("./fonts/RMForma-Bold.woff2") format("woff2");
+            font-weight: 700;
+            font-style: normal;
+            font-display: swap;
+        }
+        @font-face {
+            font-family: "RM Samplet";
+            src: url("./fonts/RM-Samplet-Regular.ttf") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+        :root {
+            font-family: "RM Forma", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        h1, h2, h3, h4 {
+            font-family: "RM Samplet", "RM Forma", sans-serif;
+        }
+        /* Global Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: #cbd5e1;
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #94a3b8;
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .grid-bg {
+            background-size: 20px 20px;
+        }
+        .lasso-area {
+            background-color: rgba(43, 108, 238, 0.08);
+            border: 2px dashed #2b6cee;
+        }
+        .cursor-blink {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-background-light text-text-main font-sans antialiased overflow-hidden">
+    <orbit-shell-bar app-id="writer" app-name="Writer" home-href="/" search-href="http://localhost:45009/search.html"></orbit-shell-bar>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+        const WRITER_WORKSPACE_KEY = "writer_workspace_id";
+        const WRITER_DEFAULT_WORKSPACE = "ws-default";
+        const WRITER_API_BASE = window.WRITER_API_BASE || `${window.location.protocol}//${window.location.hostname}:6011`;
+
+        function getWorkspaceId() {
+            return window.localStorage.getItem(WRITER_WORKSPACE_KEY) || WRITER_DEFAULT_WORKSPACE;
+        }
+
+        function getAuthToken() {
+            return (
+                window.localStorage.getItem("auth_token") ||
+                window.localStorage.getItem("gate_access_token") ||
+                ""
+            );
+        }
+
+        function getCachedOrgId() {
+            const raw = window.localStorage.getItem("auth_user");
+            if (!raw) return "";
+            try {
+                const parsed = JSON.parse(raw);
+                return parsed?.org_id || parsed?.orgId || "";
+            } catch (_err) {
+                return "";
+            }
+        }
+
+        async function writerApi(path, { method = "GET", workspaceId = getWorkspaceId(), body = null } = {}) {
+            const authToken = getAuthToken();
+            const orgId = getCachedOrgId();
+            const response = await fetch(`${WRITER_API_BASE}${path}`, {
+                method,
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-Workspace-Id": workspaceId,
+                    ...(authToken ? { Authorization: `Bearer ${authToken}` } : {}),
+                    ...(orgId ? { "X-Org-Id": orgId } : {}),
+                },
+                body: body ? JSON.stringify(body) : null,
+            });
+
+            if (!response.ok) {
+                let detail = `Request failed (${response.status})`;
+                try {
+                    const payload = await response.json();
+                    detail = payload.detail || payload.error || detail;
+                } catch (_err) {
+                    // no-op fallback
+                }
+                throw new Error(detail);
+            }
+            return response.json();
+        }
+
+        // --- Common Components ---
+
+        const NavButton = ({ to, icon, label, exact = false }) => {
+            const location = useLocation();
+            const isActive = exact ? location.pathname === to : location.pathname.startsWith(to);
+            const baseClasses = "flex items-center gap-3 px-3 py-2.5 rounded-lg transition-all group";
+            const activeClasses = "bg-white border border-border-light shadow-sm text-primary";
+            const inactiveClasses = "hover:bg-white hover:shadow-sm text-text-secondary hover:text-text-main";
+
+            return (
+                <Link to={to} className={`${baseClasses} ${isActive ? activeClasses : inactiveClasses}`}>
+                    <span className={`material-symbols-outlined transition-colors ${isActive ? 'text-primary' : 'text-slate-400 group-hover:text-primary'}`}>{icon}</span>
+                    <span className="text-sm font-medium">{label}</span>
+                </Link>
+            );
+        };
+
+        const Sidebar = () => (
+            <div className="flex w-64 flex-col border-r border-border-light bg-slate-50/50 py-4 px-3 flex-shrink-0 h-screen overflow-y-auto">
+                <div className="flex items-center gap-3 px-2 mb-8 mt-2">
+                    <div className="flex items-center justify-center size-10 rounded-lg bg-primary text-white shadow-md shadow-primary/20">
+                        <span className="material-symbols-outlined text-2xl">draw</span>
+                    </div>
+                    <div className="flex flex-col">
+                        <h1 className="text-text-main text-base font-bold leading-tight">RM Writer</h1>
+                        <p className="text-text-muted text-xs font-medium">Prototype</p>
+                    </div>
+                </div>
+                <nav className="flex flex-col gap-1 flex-1">
+                    <NavButton to="/" icon="dashboard" label="Dashboard" exact />
+                    <NavButton to="/document" icon="description" label="Document View" />
+                    <NavButton to="/split-view" icon="vertical_split" label="Split Editor" />
+                    <NavButton to="/collab" icon="group_work" label="Real-time Collab" />
+                    <NavButton to="/sheets" icon="table_chart" label="Sheets Data" />
+                    <NavButton to="/slides" icon="slideshow" label="Presentation" />
+                    <NavButton to="/infinite-canvas" icon="gesture" label="Infinite Canvas" />
+                    <NavButton to="/lasso" icon="arrow_selector_tool" label="AI Lasso" />
+                    <NavButton to="/graph" icon="hub" label="Knowledge Graph" />
+                    <NavButton to="/workflow" icon="memory" label="AI Studio" />
+                    <NavButton to="/templates" icon="grid_view" label="Templates" />
+                    <NavButton to="/history" icon="history" label="Version History" />
+                    <NavButton to="/admin" icon="admin_panel_settings" label="Admin" />
+                </nav>
+                 <div className="mt-auto pt-4 border-t border-border-light">
+                     <Link to="/command" className="flex items-center gap-3 px-3 py-2 text-sm text-slate-500 hover:text-primary transition-colors">
+                        <span className="material-symbols-outlined">search</span> AI Command
+                     </Link>
+                     <Link to="/export" className="flex items-center gap-3 px-3 py-2 text-sm text-slate-500 hover:text-primary transition-colors">
+                        <span className="material-symbols-outlined">ios_share</span> Export Dialog
+                     </Link>
+                </div>
+            </div>
+        );
+
+        const AppLayout = ({ children }) => (
+            <div className="flex h-screen w-full overflow-hidden bg-background-light">
+                <Sidebar />
+                <div className="flex-1 flex flex-col h-full overflow-hidden relative">
+                    {children}
+                </div>
+            </div>
+        );
+
+        // --- Screen 1: Dashboard ---
+        const DashboardScreen = () => {
+            const navigate = useNavigate();
+            const [workspaceId, setWorkspaceId] = useState(getWorkspaceId());
+            const [documents, setDocuments] = useState([]);
+            const [loading, setLoading] = useState(true);
+            const [error, setError] = useState("");
+            const [creating, setCreating] = useState(false);
+
+            const fetchDocuments = async (activeWorkspaceId = workspaceId) => {
+                setLoading(true);
+                setError("");
+                try {
+                    const docs = await writerApi("/api/documents?limit=24", {
+                        workspaceId: activeWorkspaceId,
+                    });
+                    setDocuments(docs);
+                } catch (err) {
+                    setError(err.message || "Could not load documents.");
+                    setDocuments([]);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            useEffect(() => {
+                fetchDocuments(workspaceId);
+            }, [workspaceId]);
+
+            const handleWorkspaceChange = (value) => {
+                const next = value.trim() || WRITER_DEFAULT_WORKSPACE;
+                window.localStorage.setItem(WRITER_WORKSPACE_KEY, next);
+                setWorkspaceId(next);
+            };
+
+            const openDocument = (doc) => {
+                navigate("/document", {
+                    state: {
+                        workspaceId,
+                        documentId: doc.id,
+                        documentTitle: doc.title,
+                    },
+                });
+            };
+
+            const handleCreateDocument = async () => {
+                setCreating(true);
+                setError("");
+                try {
+                    const timestamp = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+                    const created = await writerApi("/api/documents", {
+                        method: "POST",
+                        workspaceId,
+                        body: {
+                            title: `Untitled ${timestamp}`,
+                            initial_block_type: "text",
+                            initial_content: {
+                                text: "Start writing here. RM Writer will preserve this as structured block content.",
+                            },
+                        },
+                    });
+                    await fetchDocuments(workspaceId);
+                    openDocument(created);
+                } catch (err) {
+                    setError(err.message || "Could not create a document.");
+                } finally {
+                    setCreating(false);
+                }
+            };
+
+            return (
+                <main className="flex-1 overflow-y-auto p-8 custom-scrollbar">
+                    <header className="flex items-center justify-between mb-8">
+                         <div className="flex flex-1 max-w-xl">
+                            <div className="relative w-full group">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                                    <span className="material-symbols-outlined text-slate-400 group-focus-within:text-primary transition-colors">search</span>
+                                </div>
+                                <input className="block w-full p-2.5 pl-10 text-sm text-text-main bg-white border border-border-light rounded-lg focus:ring-1 focus:ring-primary focus:border-primary placeholder-slate-400 shadow-sm transition-all" placeholder="Search commands, documents, or ask AI..." type="text"/>
+                                <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <span className="text-xs text-slate-500 border border-slate-200 bg-slate-50 rounded px-1.5 py-0.5">⌘K</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4 ml-6">
+                            <label className="text-xs text-slate-500 flex flex-col gap-1">
+                                Workspace
+                                <input
+                                    defaultValue={workspaceId}
+                                    onBlur={(event) => handleWorkspaceChange(event.target.value)}
+                                    className="h-9 w-40 rounded-lg border border-border-light bg-white px-3 text-sm text-text-main"
+                                    placeholder="workspace id"
+                                />
+                            </label>
+                            <button
+                                onClick={handleCreateDocument}
+                                disabled={creating}
+                                className="flex items-center justify-center gap-2 h-9 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-medium shadow-md shadow-primary/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                            >
+                                <span className="material-symbols-outlined text-[18px]">add</span>
+                                <span>{creating ? "Creating..." : "New Document"}</span>
+                            </button>
+                        </div>
+                    </header>
+
+                    <div className="max-w-5xl mx-auto mb-10">
+                        <h2 className="text-2xl font-bold text-text-main mb-6">Good morning, Alex</h2>
+                        <div className="relative group">
+                            <div className="absolute -inset-0.5 bg-gradient-to-r from-primary/50 to-blue-400/50 rounded-xl blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+                            <div className="relative flex items-center bg-white rounded-xl border border-border-light shadow-sm p-1">
+                                <div className="pl-4 pr-2 text-primary">
+                                    <span className="material-symbols-outlined">auto_awesome</span>
+                                </div>
+                                <input className="w-full bg-transparent border-none text-text-main placeholder-slate-400 focus:ring-0 py-3 px-2 text-base" placeholder="Ask RM AI to generate a report, summarize notes, or draft an email..." type="text"/>
+                                <button className="bg-primary hover:bg-primary-hover text-white px-4 py-1.5 rounded-lg text-sm font-medium transition-colors shadow-sm">
+                                    Generate
+                                </button>
+                            </div>
+                        </div>
+                        <div className="flex gap-3 mt-4 overflow-x-auto pb-2 scrollbar-hide">
+                            <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border-light bg-white hover:bg-slate-50 text-slate-600 hover:text-text-main text-xs transition-colors whitespace-nowrap shadow-sm">
+                                <span className="material-symbols-outlined text-[16px]">summarize</span> Summarize last meeting
+                            </button>
+                            <button className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border-light bg-white hover:bg-slate-50 text-slate-600 hover:text-text-main text-xs transition-colors whitespace-nowrap shadow-sm">
+                                <span className="material-symbols-outlined text-[16px]">edit_document</span> Draft Q4 proposal
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className="max-w-5xl mx-auto">
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="text-lg font-semibold text-text-main flex items-center gap-2">
+                                <span className="material-symbols-outlined text-slate-400">schedule</span>
+                                Recent Work
+                            </h3>
+                            <button
+                                onClick={() => fetchDocuments(workspaceId)}
+                                className="text-xs font-medium px-3 py-1.5 rounded-lg border border-border-light bg-white hover:bg-slate-50"
+                            >
+                                Refresh
+                            </button>
+                        </div>
+                        {error && (
+                            <div className="mb-4 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                                {error}
+                            </div>
+                        )}
+                        {loading ? (
+                            <div className="rounded-xl border border-border-light bg-white p-8 text-center text-sm text-slate-500">
+                                Loading workspace documents...
+                            </div>
+                        ) : documents.length === 0 ? (
+                            <div className="rounded-xl border border-border-light bg-white p-8 text-center">
+                                <p className="text-slate-700 font-medium mb-2">No documents in this workspace yet.</p>
+                                <p className="text-sm text-slate-500 mb-4">Create your first structured document and start building the block graph.</p>
+                                <button
+                                    onClick={handleCreateDocument}
+                                    className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white"
+                                >
+                                    <span className="material-symbols-outlined text-[18px]">add</span>
+                                    Create Document
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                {documents.slice(0, 8).map((doc, index) => (
+                                    <button
+                                        key={doc.id}
+                                        onClick={() => openDocument(doc)}
+                                        className="group relative flex flex-col text-left bg-white border border-border-light rounded-xl overflow-hidden hover:border-primary/50 hover:shadow-md transition-all cursor-pointer h-64"
+                                    >
+                                        <div className="h-32 bg-gradient-to-br from-blue-50 via-white to-indigo-100 relative overflow-hidden">
+                                            <div className="absolute top-3 right-3 z-20">
+                                                <div className="bg-white/90 backdrop-blur rounded p-1 shadow-sm">
+                                                    <span className="material-symbols-outlined text-primary text-[16px]">description</span>
+                                                </div>
+                                            </div>
+                                            <div className="absolute left-4 bottom-3 text-[11px] font-semibold uppercase tracking-wide text-slate-500">
+                                                Workspace {workspaceId}
+                                            </div>
+                                        </div>
+                                        <div className="flex flex-col flex-1 p-4">
+                                            <h4 className="text-text-main font-semibold text-sm mb-1 group-hover:text-primary transition-colors line-clamp-2">
+                                                {doc.title}
+                                            </h4>
+                                            <p className="text-text-muted text-xs mb-auto">
+                                                {doc.block_count} blocks · Updated {new Date(doc.updated_at).toLocaleString()}
+                                            </p>
+                                            <span className="mt-3 inline-flex items-center text-xs font-medium text-primary">
+                                                Open Document
+                                                <span className="material-symbols-outlined text-[14px] ml-1">arrow_forward</span>
+                                            </span>
+                                        </div>
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+                </main>
+            );
+        };
+
+        // --- Screen 2: Document View ---
+        const DocumentScreen = () => {
+            const location = useLocation();
+            const [workspaceId] = useState(location.state?.workspaceId || getWorkspaceId());
+            const [documentId, setDocumentId] = useState(location.state?.documentId || null);
+            const [documentTitleHint, setDocumentTitleHint] = useState(location.state?.documentTitle || "Document");
+            const [document, setDocument] = useState(null);
+            const [blocks, setBlocks] = useState([]);
+            const [selectedBlockId, setSelectedBlockId] = useState(null);
+            const [versions, setVersions] = useState([]);
+            const [editorText, setEditorText] = useState("");
+            const [loading, setLoading] = useState(true);
+            const [saving, setSaving] = useState(false);
+            const [creatingBlock, setCreatingBlock] = useState(false);
+            const [error, setError] = useState("");
+
+            const loadDocumentData = async (activeWorkspaceId = workspaceId, activeDocumentId = documentId) => {
+                setLoading(true);
+                setError("");
+                try {
+                    let resolvedDocumentId = activeDocumentId;
+                    if (!resolvedDocumentId) {
+                        const docs = await writerApi("/api/documents?limit=1", { workspaceId: activeWorkspaceId });
+                        if (!docs.length) {
+                            setDocument(null);
+                            setBlocks([]);
+                            setSelectedBlockId(null);
+                            setVersions([]);
+                            setLoading(false);
+                            return;
+                        }
+                        resolvedDocumentId = docs[0].id;
+                        setDocumentId(resolvedDocumentId);
+                        setDocumentTitleHint(docs[0].title);
+                    }
+
+                    const [doc, docBlocks] = await Promise.all([
+                        writerApi(`/api/documents/${resolvedDocumentId}`, { workspaceId: activeWorkspaceId }),
+                        writerApi(`/api/documents/${resolvedDocumentId}/blocks`, { workspaceId: activeWorkspaceId }),
+                    ]);
+                    setDocument(doc);
+                    setBlocks(docBlocks);
+                    setSelectedBlockId((previous) => {
+                        if (previous && docBlocks.some((block) => block.id === previous)) return previous;
+                        return doc.root_block_id || docBlocks[0]?.id || null;
+                    });
+                } catch (err) {
+                    setError(err.message || "Could not load document.");
+                    setDocument(null);
+                    setBlocks([]);
+                    setSelectedBlockId(null);
+                    setVersions([]);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            useEffect(() => {
+                loadDocumentData(workspaceId, documentId);
+            }, [workspaceId, documentId]);
+
+            const selectedBlock = blocks.find((block) => block.id === selectedBlockId) || blocks[0] || null;
+
+            const toEditableContent = (block) => {
+                if (!block) return "";
+                if (block.type === "text" && typeof block.content?.text === "string") {
+                    return block.content.text;
+                }
+                return JSON.stringify(block.content || {}, null, 2);
+            };
+
+            const loadVersions = async (blockId) => {
+                if (!blockId) {
+                    setVersions([]);
+                    return;
+                }
+                try {
+                    const history = await writerApi(`/api/blocks/${blockId}/versions`, { workspaceId });
+                    setVersions(history);
+                } catch (_err) {
+                    setVersions([]);
+                }
+            };
+
+            useEffect(() => {
+                setEditorText(toEditableContent(selectedBlock));
+                loadVersions(selectedBlock?.id || null);
+            }, [selectedBlock?.id, selectedBlock?.version]);
+
+            const saveSelectedBlock = async () => {
+                if (!selectedBlock) return;
+                setSaving(true);
+                setError("");
+                try {
+                    let nextContent = null;
+                    if (selectedBlock.type === "text") {
+                        nextContent = {
+                            ...(selectedBlock.content || {}),
+                            text: editorText,
+                        };
+                    } else {
+                        try {
+                            nextContent = JSON.parse(editorText || "{}");
+                        } catch (_err) {
+                            throw new Error("Content must be valid JSON for non-text blocks.");
+                        }
+                    }
+
+                    const updated = await writerApi(`/api/blocks/${selectedBlock.id}`, {
+                        method: "PATCH",
+                        workspaceId,
+                        body: { content: nextContent },
+                    });
+                    setBlocks((current) =>
+                        current.map((item) => (item.id === updated.id ? updated : item))
+                    );
+                    setDocument((prev) => (prev ? { ...prev, updated_at: updated.updated_at } : prev));
+                    await loadVersions(updated.id);
+                } catch (err) {
+                    setError(err.message || "Could not save block.");
+                } finally {
+                    setSaving(false);
+                }
+            };
+
+            const createTextBlock = async () => {
+                if (!document) return;
+                setCreatingBlock(true);
+                setError("");
+                try {
+                    const maxPosition = blocks.length
+                        ? Math.max(...blocks.map((block) => Number(block.position_index || 0)))
+                        : 0;
+                    await writerApi(`/api/documents/${document.id}/blocks`, {
+                        method: "POST",
+                        workspaceId,
+                        body: {
+                            parent_block_id: selectedBlock?.id || document.root_block_id || null,
+                            type: "text",
+                            content: { text: "New block content..." },
+                            position_index: maxPosition + 10,
+                        },
+                    });
+                    await loadDocumentData(workspaceId, document.id);
+                } catch (err) {
+                    setError(err.message || "Could not create block.");
+                } finally {
+                    setCreatingBlock(false);
+                }
+            };
+
+            return (
+                <div className="flex flex-1 h-full overflow-hidden bg-white">
+                    <aside className="w-64 flex-none flex flex-col border-r border-border-light bg-slate-50 hidden lg:flex">
+                        <div className="p-4 border-b border-border-light">
+                            <div className="text-text-main text-sm font-semibold line-clamp-2">{document?.title || documentTitleHint}</div>
+                            <div className="mt-1 text-xs text-text-muted">Workspace: {workspaceId}</div>
+                        </div>
+                        <nav className="flex-1 overflow-y-auto py-4 px-2 space-y-1">
+                            <div className="px-3 pb-2 text-xs font-semibold text-text-secondary uppercase tracking-wider">Block Graph</div>
+                            {blocks.map((block) => (
+                                <button
+                                    key={block.id}
+                                    onClick={() => setSelectedBlockId(block.id)}
+                                    className={`w-full text-left px-3 py-1.5 rounded-md text-sm transition-colors ${
+                                        selectedBlockId === block.id
+                                            ? "text-primary font-medium bg-primary/5 border-l-2 border-primary"
+                                            : "text-text-secondary hover:text-text-main hover:bg-gray-100"
+                                    }`}
+                                >
+                                    {block.type.toUpperCase()} · v{block.version}
+                                </button>
+                            ))}
+                            {!blocks.length && (
+                                <div className="px-3 py-2 text-xs text-slate-500">No blocks loaded.</div>
+                            )}
+                        </nav>
+                    </aside>
+                    <main className="flex-1 flex flex-col relative bg-white overflow-hidden">
+                        <div className="flex-none px-12 pt-8 pb-4 border-b border-transparent">
+                            <h1 className="text-4xl font-bold text-gray-900 tracking-tight mb-3 line-clamp-2">
+                                {document?.title || documentTitleHint}
+                            </h1>
+                            <div className="flex items-center gap-2 text-xs text-text-secondary flex-wrap">
+                                <span className="text-gray-500">
+                                    {document?.updated_at
+                                        ? `Last edited ${new Date(document.updated_at).toLocaleString()}`
+                                        : "No document selected"}
+                                </span>
+                                <button
+                                    onClick={() => loadDocumentData(workspaceId, documentId)}
+                                    className="rounded border border-border-light bg-white px-2 py-1 text-xs text-slate-600 hover:bg-slate-50"
+                                >
+                                    Refresh
+                                </button>
+                                <button
+                                    onClick={createTextBlock}
+                                    disabled={!document || creatingBlock}
+                                    className="rounded border border-border-light bg-white px-2 py-1 text-xs text-slate-600 hover:bg-slate-50 disabled:opacity-50"
+                                >
+                                    {creatingBlock ? "Adding..." : "Add Text Block"}
+                                </button>
+                                <button
+                                    onClick={saveSelectedBlock}
+                                    disabled={!selectedBlock || saving}
+                                    className="rounded bg-primary px-2 py-1 text-xs text-white hover:bg-primary-hover disabled:opacity-50"
+                                >
+                                    {saving ? "Saving..." : "Save Block"}
+                                </button>
+                                <span className="flex items-center gap-1 text-primary">
+                                    <span className="material-symbols-outlined text-[14px] filled">auto_awesome</span>
+                                    <span className="font-medium">Structured Context Active</span>
+                                </span>
+                            </div>
+                        </div>
+                        <div className="flex-1 overflow-y-auto px-12 py-6">
+                            <div className="max-w-[800px] mx-auto pb-20">
+                                {error && <p className="text-sm text-red-700 mb-4">{error}</p>}
+                                {loading ? (
+                                    <p className="text-sm text-slate-500">Loading document graph...</p>
+                                ) : !document ? (
+                                    <p className="text-sm text-slate-500">No document found in this workspace. Create one from Dashboard.</p>
+                                ) : (
+                                    <>
+                                        <p className="text-lg text-gray-700 leading-relaxed mb-4">
+                                            Document ID: <span className="font-mono text-sm">{document.id}</span>
+                                        </p>
+                                        <div className="bg-blue-50 border border-blue-100 rounded-xl p-6 mb-8 relative group">
+                                            <h3 className="text-sm font-semibold text-blue-900/70 uppercase tracking-wider mb-4 flex items-center gap-2">
+                                                <span className="material-symbols-outlined text-[18px]">hub</span>
+                                                Selected Block
+                                            </h3>
+                                            <div className="space-y-2 text-sm text-gray-800">
+                                                <div><strong>Type:</strong> {selectedBlock?.type || "n/a"}</div>
+                                                <div><strong>Version:</strong> {selectedBlock?.version || "n/a"}</div>
+                                                <div className="pt-2">
+                                                    <strong>Edit Content:</strong>
+                                                    <textarea
+                                                        value={editorText}
+                                                        onChange={(event) => setEditorText(event.target.value)}
+                                                        className="mt-2 w-full min-h-40 whitespace-pre-wrap break-words rounded-lg border border-blue-100 bg-white p-3 text-xs text-slate-700 font-mono"
+                                                        placeholder="Block content"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h2 className="text-2xl font-bold text-gray-900 mb-4 mt-8">System Flow</h2>
+                                        <p className="text-gray-700 leading-relaxed mb-6">
+                                            This page is powered by the live Writer block graph API. Blocks are workspace-scoped and every save creates a version snapshot.
+                                        </p>
+                                    </>
+                                )}
+                            </div>
+                        </div>
+                    </main>
+                    <aside className="w-80 flex-none bg-slate-50 border-l border-border-light flex flex-col hidden xl:flex">
+                        <div className="p-4 border-b border-border-light flex items-center justify-between bg-white/50">
+                            <h3 className="text-sm font-semibold text-text-main">Version History</h3>
+                        </div>
+                        <div className="p-4 space-y-3 overflow-y-auto">
+                            {!selectedBlock && <p className="text-xs text-slate-500">Select a block to inspect versions.</p>}
+                            {selectedBlock && versions.length === 0 && (
+                                <p className="text-xs text-slate-500">No snapshots yet. Save the block to create one.</p>
+                            )}
+                            {versions.map((entry) => (
+                                <div key={entry.id} className="rounded-lg border border-border-light bg-white p-3 shadow-sm">
+                                    <div className="text-xs font-semibold text-slate-700">Snapshot #{entry.id}</div>
+                                    <div className="mt-1 text-[11px] text-slate-500">{new Date(entry.created_at).toLocaleString()}</div>
+                                    <div className="mt-2 text-[11px] text-slate-600">Version {entry.snapshot?.version ?? "n/a"}</div>
+                                </div>
+                            ))}
+                        </div>
+                    </aside>
+                </div>
+            );
+        };
+
+        // --- Screen 3: Sheets ---
+        const SheetsScreen = () => {
+            return (
+                <div className="flex flex-col h-full bg-white">
+                    <header className="flex items-center justify-between border-b border-border-light px-6 py-3 bg-white shrink-0">
+                         <h2 className="text-text-main text-lg font-bold">Q3 Financial Projections</h2>
+                         <div className="flex gap-2">
+                             <button className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-600 text-sm font-medium">
+                                <span className="material-symbols-outlined text-[18px]">spark</span> AI Analysis
+                             </button>
+                         </div>
+                    </header>
+                    <div className="flex-1 overflow-auto p-4">
+                         <table className="w-full border-collapse text-sm">
+                            <thead className="bg-slate-50 border-b border-slate-200">
+                                <tr>
+                                    <th className="p-2 text-left font-medium text-slate-500">ID</th>
+                                    <th className="p-2 text-left font-medium text-slate-500">Description</th>
+                                    <th className="p-2 text-left font-medium text-slate-500">Category</th>
+                                    <th className="p-2 text-right font-medium text-slate-500">Amount</th>
+                                    <th className="p-2 text-left font-medium text-slate-500 pl-4">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-100">
+                                <tr><td className="p-2 text-primary">TRX-001</td><td className="p-2">Q3 Server Infrastructure</td><td className="p-2"><span className="px-2 py-0.5 rounded bg-blue-100 text-blue-700 text-xs">Infrastructure</span></td><td className="p-2 text-right">$12,450.00</td><td className="p-2 pl-4 text-green-600 text-xs">Paid</td></tr>
+                                <tr><td className="p-2 text-primary">TRX-002</td><td className="p-2">Enterprise License</td><td className="p-2"><span className="px-2 py-0.5 rounded bg-purple-100 text-purple-700 text-xs">Software</span></td><td className="p-2 text-right">$45,000.00</td><td className="p-2 pl-4 text-green-600 text-xs">Paid</td></tr>
+                                <tr><td className="p-2 text-primary">TRX-003</td><td className="p-2">Marketing Campaign</td><td className="p-2"><span className="px-2 py-0.5 rounded bg-orange-100 text-orange-700 text-xs">Marketing</span></td><td className="p-2 text-right">$8,500.00</td><td className="p-2 pl-4 text-amber-600 text-xs">Pending</td></tr>
+                            </tbody>
+                         </table>
+                    </div>
+                     <div className="h-48 border-t border-border-light bg-slate-50 p-4">
+                        <div className="flex gap-2 items-center mb-2">
+                             <span className="material-symbols-outlined text-primary text-[20px]">auto_awesome</span>
+                             <h3 className="font-bold text-text-main text-sm">Sheet Insights</h3>
+                        </div>
+                        <div className="flex gap-4">
+                            <div className="p-3 rounded-lg bg-white border border-border-light shadow-sm w-48">
+                                <div className="text-xs text-slate-500 uppercase font-bold">Total Spend</div>
+                                <div className="text-xl font-bold text-slate-900">$96,750.00</div>
+                            </div>
+                             <div className="p-3 rounded-lg bg-white border border-border-light shadow-sm w-48">
+                                <div className="text-xs text-slate-500 uppercase font-bold">Top Category</div>
+                                <div className="text-xl font-bold text-slate-900">Software</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        // --- Router Container ---
+        const MainRouter = () => {
+            return (
+                <Routes>
+                    <Route path="/" element={<AppLayout><DashboardScreen /></AppLayout>} />
+                    <Route path="/document" element={<AppLayout><DocumentScreen /></AppLayout>} />
+                    <Route path="/sheets" element={<AppLayout><SheetsScreen /></AppLayout>} />
+                    {/* For prototyping, mapping other routes to simple placeholders or reusing components */}
+                    <Route path="/split-view" element={<AppLayout><div className="p-10 text-center text-slate-500">Split View Placeholder (See Screen 10)</div></AppLayout>} />
+                    <Route path="/collab" element={<AppLayout><div className="p-10 text-center text-slate-500">Collaboration Placeholder (See Screen 11)</div></AppLayout>} />
+                    <Route path="/slides" element={<AppLayout><div className="p-10 text-center text-slate-500">Presentation Placeholder (See Screen 4)</div></AppLayout>} />
+                    <Route path="/infinite-canvas" element={<AppLayout><div className="p-10 text-center text-slate-500">Infinite Canvas Placeholder (See Screen 5)</div></AppLayout>} />
+                    <Route path="/lasso" element={<AppLayout><div className="p-10 text-center text-slate-500">AI Lasso Placeholder (See Screen 16)</div></AppLayout>} />
+                    <Route path="/graph" element={<AppLayout><div className="p-10 text-center text-slate-500">Knowledge Graph Placeholder (See Screen 7)</div></AppLayout>} />
+                    <Route path="/workflow" element={<AppLayout><div className="p-10 text-center text-slate-500">AI Workflow Placeholder (See Screen 6)</div></AppLayout>} />
+                    <Route path="/templates" element={<AppLayout><div className="p-10 text-center text-slate-500">Templates Placeholder (See Screen 15)</div></AppLayout>} />
+                    <Route path="/history" element={<AppLayout><div className="p-10 text-center text-slate-500">History Placeholder (See Screen 14)</div></AppLayout>} />
+                    <Route path="/admin" element={<AppLayout><div className="p-10 text-center text-slate-500">Admin Placeholder (See Screen 13)</div></AppLayout>} />
+                    <Route path="/command" element={<div className="h-screen w-full bg-slate-900/10 backdrop-blur flex items-center justify-center"><div className="bg-white p-8 rounded-xl shadow-2xl max-w-2xl w-full">AI Command Modal (See Screen 8 or 12)<Link to="/" className="block mt-4 text-primary underline">Close</Link></div></div>} />
+                    <Route path="/export" element={<div className="h-screen w-full bg-slate-900/10 backdrop-blur flex items-center justify-center"><div className="bg-white p-8 rounded-xl shadow-2xl max-w-4xl w-full h-[600px]">Export Dialog (See Screen 9)<Link to="/" className="block mt-4 text-primary underline">Close</Link></div></div>} />
+                </Routes>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(
+            <MemoryRouter>
+                <MainRouter />
+            </MemoryRouter>
+        );
+    </script>
+</body>
+</html>

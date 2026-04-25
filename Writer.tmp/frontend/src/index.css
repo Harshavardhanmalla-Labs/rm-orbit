@@ -1,0 +1,51 @@
+/* ── Orbit Design Tokens ── */
+@import "/orbit-ui/orbit-tokens.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-surface-muted text-content-primary antialiased overflow-hidden;
+    font-family: var(--orbit-font-sans);
+  }
+}
+
+/* Global Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: var(--orbit-neutral-300);
+    border-radius: 20px;
+}
+.dark ::-webkit-scrollbar-thumb {
+    background-color: var(--orbit-neutral-600);
+}
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--orbit-neutral-400);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+.grid-bg {
+    background-size: 20px 20px;
+}
+.lasso-area {
+    background-color: rgba(43, 108, 238, 0.08);
+    border: 2px dashed #2b6cee;
+}
+.cursor-blink {
+    animation: blink 1s step-end infinite;
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}

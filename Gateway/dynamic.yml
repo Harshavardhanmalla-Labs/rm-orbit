@@ -1,0 +1,69 @@
+tls:
+  certificates:
+    - certFile: "/etc/certs/freedomlabs.crt"
+      keyFile: "/etc/certs/freedomlabs.key"
+
+# Routing for apps running natively (outside Docker) on the host machine
+http:
+  routers:
+    # --- AUTH / GATE ---
+    gate-native:
+      rule: "Host(`auth.freedomlabs.in`)"
+      service: gate-backend-native
+      tls: {}
+    
+    # --- ATLAS / TASKS ---
+    atlas-native:
+      rule: "Host(`atlas.freedomlabs.in`)"
+      service: atlas-backend-native
+      tls: {}
+    
+    # --- CALENDAR / CHRONOS ---
+    chronos-native:
+      rule: "Host(`chronos.freedomlabs.in`)"
+      service: chronos-backend-native
+      tls: {}
+
+    # --- SEARCH ---
+    search-native:
+      rule: "Host(`search.freedomlabs.in`)"
+      service: search-backend-native
+      tls: {}
+
+    # --- CONNECT ---
+    connect-native:
+      rule: "Host(`connect.freedomlabs.in`)"
+      service: connect-backend-native
+      tls: {}
+
+    # --- MEET ---
+    meet-native:
+      rule: "Host(`meet.freedomlabs.in`)"
+      service: meet-backend-native
+      tls: {}
+
+  services:
+    gate-backend-native:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:45001"
+    atlas-backend-native:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8000"
+    chronos-backend-native:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:5001"
+    search-backend-native:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:6200"
+    connect-backend-native:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:5000"
+    meet-backend-native:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:6001"
