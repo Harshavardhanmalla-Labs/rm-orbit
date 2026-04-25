@@ -11,9 +11,9 @@ import {
   RotateCcw,
 } from 'lucide-react'
 import { api } from '../api/client.js'
-import VenueBadge from '../components/VenueBadge.jsx'
-import Spinner from '../components/Spinner.jsx'
-import ErrorCard from '../components/ErrorCard.jsx'
+import VenueBadge from '../components/ui/VenueBadge.jsx'
+import Spinner from '../components/ui/Spinner.jsx'
+import ErrorCard from '../components/ui/ErrorCard.jsx'
 
 const VENUES = [
   { label: 'IEEE', value: 'ieee' },
