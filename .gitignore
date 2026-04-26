@@ -8,3 +8,16 @@ build/
 .vscode/
 .idea/
 .backup_apps/
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+*.egg-info/
+
+# Dev databases
+agenttheatre.db
+
+# Graphify cache
+graphify-out/cache/

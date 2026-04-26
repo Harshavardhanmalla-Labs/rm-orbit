@@ -4,8 +4,8 @@ from __future__ import annotations
 from uuid import UUID, uuid4
 from datetime import datetime, timezone
 from typing import Optional
-from fastapi import APIRouter, Depends, Request, HTTPException
-from sqlalchemy import select
+from fastapi import APIRouter, Depends, Request, HTTPException, Response
+from sqlalchemy import select, func
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from AgentTheater.api.integration.context_flow import (
@@ -22,9 +22,12 @@ from AgentTheater.schemas import (
     DecisionRecordResponse,
     ListDecisionsResponse,
     GithubIssueRequest,
+    GithubIssuesRequest,
 )
 from AgentTheater.events import EventStore
-from AgentTheater.models import Decision, GithubIssue
+from AgentTheater.events.db_models import Decision, GithubIssue, DecisionReadModel
+from AgentTheater.api.services.event_driven_projections import DecisionReadModelProjector
+from AgentTheater.schemas import DecisionReadModelResponse, DecisionReadModelListResponse
 
 router = APIRouter(prefix="/decisions", tags=["decisions"])
 
@@ -42,6 +45,7 @@ def get_event_store():
 @router.post("", status_code=201, response_model=DecisionCreateResponse)
 async def create_decision(
     request: Request,
+    response: Response,
     req: DecisionCreateRequest,
     db: AsyncSession = Depends(get_db),
     event_store: EventStore = Depends(get_event_store),
@@ -97,33 +101,100 @@ async def create_decision(
             correlation_id=correlation_id,
         )
 
+        # 3. Project to read model (same transaction)
+        projector = DecisionReadModelProjector(session)
+        await projector.project_decision_created(
+            decision_id=decision_id,
+            question=req.question,
+            project_id=req.project_id,
+            owner_id=security_context.user_id,
+            tenant_id=security_context.tenant_id,
+        )
+
         # Flush to validate constraints
         await session.flush()
 
     # After context: both committed, events in outbox
 
-    # Build response
-    response = DecisionCreateResponse(
-        id=decision_id,
-        question=req.question,
-        roles=req.roles,
-        created_at=decision.created_at,
-    )
-
-    # Add context headers
+    # Add context headers to response
     propagate_context_to_response_headers(
         response,
         correlation_id=correlation_id,
         api_version="v1",
     )
 
-    return response
+    # Build response body
+    return DecisionCreateResponse(
+        id=decision_id,
+        question=req.question,
+        roles=req.roles,
+        created_at=decision.created_at,
+    )
+
+
+@router.get("/read-models", response_model=DecisionReadModelListResponse)
+async def list_decision_read_models(
+    request: Request,
+    response: Response,
+    limit: int = 50,
+    offset: int = 0,
+    state: Optional[str] = None,
+    project_id: Optional[UUID] = None,
+    min_confidence: Optional[float] = None,
+    max_risk: Optional[float] = None,
+    db: AsyncSession = Depends(get_db),
+) -> DecisionReadModelListResponse:
+    """List decision read models with optional filters (paginated, tenant-scoped)."""
+
+    if limit > 200:
+        raise HTTPException(status_code=400, detail="limit cannot exceed 200")
+
+    try:
+        security_context = extract_security_context(request)
+    except ValueError as e:
+        raise HTTPException(status_code=401, detail=str(e))
+
+    correlation_id = extract_correlation_id(request)
+
+    base_filter = [DecisionReadModel.tenant_id == security_context.tenant_id]
+    if state:
+        base_filter.append(DecisionReadModel.current_state == state)
+    if project_id:
+        base_filter.append(DecisionReadModel.project_id == project_id)
+    if min_confidence is not None:
+        base_filter.append(DecisionReadModel.overall_confidence >= min_confidence)
+    if max_risk is not None:
+        base_filter.append(DecisionReadModel.overall_risk <= max_risk)
+
+    count_result = await db.execute(
+        select(func.count(DecisionReadModel.id)).where(*base_filter)
+    )
+    total = count_result.scalar() or 0
+
+    result = await db.execute(
+        select(DecisionReadModel)
+        .where(*base_filter)
+        .order_by(DecisionReadModel.updated_at.desc())
+        .limit(limit)
+        .offset(offset)
+    )
+    items = result.scalars().all()
+
+    propagate_context_to_response_headers(response, correlation_id=correlation_id, api_version="v1")
+
+    return DecisionReadModelListResponse(
+        items=[DecisionReadModelResponse.model_validate(rm) for rm in items],
+        total=total,
+        limit=limit,
+        offset=offset,
+    )
 
 
 @router.get("/{id}", response_model=DecisionRecordResponse)
 async def get_decision(
     id: UUID,
     request: Request,
+    response: Response,
     db: AsyncSession = Depends(get_db),
 ) -> DecisionRecordResponse:
     """Get decision (read-only, no event)."""
@@ -146,8 +217,15 @@ async def get_decision(
     if decision.tenant_id != security_context.tenant_id:
         raise HTTPException(status_code=403, detail="Tenant mismatch")
 
-    # Build response
-    response = DecisionRecordResponse(
+    # Add headers to response
+    propagate_context_to_response_headers(
+        response,
+        correlation_id=correlation_id,
+        api_version="v1",
+    )
+
+    # Build response body
+    return DecisionRecordResponse(
         id=decision.id,
         question=decision.question,
         roles=decision.roles,
@@ -157,22 +235,19 @@ async def get_decision(
         completed_at=decision.completed_at,
     )
 
-    # Add headers
-    propagate_context_to_response_headers(
-        response,
-        correlation_id=correlation_id,
-        api_version="v1",
-    )
-
-    return response
-
 
 @router.get("", response_model=ListDecisionsResponse)
 async def list_decisions(
     request: Request,
+    response: Response,
+    limit: int = 50,
+    offset: int = 0,
     db: AsyncSession = Depends(get_db),
 ) -> ListDecisionsResponse:
-    """List all decisions for user's tenant."""
+    """List decisions for user's tenant (paginated)."""
+
+    if limit > 200:
+        raise HTTPException(status_code=400, detail="limit cannot exceed 200")
 
     try:
         security_context = extract_security_context(request)
@@ -181,14 +256,30 @@ async def list_decisions(
 
     correlation_id = extract_correlation_id(request)
 
-    # Get decisions
+    # Accurate total count (separate query, not len of current page)
+    count_result = await db.execute(
+        select(func.count(Decision.id)).where(Decision.tenant_id == security_context.tenant_id)
+    )
+    total = count_result.scalar() or 0
+
     result = await db.execute(
-        select(Decision).where(Decision.tenant_id == security_context.tenant_id)
+        select(Decision)
+        .where(Decision.tenant_id == security_context.tenant_id)
+        .order_by(Decision.created_at.desc())
+        .limit(limit)
+        .offset(offset)
     )
     decisions = result.scalars().all()
 
-    # Add headers
-    response = ListDecisionsResponse(
+    # Add headers to response
+    propagate_context_to_response_headers(
+        response,
+        correlation_id=correlation_id,
+        api_version="v1",
+    )
+
+    # Build response body
+    return ListDecisionsResponse(
         items=[
             DecisionRecordResponse(
                 id=d.id,
@@ -201,22 +292,15 @@ async def list_decisions(
             )
             for d in decisions
         ],
-        total=len(decisions),
+        total=total,
     )
-
-    propagate_context_to_response_headers(
-        response,
-        correlation_id=correlation_id,
-        api_version="v1",
-    )
-
-    return response
 
 
 @router.post("/{id}/outcome", response_model=DecisionRecordResponse)
 async def record_outcome(
     id: UUID,
     request: Request,
+    response: Response,
     req: OutcomeRequest,
     db: AsyncSession = Depends(get_db),
     event_store: EventStore = Depends(get_event_store),
@@ -266,8 +350,15 @@ async def record_outcome(
 
         await session.flush()
 
-    # Build response
-    response = DecisionRecordResponse(
+    # Add headers to response
+    propagate_context_to_response_headers(
+        response,
+        correlation_id=correlation_id,
+        api_version="v1",
+    )
+
+    # Build response body
+    return DecisionRecordResponse(
         id=decision.id,
         question=decision.question,
         roles=decision.roles,
@@ -277,13 +368,6 @@ async def record_outcome(
         completed_at=decision.completed_at,
     )
 
-    propagate_context_to_response_headers(
-        response,
-        correlation_id=correlation_id,
-        api_version="v1",
-    )
-
-    return response
 
 
 @router.post("/{id}/github-issue")
@@ -344,7 +428,7 @@ async def add_github_issue(
 async def create_github_issues(
     id: UUID,
     request: Request,
-    body: dict,
+    req: GithubIssuesRequest,
     db: AsyncSession = Depends(get_db),
     event_store: EventStore = Depends(get_event_store),
 ):
@@ -357,7 +441,7 @@ async def create_github_issues(
 
     correlation_id = extract_correlation_id(request)
 
-    urls = body.get("urls", [])
+    urls = req.urls
 
     async with transactional_event_scope(db, event_store) as (session, store):
         # Verify decision exists

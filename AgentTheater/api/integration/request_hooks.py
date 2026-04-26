@@ -31,15 +31,19 @@ async def transactional_event_scope(
       - No partial state
       - No lost events
     """
-
-    async with db_session.begin():
-        # Transaction open
+    try:
+        # Yield session and event store for operations
         yield db_session, event_store
 
-        # Auto-commit on exit (or rollback on exception)
+        # Commit all changes
+        await db_session.commit()
 
-    # After transaction commits, publish pending events
-    await event_store.commit()
+        # After commit, clear pending events
+        await event_store.commit()
+    except Exception:
+        # Rollback on any exception
+        await db_session.rollback()
+        raise
 
 
 class RequestContext:

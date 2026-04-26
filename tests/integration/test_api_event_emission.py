@@ -1,19 +1,24 @@
 """Test API → Event emission integration."""
 import pytest
-import json
-import base64
+import os
+import jwt
+from datetime import datetime, timezone, timedelta
 from uuid import UUID
 from httpx import AsyncClient
+from httpx import ASGITransport
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, async_sessionmaker
-from AgentTheater.events.db_models import EventOutbox, EventLog, Base as EventBase
-from AgentTheater.models import Decision, Base as ModelBase
-from AgentTheater.main import app, get_db, get_event_store
+from AgentTheater.events.db_models import EventOutbox, EventLog, Decision, Base as EventBase
+from AgentTheater.main import app
+from AgentTheater.api.versions.v1.decisions_router import get_db, get_event_store
 from AgentTheater.events import EventStore
 
 
 # Test database setup
 TEST_DATABASE_URL = "sqlite+aiosqlite:///:memory:"
+
+
+pytest_plugins = ('pytest_asyncio',)
 
 
 @pytest.fixture(scope="session")
@@ -31,9 +36,9 @@ async def test_db():
     engine = create_async_engine(TEST_DATABASE_URL, echo=False)
 
     async with engine.begin() as conn:
-        # Create all tables
+        # Create all tables from single metadata object
+        await conn.run_sync(EventBase.metadata.drop_all)
         await conn.run_sync(EventBase.metadata.create_all)
-        await conn.run_sync(ModelBase.metadata.create_all)
 
     SessionLocal = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
@@ -45,17 +50,16 @@ async def test_db():
 async def client(test_db):
     """Create test HTTP client."""
 
-    async def override_get_db():
-        async with test_db.begin():
-            yield test_db
+    def get_test_db():
+        return test_db
 
-    async def override_get_event_store():
-        yield EventStore(test_db)
+    def get_test_event_store():
+        return EventStore(test_db)
 
-    app.dependency_overrides[get_db] = override_get_db
-    app.dependency_overrides[get_event_store] = override_get_event_store
+    app.dependency_overrides[get_db] = get_test_db
+    app.dependency_overrides[get_event_store] = get_test_event_store
 
-    async with AsyncClient(app=app, base_url="http://test") as ac:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         yield ac
 
     app.dependency_overrides.clear()
@@ -79,27 +83,20 @@ def project_id():
     return UUID("33333333-3333-3333-3333-333333333333")
 
 
+_JWT_SECRET = os.environ.get("JWT_SECRET_KEY", "dev-secret-change-in-production-key!")
+
+
 def create_jwt_token(user_id: UUID, tenant_id: UUID, roles=None):
-    """Create test JWT token."""
+    """Create a properly signed HS256 JWT for tests."""
     if roles is None:
         roles = ["operator"]
-
     payload = {
         "sub": str(user_id),
         "tenant_id": str(tenant_id),
         "roles": roles,
+        "exp": datetime.now(timezone.utc) + timedelta(hours=1),
     }
-
-    # Create JWT (simplified: no signature)
-    header = base64.urlsafe_b64encode(
-        json.dumps({"alg": "HS256"}).encode()
-    ).decode().rstrip("=")
-    payload_b64 = base64.urlsafe_b64encode(
-        json.dumps(payload).encode()
-    ).decode().rstrip("=")
-    signature = "test-signature"
-
-    return f"{header}.{payload_b64}.{signature}"
+    return jwt.encode(payload, _JWT_SECRET, algorithm="HS256")
 
 
 @pytest.mark.asyncio
@@ -266,7 +263,7 @@ async def test_tenant_isolation_in_events(client, test_db, tenant_id, user_id, p
         "/api/v1/decisions",
         json={
             "project_id": str(project_id),
-            "question": "Test",
+            "question": "Test question",
             "roles": ["ceo"],
             "tenant_id": str(tenant_id),
         },
